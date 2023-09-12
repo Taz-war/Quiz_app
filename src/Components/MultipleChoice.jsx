@@ -12,51 +12,59 @@ import {
   ListItemIcon,
   Paper,
   TextField,
+  Typography,
 } from "@mui/material";
 
 const MultipleChoice = () => {
-  const McqTemplate = { op1: "", op2: "", op3: "", op4: "" };
-  const [multipleChoice, setMultipleChoice] = useState([McqTemplate]);
-
-  const addQuestions = () => {
-    setMultipleChoice([...multipleChoice, McqTemplate]);
+  const [multipleChoice, setMultipleChoice] = useState({ A: "", B: "" });
+  const [question, setQuestion] = useState("");
+  const [options, setOptions] = useState({});
+  let index = 0;
+  const addOption = () => {
+    var letter = String.fromCharCode(index + 66);
+    const tempObj = {};
+    tempObj[letter] = "";
+    setMultipleChoice({ ...multipleChoice, ...tempObj });
   };
 
-  const handleOptionChange = (index, optionName, newValue) => {
-    const updatedQuestions = [...multipleChoice];
-    updatedQuestions[index][optionName] = newValue;
-    setMultipleChoice(updatedQuestions);
+  const handleOptionChange = (optionName, newValue) => {
+    // const updatedQuestions = [...multipleChoice];
+    // updatedQuestions[index][optionName] = newValue;
+    // setMultipleChoice(updatedQuestions);
+    setMultipleChoice({
+      ...multipleChoice,
+      [optionName]: newValue,
+    });
   };
+  console.log(multipleChoice)
   return (
     <>
       <Card sx={{ minWidth: 275, bgcolor: "#F5F7F8" }}>
+        <TextField variant="outlined" label="Question" fullWidth sx={{ mb: 2 }}onChange={(e) => setQuestion(e.target.value)}>
+          Question
+        </TextField>
 
-          <TextField variant="outlined" label="Question" fullWidth>
-            Question
-          </TextField>
-
-
-        {multipleChoice.map((option, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton role={undefined} dense>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  // checked={checked.indexOf(value) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  // inputProps={{ 'aria-labelledby': labelId }}
-                />
-              </ListItemIcon>
-              <TextField></TextField>
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {Object.keys(multipleChoice).map((option, i) => {
+          index = i;
+          return (
+            <ListItem key={i} disablePadding>
+              <ListItemButton role={undefined} dense>
+                <ListItemIcon>
+                  <Checkbox edge="start" tabIndex={-1} disableRipple />
+                  <Typography mt={1.3} fontWeight={"bolder"}>
+                    <b>{option}</b>
+                  </Typography>
+                </ListItemIcon>
+                <TextField fullWidth label={`Option ${option}`} onRateChange={(e)=>handleOptionChange(option,e.target.value)}></TextField>
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
         <Button
           size="small"
           color="primary"
           variant="contained"
-          onClick={addQuestions}
+          onClick={addOption}
         >
           ADD MORE
         </Button>
