@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useTransition } from "react";
 import {
   Box,
   Button,
@@ -7,6 +7,7 @@ import {
   CardContent,
   CardHeader,
   Checkbox,
+  Grid,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -14,36 +15,57 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const MultipleChoice = () => {
-  const [multipleChoice, setMultipleChoice] = useState({ A: "", B: "" });
+  const [isPending,startTransition]=useTransition()
+  const [multipleChoice, setMultipleChoice] = useState({ 1: "", 2: "" });
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState({});
+  let tempQuestion = {
+    "Question":question,
+    "Options":multipleChoice
+  }
   let index = 0;
+  ///add options////
   const addOption = () => {
-    var letter = String.fromCharCode(index + 66);
     const tempObj = {};
-    tempObj[letter] = "";
+    tempObj[index+2] = "";
     setMultipleChoice({ ...multipleChoice, ...tempObj });
   };
+////delete option///
+const deleteOption = (optionName) => {
+  const updatedOptions = { ...multipleChoice };
+  delete updatedOptions[optionName];
+  const result = {};
+  Object.keys(updatedOptions).forEach((item, index) => {
+    result[index+1] = updatedOptions[item]
+  })
+
+  setMultipleChoice(result);
+};
 
   const handleOptionChange = (optionName, newValue) => {
-    // const updatedQuestions = [...multipleChoice];
-    // updatedQuestions[index][optionName] = newValue;
-    // setMultipleChoice(updatedQuestions);
-    setMultipleChoice({
-      ...multipleChoice,
-      [optionName]: newValue,
-    });
+      setMultipleChoice({
+        ...multipleChoice,
+        [optionName]: newValue,
+      });
   };
   console.log(multipleChoice)
+  console.log(tempQuestion)
   return (
     <>
-      <Card sx={{ minWidth: 275, bgcolor: "#F5F7F8" }}>
-        <TextField variant="outlined" label="Question" fullWidth sx={{ mb: 2 }}onChange={(e) => setQuestion(e.target.value)}>
+      <Card sx={{ minWidth: 275, bgcolor: "#F5F7F8",mt:2,p:2,textAlign:'left' }}>
+        <Grid container columns={12} columnSpacing={2}>
+        <Grid item xs={8}>
+        <TextField variant="outlined" label="Question" fullWidth sx={{ mb: 2 ,mt:2}} onBlur={(e) => setQuestion(e.target.value)}>
           Question
         </TextField>
-
+        </Grid>
+        <Grid item xs={4}>
+          <TextField variant="outlined" label="Point" fullWidth sx={{ mb: 2 ,mt:2}}>Point</TextField>
+        </Grid>
+        </Grid>
         {Object.keys(multipleChoice).map((option, i) => {
           index = i;
           return (
@@ -52,21 +74,22 @@ const MultipleChoice = () => {
                 <ListItemIcon>
                   <Checkbox edge="start" tabIndex={-1} disableRipple />
                   <Typography mt={1.3} fontWeight={"bolder"}>
-                    <b>{option}</b>
+                    <b>{String.fromCharCode(i + 65)}</b>
                   </Typography>
                 </ListItemIcon>
-                <TextField fullWidth label={`Option ${option}`} onRateChange={(e)=>handleOptionChange(option,e.target.value)}></TextField>
+                <TextField fullWidth label={`Option ${String.fromCharCode(i + 65)}`} onBlur={(e)=>handleOptionChange(option,e.target.value)} />
+                <DeleteOutlineOutlinedIcon sx={{color:'red',ml:1,fontSize:'xx-large'}} onClick={() => deleteOption(option)}/>
               </ListItemButton>
             </ListItem>
           );
         })}
         <Button
           size="small"
-          color="primary"
-          variant="contained"
+          variant="outlined"
+          sx={{mt:2,bgcolor:'#E9EEFB',color:'navy'}}
           onClick={addOption}
         >
-          ADD MORE
+          ADD MORE Options
         </Button>
       </Card>
     </>
