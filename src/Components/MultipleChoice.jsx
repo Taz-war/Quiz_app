@@ -23,11 +23,15 @@ const MultipleChoice = () => {
   const [multipleChoice, setMultipleChoice] = useState({ 1: "", 2: "" });
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
+  const [answer,setAnswer] = useState(null)
+  // console.log(multipleChoice[answer])
   let tempQuestion = {
     "Question":question,
     "Options":multipleChoice,
-    "Point": point
+    "Point": point,
+    "Answer":multipleChoice[answer]
   }
+  console.log(tempQuestion)
   let index = 0;
   ///add options////
   const addOption = () => {
@@ -53,8 +57,8 @@ const deleteOption = (optionName) => {
         [optionName]: newValue,
       });
   };
-  console.log(multipleChoice)
-  console.log(tempQuestion)
+  // console.log(multipleChoice)
+  // console.log(tempQuestion)
   return (
     <>
       <Card sx={{ minWidth: 275, bgcolor: "#F5F7F8",mt:2,p:2,textAlign:'left',mb:2 }}>
@@ -74,7 +78,7 @@ const deleteOption = (optionName) => {
             <ListItem key={i} disablePadding>
               <ListItemButton role={undefined} dense>
                 <ListItemIcon>
-                  <Checkbox edge="start" tabIndex={-1} disableRipple />
+                  <Checkbox edge="start" tabIndex={-1} disableRipple checked={answer === option} onChange={()=>setAnswer(option)}/>
                   <Typography mt={1.3} fontWeight={"bolder"}>
                     <b>{String.fromCharCode(i + 65)}</b>
                   </Typography>
