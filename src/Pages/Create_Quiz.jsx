@@ -26,6 +26,7 @@ const Create_Quiz = () => {
             variant="outlined"
             sx={{
               mr: 2,
+              mb:2,
               bgcolor: "#FFF7E5",
               color: "#F3AF46",
               borderColor: "#F3AF46",
@@ -43,6 +44,7 @@ const Create_Quiz = () => {
             variant="outlined"
             sx={{
               mr: 2,
+              mb: 2,
               bgcolor: "#E9EEFB",
               color: "#5971B7",
               borderColor: "#5971B7",
@@ -60,6 +62,7 @@ const Create_Quiz = () => {
             variant="outlined"
             sx={{
               mr: 2,
+              mb: 2,
               bgcolor: "#FFECE6",
               color: "#FF7B64",
               borderColor: "#FF7B64",
