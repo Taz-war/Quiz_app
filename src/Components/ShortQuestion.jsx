@@ -21,12 +21,12 @@ import AddIcon from "@mui/icons-material/Add";
 const ShortQuestion = () => {
   const [isPending, startTransition] = useTransition();
   const [shortAnswer, setShortAnswer] = useState([""]);
-
   const [trigger, setTrigger] = useState(false);
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
   const [answer, setAnswer] = useState(null);
-  // console.log(multipleChoice[answer])
+  const [value,setValue]= useState('');
+
   // let tempQuestion = {
   //   "Question":question,
   //   "Options":multipleChoice,
@@ -39,50 +39,47 @@ const ShortQuestion = () => {
   const addOption = () => {
     setShortAnswer([...shortAnswer, ""]);
   };
+
   ////delete option///
   const deleteOption = (index) => {
     const tempArr = [...shortAnswer];
     tempArr.splice(index, 1);
     console.log({ tempArr });
     setShortAnswer([...tempArr]);
-    setTrigger(!trigger);
   };
 
-  useEffect(() => {
-    setShortAnswer([]);
-    console.log(shortAnswer);
-    setShortAnswer([...shortAnswer]);
-    // setShortAnswer([]);
-    // setTimeout(() => {
-    //   setShortAnswer([...shortAnswer]);
-    // }, 1000);
-    // console.log([...shortAnswer]);
-  }, [trigger]);
+  const someEventHandler = (event) => {
+    startTransition(() => {
+      // updates as transitions
+      setValue(event.target.value);
+      console.log(value)
+    });
+  }
 
   const handleOptionChange = (newValue, index) => {
-    startTransition(()=>{
-      const tempArr = [...shortAnswer];
-      tempArr[index] = newValue;
-      setShortAnswer(tempArr);
-    })
-    
+    const tempArr = [...shortAnswer];
+    tempArr[index] = newValue;
+    setShortAnswer(tempArr);
   };
 
-  // function debounce(func, timeout = 50) {
-  //   let timer;
-  //   return (...args) => {
-  //     clearTimeout(timer);
-  //     timer = setTimeout(() => {
-  //       func.apply(this, args);
-  //     }, timeout);
-  //   };
-  // }
-  // function saveInput(value, index) {
-  //   console.log("Saving data", value, index);
-  // }
-  // const processChange = debounce((value, index) =>
-  //   handleOptionChange(value, index)
-  // );
+  function debounce(func, timeout = 100) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  }
+  function saveInput(value, index) {
+    console.log("Saving data", value, index);
+    const tempArr = [...shortAnswer];
+    tempArr[index] = value;
+    setShortAnswer(tempArr);
+  }
+  const processChange = debounce((value, index) =>
+  saveInput(value, index)
+  );
   return (
     <>
       <Card
@@ -127,11 +124,9 @@ const ShortQuestion = () => {
                 <TextField
                   fullWidth
                   label={"Correct Answer (optional)"}
-                  value={option}
-                  onChange={(e) => {
-                    console.log({ value: e.target.value });
-                    handleOptionChange(e.target.value, i);
-                  }}
+                  // value={option}
+                  // placeholder={`${shortAnswer[i]}`}
+                  onChange={(e) => someEventHandler(e)}
                 />
                 <DeleteOutlineOutlinedIcon
                   sx={{ color: "red", ml: 1, fontSize: "xx-large" }}
