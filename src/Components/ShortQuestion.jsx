@@ -20,7 +20,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 const ShortQuestion = () => {
   const [isPending, startTransition] = useTransition();
-  const [shortAnswer, setShortAnswer] = useState([]);
+  const [shortAnswer, setShortAnswer] = useState([""]);
 
   const [trigger, setTrigger] = useState(false);
   const [question, setQuestion] = useState("");
@@ -43,7 +43,8 @@ const ShortQuestion = () => {
   const deleteOption = (index) => {
     const tempArr = [...shortAnswer];
     tempArr.splice(index, 1);
-    setShortAnswer(tempArr);
+    console.log({ tempArr });
+    setShortAnswer([...tempArr]);
     setTrigger(!trigger);
   };
 
@@ -58,11 +59,30 @@ const ShortQuestion = () => {
     // console.log([...shortAnswer]);
   }, [trigger]);
 
-  const handleOptionChange = (index, newValue) => {
-    const tempArr = [...shortAnswer];
-    tempArr[index] = newValue;
-    setShortAnswer(tempArr);
+  const handleOptionChange = (newValue, index) => {
+    startTransition(()=>{
+      const tempArr = [...shortAnswer];
+      tempArr[index] = newValue;
+      setShortAnswer(tempArr);
+    })
+    
   };
+
+  // function debounce(func, timeout = 50) {
+  //   let timer;
+  //   return (...args) => {
+  //     clearTimeout(timer);
+  //     timer = setTimeout(() => {
+  //       func.apply(this, args);
+  //     }, timeout);
+  //   };
+  // }
+  // function saveInput(value, index) {
+  //   console.log("Saving data", value, index);
+  // }
+  // const processChange = debounce((value, index) =>
+  //   handleOptionChange(value, index)
+  // );
   return (
     <>
       <Card
@@ -107,9 +127,11 @@ const ShortQuestion = () => {
                 <TextField
                   fullWidth
                   label={"Correct Answer (optional)"}
-                  defaultValue={option}
-                  placeholder={`${shortAnswer[i]}`}
-                  onBlur={(e) => handleOptionChange(i, e.target.value)}
+                  value={option}
+                  onChange={(e) => {
+                    console.log({ value: e.target.value });
+                    handleOptionChange(e.target.value, i);
+                  }}
                 />
                 <DeleteOutlineOutlinedIcon
                   sx={{ color: "red", ml: 1, fontSize: "xx-large" }}
