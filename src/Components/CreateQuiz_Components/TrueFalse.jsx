@@ -4,6 +4,13 @@ import React, { useState } from 'react'
 const TrueFalse = () => {
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
+  const [value,setValue] = useState(null)
+  let tempTrueFalseQuestion = {
+    "Question":question,
+    "Point": point,
+    "Answer":value
+  }
+  console.log(tempTrueFalseQuestion)
   return (
       <Card sx={{ minWidth: 275, bgcolor: "#F5F7F8", mt: 2, p: 2, textAlign: 'left', mb: 2 }}>
           <Grid container columns={12} columnSpacing={2}>
@@ -16,8 +23,8 @@ const TrueFalse = () => {
                   <TextField variant="outlined" label="Point" fullWidth sx={{ mb: 2, mt: 2 }} onChange={(e) => setPoint(e.target.value)}>Point</TextField>
               </Grid>
               <Grid item xs={5}>
-                  <Button variant='contained' color='success' sx={{mr:2}}>True</Button>
-                  <Button color='secondary'>False</Button>
+                  <Button variant={`${value===true?'contained':'outlined'}`}  color={`${value===true?'success':'secondary'}`} sx={{mr:2}} onClick={()=>setValue(true)}>True</Button>
+                  <Button variant={`${value===false?'contained':'outlined'}`} color={`${value===true?'secondary':'error'}`} onClick={()=>setValue(false)}>False</Button>
               </Grid>
           </Grid>
       </Card>

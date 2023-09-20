@@ -1,17 +1,12 @@
 import React, { useState,useTransition } from "react";
 import {
-  Box,
   Button,
   Card,
-  CardActions,
-  CardContent,
-  CardHeader,
   Checkbox,
   Grid,
   ListItem,
   ListItemButton,
   ListItemIcon,
-  Paper,
   TextField,
   Typography,
 } from "@mui/material";
@@ -51,14 +46,21 @@ const deleteOption = (optionName) => {
   setMultipleChoice(result);
 };
 
-  const handleOptionChange = (optionName, newValue) => {
+  const handleOptionChange = debounce((optionName, newValue) => {
       setMultipleChoice({
         ...multipleChoice,
         [optionName]: newValue,
       });
-  };
-  // console.log(multipleChoice)
-  // console.log(tempQuestion)
+  });
+  function debounce(func, timeout = 500) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  }
   return (
     <>
       <Card sx={{ minWidth: 275, bgcolor: "#F5F7F8",mt:2,p:2,textAlign:'left',mb:2 }}>
@@ -69,7 +71,7 @@ const deleteOption = (optionName) => {
         </TextField>
         </Grid>
         <Grid item xs={4}>
-          <TextField variant="outlined" label="Point" fullWidth sx={{ mb: 2 ,mt:2}} onChange={(e)=>setPoint(e.target.value)}>Point</TextField>
+          <TextField variant="outlined" label="Point" fullWidth sx={{ mb: 2 ,mt:2}} onBlur={(e)=>setPoint(e.target.value)}>Point</TextField>
         </Grid>
         </Grid>
         {Object.keys(multipleChoice).map((option, i) => {
@@ -83,7 +85,7 @@ const deleteOption = (optionName) => {
                     <b>{String.fromCharCode(i + 65)}</b>
                   </Typography>
                 </ListItemIcon>
-                <TextField fullWidth label={`Option ${String.fromCharCode(i + 65)}`} onBlur={(e)=>handleOptionChange(option,e.target.value)} />
+                <TextField fullWidth label={`Option ${String.fromCharCode(i + 65)}`} onChange={(e)=>handleOptionChange(option,e.target.value)} />
                 <DeleteOutlineOutlinedIcon sx={{color:'red',ml:1,fontSize:'xx-large'}} onClick={() => deleteOption(option)}/>
               </ListItemButton>
             </ListItem>

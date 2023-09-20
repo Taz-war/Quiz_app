@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box, Button, Container, Paper } from "@mui/material";
-import MultipleChoice from "../Components/MultipleChoice";
-import ShortQuestion from "../Components/ShortQuestion";
-import TrueFalse from "../Components/TrueFalse";
+import MultipleChoice from "../Components/CreateQuiz_Components/MultipleChoice";
+import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion";
+import TrueFalse from "../Components/CreateQuiz_Components/TrueFalse";
 
 const Create_Quiz = () => {
   const [componentsToRender, setComponentsToRender] = useState([]);
