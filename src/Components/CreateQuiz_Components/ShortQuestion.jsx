@@ -53,6 +53,7 @@ const ShortQuestion = () => {
       }, timeout);
     };
   }
+  return <p>Shirdf</p>
 
   return (
     <>
@@ -139,13 +140,13 @@ const ShortQuestion = () => {
             {tempShortQuestion.Question}
           </Typography>
         
-          {shortAnswer?.map((data,i) => 
+          {/* {shortAnswer?.map((data,i) => 
            
          
               <p>{data}</p>
            
             
-          )}
+          )} */}
         </Card>
       </Collapse>
     </>
