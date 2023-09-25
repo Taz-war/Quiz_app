@@ -1,10 +1,11 @@
-import React, { useState, useTransition } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Card,
   Checkbox,
   Collapse,
   Grid,
+  IconButton,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -13,8 +14,10 @@ import {
 } from "@mui/material";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddIcon from "@mui/icons-material/Add";
+import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 
-const MultipleChoice = () => {
+const MultipleChoice = ({ index }) => {
+  let serialNum = index;
   const [open, setOpen] = useState(false);
   const [multipleChoice, setMultipleChoice] = useState({ 1: "", 2: "" });
   const [question, setQuestion] = useState("");
@@ -28,7 +31,7 @@ const MultipleChoice = () => {
     Answer: multipleChoice[answer],
   };
   console.log(tempQuestion);
-  let index = 0;
+  // let index = 0;
   ///add options////
   const addOption = () => {
     const tempObj = {};
@@ -64,86 +67,7 @@ const MultipleChoice = () => {
   }
   return (
     <>
-    <Collapse in={open===false}>
-      <Card
-        sx={{
-          minWidth: 275,
-          bgcolor: "#F5F7F8",
-          mt: 2,
-          p: 2,
-          textAlign: "left",
-          mb: 2,
-        }}
-      >
-        <Grid container columns={12} columnSpacing={2}>
-          <Grid item xs={8}>
-            <TextField
-              variant="outlined"
-              label="Question"
-              fullWidth
-              sx={{ mb: 2, mt: 2 }}
-              onBlur={(e) => setQuestion(e.target.value)}
-            >
-              Question
-            </TextField>
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              variant="outlined"
-              label="Point"
-              fullWidth
-              sx={{ mb: 2, mt: 2 }}
-              onBlur={(e) => setPoint(e.target.value)}
-            >
-              Point
-            </TextField>
-          </Grid>
-        </Grid>
-        {Object.keys(multipleChoice).map((option, i) => {
-          index = i;
-          return (
-            <ListItem key={i} disablePadding>
-              <ListItemButton role={undefined} dense>
-                <ListItemIcon>
-                  <Checkbox
-                    edge="start"
-                    tabIndex={-1}
-                    disableRipple
-                    checked={answer === option}
-                    onChange={() => setAnswer(option)}
-                  />
-                  <Typography mt={1.3} fontWeight={"bolder"}>
-                    <b>{String.fromCharCode(i + 65)}</b>
-                  </Typography>
-                </ListItemIcon>
-                <TextField
-                  fullWidth
-                  label={`Option ${String.fromCharCode(i + 65)}`}
-                  onChange={(e) => handleOptionChange(option, e.target.value)}
-                />
-                <DeleteOutlineOutlinedIcon
-                  sx={{ color: "red", ml: 1, fontSize: "xx-large" }}
-                  onClick={() => deleteOption(option)}
-                />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
-        <Button
-          size="small"
-          variant="outlined"
-          sx={{ mt: 2, bgcolor: "#E9EEFB", color: "navy" }}
-          startIcon={<AddIcon />}
-          onClick={addOption}
-        >
-          ADD MORE Options
-        </Button>
-        <Button variant="contained" onClick={() => setOpen(true)}>
-          submit
-        </Button>
-      </Card>
-      </Collapse>
-      <Collapse in={open}>
+      <Collapse in={open === false}>
         <Card
           sx={{
             minWidth: 275,
@@ -154,10 +78,104 @@ const MultipleChoice = () => {
             mb: 2,
           }}
         >
-          {<Typography fontSize={'x-large'} fontWeight={'bolder'}>{tempQuestion.Question}</Typography>}
-          {Object.keys(multipleChoice).map((data,i) => (
-            <Typography><b>{`${String.fromCharCode(i + 65)}`}</b> {` ${multipleChoice[data]}`}</Typography>
-          ))}
+          <Grid container columns={12} columnSpacing={2}>
+            <Grid item xs={8}>
+              <TextField
+                variant="outlined"
+                label="Question"
+                fullWidth
+                sx={{ mb: 2, mt: 2 }}
+                onBlur={(e) => setQuestion(e.target.value)}
+              >
+                Question
+              </TextField>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                variant="outlined"
+                label="Point"
+                fullWidth
+                sx={{ mb: 2, mt: 2 }}
+                onBlur={(e) => setPoint(e.target.value)}
+              >
+                Point
+              </TextField>
+            </Grid>
+          </Grid>
+          {Object.keys(multipleChoice).map((option, i) => {
+            return (
+              <ListItem key={i} disablePadding>
+                <ListItemButton role={undefined} dense>
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      tabIndex={-1}
+                      disableRipple
+                      checked={answer === option}
+                      onChange={() => setAnswer(option)}
+                    />
+                    <Typography mt={1.3} fontWeight={"bolder"}>
+                      <b>{String.fromCharCode(i + 65)}</b>
+                    </Typography>
+                  </ListItemIcon>
+                  <TextField
+                    fullWidth
+                    label={`Option ${String.fromCharCode(i + 65)}`}
+                    onChange={(e) => handleOptionChange(option, e.target.value)}
+                  />
+                  <DeleteOutlineOutlinedIcon
+                    sx={{ color: "red", ml: 1, fontSize: "xx-large" }}
+                    onClick={() => deleteOption(option)}
+                  />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
+          <Button
+            size="small"
+            variant="outlined"
+            sx={{ mt: 2, bgcolor: "#E9EEFB", color: "navy" }}
+            startIcon={<AddIcon />}
+            onClick={addOption}
+          >
+            ADD MORE Options
+          </Button>
+          <Button variant="contained" onClick={() => setOpen(true)}>
+            submit
+          </Button>
+        </Card>
+      </Collapse>
+      <Collapse in={open}>
+        <Card
+          sx={{
+            minWidth: 275,
+            bgcolor: "#FFFFF",
+            mt: 2,
+            p: 2,
+            textAlign: "left",
+            mb: 2,
+          }}
+        >
+          <Grid container columns={12} columnSpacing={2}>
+            <Grid item xs={10}>
+              {
+                <Typography fontSize={"x-large"} fontWeight={"bolder"}>{`${
+                  serialNum + 1
+                } . ${tempQuestion.Question}`}</Typography>
+              }
+              {Object.keys(multipleChoice).map((data, i) => (
+                <Typography>
+                  <b>{`${String.fromCharCode(i + 65)} .`}</b>{" "}
+                  {` ${multipleChoice[data]}`}
+                </Typography>
+              ))}
+            </Grid>
+            <Grid item xs={2} textAlign={"right"}>
+              <IconButton onClick={()=>setOpen(false)}>
+                <BorderColorTwoToneIcon  sx={{ bgcolor: "skyblue", color: "white",p:1 }}/>
+              </IconButton>
+            </Grid>
+          </Grid>
         </Card>
       </Collapse>
     </>

@@ -3,12 +3,15 @@ import {
   Card,
   Collapse,
   Grid,
+  IconButton,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 
-const TrueFalse = () => {
+const TrueFalse = ({ index }) => {
+  let serialNum = index;
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
@@ -82,24 +85,35 @@ const TrueFalse = () => {
         <Card
           sx={{
             minWidth: 275,
-            bgcolor: "#F5F7F8",
+            bgcolor: "#FFFFF",
             mt: 2,
             p: 2,
             textAlign: "left",
             mb: 2,
           }}
         >
-          <Typography fontSize={"x-large"} fontWeight={"bolder"} mb={2}>
-            {tempTrueFalseQuestion.Question}
-          </Typography>
-          <Button
-            variant="contained"
-            color={`${
-              tempTrueFalseQuestion.Answer === true ? "success" : "error"
-            }`}
-          >
-            {tempTrueFalseQuestion.Answer === true ? "True" : "False"}
-          </Button>
+          <Grid container columns={12} columnSpacing={2}>
+            <Grid item xs={10}>
+              <Typography fontSize={"x-large"} fontWeight={"bolder"} mb={2}>
+                {`${serialNum + 1} . ${tempTrueFalseQuestion.Question}`}
+              </Typography>
+              <Button
+                variant="contained"
+                color={`${
+                  tempTrueFalseQuestion.Answer === true ? "success" : "error"
+                }`}
+              >
+                {tempTrueFalseQuestion.Answer === true ? "True" : "False"}
+              </Button>
+            </Grid>
+            <Grid item xs={2} textAlign={'right'}>
+              <IconButton onClick={()=>setOpen(false)}>
+                <BorderColorTwoToneIcon
+                  sx={{ bgcolor: "skyblue", color: "white",p:1 }}
+                />
+              </IconButton>
+            </Grid>
+          </Grid>
         </Card>
       </Collapse>
     </>

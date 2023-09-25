@@ -6,12 +6,14 @@ import TrueFalse from "../Components/CreateQuiz_Components/TrueFalse";
 
 const Create_Quiz = () => {
   const [componentsToRender, setComponentsToRender] = useState([]);
+  const [open,setOpen]= useState(false)
 
   // Function to add components to the list
   const addComponent = (Component) => {
-    setComponentsToRender([
-      ...componentsToRender,
-      <Component key={componentsToRender.length} />,
+    setOpen(false)
+    setComponentsToRender((prevComponents) => [
+      ...prevComponents,
+      <Component key={prevComponents.length} index={prevComponents.length} open={open} setOpen={setOpen}/>,
     ]);
   };
 
