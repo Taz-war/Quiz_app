@@ -113,7 +113,7 @@ const ShortQuestion = ({ index }) => {
           >
             ADD MORE Options
           </Button>
-          <Button variant="contained" onClick={() => handleSubmit()}>
+          <Button variant="contained" size="small" sx={{ml:2,mt:2}} onClick={() => handleSubmit()}>
             submit
           </Button>
         </Card>

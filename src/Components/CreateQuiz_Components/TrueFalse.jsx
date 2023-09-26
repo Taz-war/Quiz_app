@@ -76,7 +76,7 @@ const TrueFalse = ({ index }) => {
               </Button>
             </Grid>
           </Grid>
-          <Button variant="contained" onClick={() => setOpen(true)}>
+          <Button variant="contained" size="small" sx={{mt:2}} onClick={() => setOpen(true)}>
             Submit
           </Button>
         </Card>

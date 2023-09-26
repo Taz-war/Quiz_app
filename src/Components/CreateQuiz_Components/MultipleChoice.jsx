@@ -19,42 +19,36 @@ import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 const MultipleChoice = ({ index }) => {
   let serialNum = index;
   const [open, setOpen] = useState(false);
-  const [multipleChoice, setMultipleChoice] = useState({ 1: "", 2: "" });
+  const [multipleChoice, setMultipleChoice] = useState( [ "","" ]);
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
   const [answer, setAnswer] = useState(null);
-  // console.log(multipleChoice[answer])
+
   let tempQuestion = {
     Question: question,
     Options: multipleChoice,
     Point: point,
-    Answer: multipleChoice[answer],
+    Answer: answer
   };
   console.log(tempQuestion);
-  // let index = 0;
+
   ///add options////
   const addOption = () => {
-    const tempObj = {};
-    tempObj[index + 2] = "";
-    setMultipleChoice({ ...multipleChoice, ...tempObj });
+    setMultipleChoice([...multipleChoice,''])
   };
+  
   ////delete option///
-  const deleteOption = (optionName) => {
-    const updatedOptions = { ...multipleChoice };
-    delete updatedOptions[optionName];
-    const result = {};
-    Object.keys(updatedOptions).forEach((item, index) => {
-      result[index + 1] = updatedOptions[item];
-    });
-
-    setMultipleChoice(result);
+  const deleteOption = (index) => {
+    const updatedAnswers = [...multipleChoice];
+    updatedAnswers.splice(index, 1);
+    setMultipleChoice(updatedAnswers);
   };
 
-  const handleOptionChange = debounce((optionName, newValue) => {
-    setMultipleChoice({
-      ...multipleChoice,
-      [optionName]: newValue,
-    });
+  const handleOptionChange = debounce((index, newValue) => {
+    const updatedAnswers = [...multipleChoice];
+    updatedAnswers[index] = newValue;
+    setMultipleChoice(updatedAnswers)
+
   });
   function debounce(func, timeout = 500) {
     let timer;
@@ -102,7 +96,7 @@ const MultipleChoice = ({ index }) => {
               </TextField>
             </Grid>
           </Grid>
-          {Object.keys(multipleChoice).map((option, i) => {
+          {multipleChoice.map((option, i) => {
             return (
               <ListItem key={i} disablePadding>
                 <ListItemButton role={undefined} dense>
@@ -121,11 +115,12 @@ const MultipleChoice = ({ index }) => {
                   <TextField
                     fullWidth
                     label={`Option ${String.fromCharCode(i + 65)}`}
-                    onChange={(e) => handleOptionChange(option, e.target.value)}
+                    value={option}
+                    onChange={(e) => handleOptionChange(i, e.target.value)}
                   />
                   <DeleteOutlineOutlinedIcon
                     sx={{ color: "red", ml: 1, fontSize: "xx-large" }}
-                    onClick={() => deleteOption(option)}
+                    onClick={() => deleteOption(i)}
                   />
                 </ListItemButton>
               </ListItem>
@@ -140,7 +135,7 @@ const MultipleChoice = ({ index }) => {
           >
             ADD MORE Options
           </Button>
-          <Button variant="contained" onClick={() => setOpen(true)}>
+          <Button variant="contained" size="small" sx={{ml:2,mt:2}} onClick={() => setOpen(true)}>
             submit
           </Button>
         </Card>
@@ -159,20 +154,22 @@ const MultipleChoice = ({ index }) => {
           <Grid container columns={12} columnSpacing={2}>
             <Grid item xs={10}>
               {
-                <Typography fontSize={"x-large"} fontWeight={"bolder"}>{`${
-                  serialNum + 1
-                } . ${tempQuestion.Question}`}</Typography>
+                <Typography fontSize={"x-large"} fontWeight={"bolder"}>
+                  {`${serialNum + 1} . ${tempQuestion.Question}`}
+                </Typography>
               }
-              {Object.keys(multipleChoice).map((data, i) => (
-                <Typography>
+              {multipleChoice.map((data, i) => (
+                <Typography key={i} ml={3}>
                   <b>{`${String.fromCharCode(i + 65)} .`}</b>{" "}
-                  {` ${multipleChoice[data]}`}
+                  {` ${data}`}
                 </Typography>
               ))}
             </Grid>
             <Grid item xs={2} textAlign={"right"}>
-              <IconButton onClick={()=>setOpen(false)}>
-                <BorderColorTwoToneIcon  sx={{ bgcolor: "skyblue", color: "white",p:1 }}/>
+              <IconButton onClick={() => setOpen(false)}>
+                <BorderColorTwoToneIcon
+                  sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
+                />
               </IconButton>
             </Grid>
           </Grid>
