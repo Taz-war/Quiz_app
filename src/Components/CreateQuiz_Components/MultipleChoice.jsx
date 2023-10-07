@@ -50,7 +50,7 @@ const MultipleChoice = ({ index }) => {
     setMultipleChoice(updatedAnswers)
 
   });
-  function debounce(func, timeout = 500) {
+  function debounce(func, timeout = 50) {
     let timer;
     return (...args) => {
       clearTimeout(timer);
