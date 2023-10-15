@@ -4,6 +4,8 @@ import MultipleChoice from "../Components/CreateQuiz_Components/MultipleChoice";
 import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion";
 import TrueFalse from "../Components/CreateQuiz_Components/TrueFalse";
 import EditIcon from '@mui/icons-material/Edit';
+import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
+import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 
 const Create_Quiz = () => {
   const [componentsToRender, setComponentsToRender] = useState([]);
@@ -29,6 +31,7 @@ const Create_Quiz = () => {
     ]);
   };
 
+  console.log({ value })
   return (
     <Container>
       <Grid container columns={12} columnSpacing={2} mt={2}>
@@ -37,14 +40,17 @@ const Create_Quiz = () => {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             fullWidth
-            sx={{fontWeight:'bolder'}}
+            sx={{ fontWeight: 'bolder' }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   {isEditing ? (
-                    <button onClick={handleSaveClick}>Save</button>
+                    <DoneTwoToneIcon onClick={handleSaveClick} sx={{ bgcolor: "skyblue", color: "white", p: 1 }} />
                   ) : (
-                    <EditIcon onClick={handleEditClick} />
+                      <BorderColorTwoToneIcon
+                        onClick={handleEditClick}
+                        sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
+                      />
                   )}
                 </InputAdornment>
               ),
@@ -52,8 +58,10 @@ const Create_Quiz = () => {
           />
         </Grid>
         <Grid item xs={6} textAlign={"right"} p={2}>
-          <Button variant="contained" size="large" sx={{ borderRadius: '25px', bgcolor: '#E4FBFF', color: '#0075A3', mt: 1, 
-              '&:hover': { bgcolor: '#E4FBFF', color: '#0075A3' } }}>
+          <Button variant="contained" size="large" sx={{
+            borderRadius: '25px', bgcolor: '#E4FBFF', color: '#0075A3', mt: 1,
+            '&:hover': { bgcolor: '#E4FBFF', color: '#0075A3' }
+          }}>
             Save and Exit
           </Button>
         </Grid>
