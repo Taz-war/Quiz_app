@@ -19,7 +19,7 @@ import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 const MultipleChoice = ({ index }) => {
   let serialNum = index;
   const [open, setOpen] = useState(false);
-  const [multipleChoice, setMultipleChoice] = useState( [ "","" ]);
+  const [multipleChoice, setMultipleChoice] = useState(["", ""]);
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
   const [answer, setAnswer] = useState(null);
@@ -28,15 +28,15 @@ const MultipleChoice = ({ index }) => {
     Question: question,
     Options: multipleChoice,
     Point: point,
-    Answer: answer
+    Answer: answer,
   };
   console.log(tempQuestion);
 
   ///add options////
   const addOption = () => {
-    setMultipleChoice([...multipleChoice,''])
+    setMultipleChoice([...multipleChoice, ""]);
   };
-  
+
   ////delete option///
   const deleteOption = (index) => {
     const updatedAnswers = [...multipleChoice];
@@ -47,8 +47,7 @@ const MultipleChoice = ({ index }) => {
   const handleOptionChange = debounce((index, newValue) => {
     const updatedAnswers = [...multipleChoice];
     updatedAnswers[index] = newValue;
-    setMultipleChoice(updatedAnswers)
-
+    setMultipleChoice(updatedAnswers);
   });
   function debounce(func, timeout = 50) {
     let timer;
@@ -59,6 +58,7 @@ const MultipleChoice = ({ index }) => {
       }, timeout);
     };
   }
+
   return (
     <>
       <Collapse in={open === false}>
@@ -135,7 +135,12 @@ const MultipleChoice = ({ index }) => {
           >
             ADD MORE Options
           </Button>
-          <Button variant="contained" size="small" sx={{ml:2,mt:2}} onClick={() => setOpen(true)}>
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ ml: 2, mt: 2 }}
+            onClick={() => setOpen(true)}
+          >
             submit
           </Button>
         </Card>
@@ -160,8 +165,7 @@ const MultipleChoice = ({ index }) => {
               }
               {multipleChoice.map((data, i) => (
                 <Typography key={i} ml={3}>
-                  <b>{`${String.fromCharCode(i + 65)} .`}</b>{" "}
-                  {` ${data}`}
+                  <b>{`${String.fromCharCode(i + 65)} .`}</b> {` ${data}`}
                 </Typography>
               ))}
             </Grid>
