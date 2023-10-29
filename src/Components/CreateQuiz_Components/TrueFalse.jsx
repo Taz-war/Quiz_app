@@ -10,18 +10,20 @@ import {
 import React, { useState } from "react";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 
-const TrueFalse = ({ index }) => {
+const TrueFalse = ({ index,setQuestionSet,questionSet }) => {
   let serialNum = index;
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
   const [value, setValue] = useState(null);
   let tempTrueFalseQuestion = {
-    Question: question,
+    QuestionTitle: question,
     Point: point,
     Answer: value,
   };
-  console.log(tempTrueFalseQuestion);
+  setQuestionSet([...questionSet,tempTrueFalseQuestion])
+
+  // console.log(tempTrueFalseQuestion);
   return (
     <>
       <Collapse in={open === false}>
@@ -95,7 +97,7 @@ const TrueFalse = ({ index }) => {
           <Grid container columns={12} columnSpacing={2}>
             <Grid item xs={10}>
               <Typography fontSize={"x-large"} fontWeight={"bolder"} mb={2}>
-                {`${serialNum + 1} . ${tempTrueFalseQuestion.Question}`}
+                {`${serialNum + 1} . ${tempTrueFalseQuestion.QuestionTitle}`}
               </Typography>
               <Button
                 variant="contained"

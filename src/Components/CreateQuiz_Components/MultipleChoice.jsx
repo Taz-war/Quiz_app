@@ -16,7 +16,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import AddIcon from "@mui/icons-material/Add";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 
-const MultipleChoice = ({ index }) => {
+const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
   let serialNum = index;
   const [open, setOpen] = useState(false);
   const [multipleChoice, setMultipleChoice] = useState(["", ""]);
@@ -25,13 +25,13 @@ const MultipleChoice = ({ index }) => {
   const [answer, setAnswer] = useState(null);
 
   let tempQuestion = {
-    Question: question,
+    QuestionTitle: question,
     Options: multipleChoice,
     Point: point,
     Answer: answer,
   };
   console.log(tempQuestion);
-
+  setQuestionSet([...questionSet,tempQuestion])
   ///add options////
   const addOption = () => {
     setMultipleChoice([...multipleChoice, ""]);
@@ -160,7 +160,7 @@ const MultipleChoice = ({ index }) => {
             <Grid item xs={10}>
               {
                 <Typography fontSize={"x-large"} fontWeight={"bolder"}>
-                  {`${serialNum + 1} . ${tempQuestion.Question}`}
+                  {`${serialNum + 1} . ${tempQuestion.QuestionTitle}`}
                 </Typography>
               }
               {multipleChoice.map((data, i) => (

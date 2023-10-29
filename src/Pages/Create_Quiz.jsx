@@ -1,18 +1,27 @@
 import React, { useState } from "react";
-import { Box, Button, Container, Grid, InputAdornment, Paper, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  InputAdornment,
+  Paper,
+  TextField,
+} from "@mui/material";
 import MultipleChoice from "../Components/CreateQuiz_Components/MultipleChoice";
 import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion";
 import TrueFalse from "../Components/CreateQuiz_Components/TrueFalse";
-import EditIcon from '@mui/icons-material/Edit';
-import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
+import EditIcon from "@mui/icons-material/Edit";
+import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 
 const Create_Quiz = () => {
   const [componentsToRender, setComponentsToRender] = useState([]);
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   ///for title edit////
-  const [value, setValue] = useState('Untitled Quiz');
+  const [value, setValue] = useState("Untitled Quiz");
   const [isEditing, setIsEditing] = useState(false);
+  const [questionSet, setQuestionSet] = useState([]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -24,14 +33,21 @@ const Create_Quiz = () => {
 
   // Function to add components to the list
   const addComponent = (Component) => {
-    setOpen(false)
+    setOpen(false);
     setComponentsToRender((prevComponents) => [
       ...prevComponents,
-      <Component key={prevComponents.length} index={prevComponents.length} open={open} setOpen={setOpen} />,
+      <Component
+        key={prevComponents.length}
+        index={prevComponents.length}
+        open={open}
+        setOpen={setOpen}
+        setQuestionSet={setQuestionSet}
+        questionSet={questionSet}
+      />,
     ]);
   };
 
-  console.log({ value })
+  console.log({ questionSet });
   return (
     <Container>
       <Grid container columns={12} columnSpacing={2} mt={2}>
@@ -40,17 +56,20 @@ const Create_Quiz = () => {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             fullWidth
-            sx={{ fontWeight: 'bolder' }}
+            sx={{ fontWeight: "bolder" }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   {isEditing ? (
-                    <DoneTwoToneIcon onClick={handleSaveClick} sx={{ bgcolor: "skyblue", color: "white", p: 1 }} />
+                    <DoneTwoToneIcon
+                      onClick={handleSaveClick}
+                      sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
+                    />
                   ) : (
-                      <BorderColorTwoToneIcon
-                        onClick={handleEditClick}
-                        sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
-                      />
+                    <BorderColorTwoToneIcon
+                      onClick={handleEditClick}
+                      sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
+                    />
                   )}
                 </InputAdornment>
               ),
@@ -58,10 +77,17 @@ const Create_Quiz = () => {
           />
         </Grid>
         <Grid item xs={6} textAlign={"right"} p={2}>
-          <Button variant="contained" size="large" sx={{
-            borderRadius: '25px', bgcolor: '#E4FBFF', color: '#0075A3', mt: 1,
-            '&:hover': { bgcolor: '#E4FBFF', color: '#0075A3' }
-          }}>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              borderRadius: "25px",
+              bgcolor: "#E4FBFF",
+              color: "#0075A3",
+              mt: 1,
+              "&:hover": { bgcolor: "#E4FBFF", color: "#0075A3" },
+            }}
+          >
             Save and Exit
           </Button>
         </Grid>

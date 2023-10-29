@@ -14,7 +14,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import AddIcon from "@mui/icons-material/Add";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 
-const ShortQuestion = ({ index }) => {
+const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
   let serialNum = index;
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState("");
@@ -22,10 +22,11 @@ const ShortQuestion = ({ index }) => {
   const [shortAnswers, setShortAnswers] = useState([""]);
 
   let tempShortQuestion = {
-    Question: question,
+    QuestionTitle: question,
     Point: point,
     Answer: shortAnswers,
   };
+  setQuestionSet([...questionSet,tempShortQuestion])
   ///add option///
   const addOption = () => {
     setShortAnswers([...shortAnswers, ""]);
