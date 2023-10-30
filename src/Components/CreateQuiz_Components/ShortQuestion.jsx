@@ -13,6 +13,7 @@ import {
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
+import { v4 as uuidv4 } from 'uuid';
 
 const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
   let serialNum = index;
@@ -22,6 +23,8 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
   const [shortAnswers, setShortAnswers] = useState([""]);
 
   let tempShortQuestion = {
+    id:uuidv4(),
+    QuestionType:'shortQuestion',
     QuestionTitle: question,
     Point: point,
     Answer: shortAnswers,

@@ -14,6 +14,7 @@ import TrueFalse from "../Components/CreateQuiz_Components/TrueFalse";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
+import { v4 as uuidv4 } from 'uuid';
 
 const Create_Quiz = () => {
   const [componentsToRender, setComponentsToRender] = useState([]);
@@ -22,6 +23,9 @@ const Create_Quiz = () => {
   const [value, setValue] = useState("Untitled Quiz");
   const [isEditing, setIsEditing] = useState(false);
   const [questionSet, setQuestionSet] = useState([]);
+  const [question,setQuestion] = useState({id:null,questionSetTitle:'',questions:[]})
+
+  const { v4: uuidv4 } = require('uuid');
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -31,6 +35,15 @@ const Create_Quiz = () => {
     setIsEditing(false);
   };
 
+  ////save question set///
+  const handleSave =()=>{
+    setQuestion({
+      id:uuidv4(),
+      questionSetTitle:value,
+      questions:[...questionSet]
+    })
+  }
+  console.log({question})
   // Function to add components to the list
   const addComponent = (Component) => {
     setOpen(false);
@@ -47,7 +60,7 @@ const Create_Quiz = () => {
     ]);
   };
 
-  console.log({ questionSet });
+
   return (
     <Container>
       <Grid container columns={12} columnSpacing={2} mt={2}>
@@ -87,6 +100,7 @@ const Create_Quiz = () => {
               mt: 1,
               "&:hover": { bgcolor: "#E4FBFF", color: "#0075A3" },
             }}
+            onClick={()=>handleSave()}
           >
             Save and Exit
           </Button>

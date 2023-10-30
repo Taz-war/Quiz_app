@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
+import { v4 as uuidv4 } from 'uuid';
 
 const TrueFalse = ({ index,setQuestionSet,questionSet }) => {
   let serialNum = index;
@@ -16,7 +17,11 @@ const TrueFalse = ({ index,setQuestionSet,questionSet }) => {
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
   const [value, setValue] = useState(null);
+
+  
   let tempTrueFalseQuestion = {
+    id:uuidv4(),
+    QuestionType:'trueFalse',
     QuestionTitle: question,
     Point: point,
     Answer: value,

@@ -15,6 +15,7 @@ import {
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
+import { v4 as uuidv4 } from 'uuid';
 
 const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
   let serialNum = index;
@@ -25,12 +26,14 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
   const [answer, setAnswer] = useState(null);
 
   let tempQuestion = {
+    id:uuidv4(),
+    QuestionType:'multipleChoice',
     QuestionTitle: question,
     Options: multipleChoice,
     Point: point,
     Answer: answer,
   };
-  console.log(tempQuestion);
+  
   setQuestionSet([...questionSet,tempQuestion])
   ///add options////
   const addOption = () => {
