@@ -26,7 +26,11 @@ const TrueFalse = ({ index,setQuestionSet,questionSet }) => {
     Point: point,
     Answer: value,
   };
-  setQuestionSet([...questionSet,tempTrueFalseQuestion])
+  
+  const handleSubmit =()=>{
+    setOpen(true)
+    setQuestionSet([...questionSet,tempTrueFalseQuestion])
+  }
 
   // console.log(tempTrueFalseQuestion);
   return (
@@ -83,7 +87,7 @@ const TrueFalse = ({ index,setQuestionSet,questionSet }) => {
               </Button>
             </Grid>
           </Grid>
-          <Button variant="contained" size="small" sx={{mt:2}} onClick={() => setOpen(true)}>
+          <Button variant="contained" size="small" sx={{mt:2}} onClick={() => handleSubmit()}>
             Submit
           </Button>
         </Card>

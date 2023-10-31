@@ -11,12 +11,11 @@ import {
 import MultipleChoice from "../Components/CreateQuiz_Components/MultipleChoice";
 import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion";
 import TrueFalse from "../Components/CreateQuiz_Components/TrueFalse";
-import EditIcon from "@mui/icons-material/Edit";
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
-import { v4 as uuidv4 } from 'uuid';
 
-const Create_Quiz = () => {
+
+const CreateQuiz = () => {
   const [componentsToRender, setComponentsToRender] = useState([]);
   const [open, setOpen] = useState(false);
   ///for title edit////
@@ -43,7 +42,8 @@ const Create_Quiz = () => {
       questions:[...questionSet]
     })
   }
-  console.log({question})
+  console.log(question)
+  
   // Function to add components to the list
   const addComponent = (Component) => {
     setOpen(false);
@@ -171,4 +171,4 @@ const Create_Quiz = () => {
   );
 };
 
-export default Create_Quiz;
+export default CreateQuiz;

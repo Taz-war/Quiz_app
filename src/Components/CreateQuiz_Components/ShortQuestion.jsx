@@ -29,7 +29,7 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
     Point: point,
     Answer: shortAnswers,
   };
-  setQuestionSet([...questionSet,tempShortQuestion])
+  
   ///add option///
   const addOption = () => {
     setShortAnswers([...shortAnswers, ""]);
@@ -55,6 +55,7 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
       setShortAnswers([]);
     }
     setOpen(true);
+    setQuestionSet([...questionSet,tempShortQuestion])
   };
   return (
     <>

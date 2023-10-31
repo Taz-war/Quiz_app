@@ -34,7 +34,11 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
     Answer: answer,
   };
   
-  setQuestionSet([...questionSet,tempQuestion])
+  ////on submit button click////
+  const  handleSubmit =()=>{
+    setOpen(true)
+    setQuestionSet([...questionSet,tempQuestion])
+  }
   ///add options////
   const addOption = () => {
     setMultipleChoice([...multipleChoice, ""]);
@@ -142,7 +146,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
             variant="contained"
             size="small"
             sx={{ ml: 2, mt: 2 }}
-            onClick={() => setOpen(true)}
+            onClick={() => handleSubmit()}
           >
             submit
           </Button>
