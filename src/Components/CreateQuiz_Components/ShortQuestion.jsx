@@ -143,7 +143,7 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
                     <Button
                       key={i}
                       variant="contained"
-                      sx={{ bgcolor: "#E7F6EA", color: "#4EB164",'&:hover':{
+                      sx={{ bgcolor: "#E7F6EA", color: "#4EB164",mr:2,'&:hover':{
                         bgcolor:"#E7F6EA"
                       } }}
                     >

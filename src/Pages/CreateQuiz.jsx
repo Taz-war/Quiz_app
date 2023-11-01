@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -42,6 +42,18 @@ const CreateQuiz = () => {
       questions:[...questionSet]
     })
   }
+
+  ////post question///
+  useEffect(()=>{
+    fetch(`http://localhost:8080/Questions`,{
+      method:'POST',
+      body: JSON.stringify(question),
+      headers:{
+        'Content-type':'application/json'
+      }
+    })
+  },[question])
+
   console.log(question)
   
   // Function to add components to the list
