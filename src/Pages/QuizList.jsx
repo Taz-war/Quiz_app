@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Card, CardContent, IconButton, Typography, Box, Container } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import SearchIcon from "@mui/icons-material/Search";
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useState } from "react";
 
 const QuizList = () => {
@@ -46,10 +47,8 @@ const QuizList = () => {
        
         <Card sx={{ mb: 2,textAlign:'left' }} key={quiz.id} >
           <CardContent>
+            <InsertDriveFileIcon />
             <Typography variant="body1">{quiz.questionSetTitle}</Typography>
-            {/* <Typography variant="body2" color="text.secondary">
-              Modified: {quiz.modifiedDate}
-            </Typography> */}
           </CardContent>
         </Card>
       ))}

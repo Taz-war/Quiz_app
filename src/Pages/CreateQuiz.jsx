@@ -14,7 +14,6 @@ import TrueFalse from "../Components/CreateQuiz_Components/TrueFalse";
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 
-
 const CreateQuiz = () => {
   const [componentsToRender, setComponentsToRender] = useState([]);
   const [open, setOpen] = useState(false);
@@ -22,9 +21,13 @@ const CreateQuiz = () => {
   const [value, setValue] = useState("Untitled Quiz");
   const [isEditing, setIsEditing] = useState(false);
   const [questionSet, setQuestionSet] = useState([]);
-  const [question,setQuestion] = useState({id:null,questionSetTitle:'',questions:[]})
+  const [question, setQuestion] = useState({
+    id: null,
+    questionSetTitle: "",
+    questions: [],
+  });
 
-  const { v4: uuidv4 } = require('uuid');
+  const { v4: uuidv4 } = require("uuid");
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -34,28 +37,44 @@ const CreateQuiz = () => {
     setIsEditing(false);
   };
 
-  ////save question set///
-  const handleSave =()=>{
-    setQuestion({
-      id:uuidv4(),
-      questionSetTitle:value,
-      questions:[...questionSet]
-    })
-  }
+  ////save question set/// and   ////post question///
+  const handleSave = async () => {
+    const newQuestion = {
+      id: uuidv4(),
+      questionSetTitle: value,
+      questions: [...questionSet],
+    };
 
-  ////post question///
-  useEffect(()=>{
-    fetch(`http://localhost:8080/Questions`,{
-      method:'POST',
-      body: JSON.stringify(question),
-      headers:{
-        'Content-type':'application/json'
+    // Now, set the question in your state if necessary or directly post it
+    // setQuestion(newQuestion); // Only if you need to update the state
+    
+    try {
+      const response = await fetch(`http://localhost:8080/Questions`, {
+        method: "POST",
+        body: JSON.stringify(newQuestion),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    })
-  },[question])
 
-  console.log(question)
+      const data = await response.json();
+      console.log(data);
+      // Handle success here
+    } catch (error) {
+      console.error('Error posting question:', error);
+      // Handle errors here
+    }
+  };
+
+
   
+
+  console.log(question);
+
   // Function to add components to the list
   const addComponent = (Component) => {
     setOpen(false);
@@ -71,7 +90,6 @@ const CreateQuiz = () => {
       />,
     ]);
   };
-
 
   return (
     <Container>
@@ -112,7 +130,7 @@ const CreateQuiz = () => {
               mt: 1,
               "&:hover": { bgcolor: "#E4FBFF", color: "#0075A3" },
             }}
-            onClick={()=>handleSave()}
+            onClick={() => handleSave()}
           >
             Save and Exit
           </Button>
