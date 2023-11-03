@@ -6,6 +6,7 @@ import {
   Typography,
   Box,
   Container,
+  Radio,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import SearchIcon from "@mui/icons-material/Search";
@@ -59,7 +60,15 @@ const QuizList = () => {
             onMouseLeave={() => setHover(false)}
           >
             {hover ? (
-              <RadioButtonUncheckedOutlinedIcon size="medium" sx={{ mr: 2 }} />
+              // <RadioButtonUncheckedOutlinedIcon size="medium" sx={{ mr: 2 }} />
+              <Radio
+                // checked={selectedValue === 'a'}
+                // onChange={handleChange}
+                sx={{height:24,width:24,mr:2}}
+                value="a"
+                name="radio-buttons"
+                inputProps={{ 'aria-label': 'A' }}
+              />
             ) : (
               <InsertDriveFileOutlinedIcon fontSize="medium" sx={{ mr: 2 }} />
             )}
