@@ -14,7 +14,7 @@ import TrueFalse from "../Components/CreateQuiz_Components/TrueFalse";
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 
-const CreateQuiz = () => {
+const CreateQuiz = ({ setOpenCreateQuiz }) => {
   const [componentsToRender, setComponentsToRender] = useState([]);
   const [open, setOpen] = useState(false);
   ///for title edit////
@@ -39,15 +39,22 @@ const CreateQuiz = () => {
 
   ////save question set/// and   ////post question///
   const handleSave = async () => {
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let currentDate = `${day}/${month}/${year}`;
     const newQuestion = {
       id: uuidv4(),
+      date:currentDate,
       questionSetTitle: value,
       questions: [...questionSet],
     };
 
     // Now, set the question in your state if necessary or directly post it
     // setQuestion(newQuestion); // Only if you need to update the state
-    
+
     try {
       const response = await fetch(`http://localhost:8080/Questions`, {
         method: "POST",
@@ -65,13 +72,12 @@ const CreateQuiz = () => {
       console.log(data);
       // Handle success here
     } catch (error) {
-      console.error('Error posting question:', error);
+      console.error("Error posting question:", error);
       // Handle errors here
     }
+
+    setOpenCreateQuiz(false);
   };
-
-
-  
 
   console.log(question);
 
