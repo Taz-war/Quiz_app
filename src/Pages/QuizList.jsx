@@ -224,7 +224,7 @@ const QuizList = () => {
           />
         </Container>
       </Collapse>
-      {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz}/>}
+      {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} />}
     </Box>
   );
 };
