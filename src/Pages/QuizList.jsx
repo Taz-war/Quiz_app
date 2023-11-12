@@ -25,8 +25,11 @@ import RadioButtonUncheckedOutlinedIcon from "@mui/icons-material/RadioButtonUnc
 import { useState } from "react";
 import EnhancedTableHead from "../Components/QuizList_Components/EnhancedTableHead";
 import CreateQuiz from "./CreateQuiz";
+import { useContext } from "react";
+import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 
 const QuizList = () => {
+  const {open,setOpen} =useContext(CreateQuizContex)
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -193,6 +196,7 @@ const QuizList = () => {
                         id={labelId}
                         scope="row"
                         padding="none"
+                        onClick={() => { setOpenCreateQuiz(true)}}
                       >
                         {row.questionSetTitle}
                       </TableCell>

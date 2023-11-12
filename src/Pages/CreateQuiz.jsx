@@ -13,10 +13,13 @@ import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion";
 import TrueFalse from "../Components/CreateQuiz_Components/TrueFalse";
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
+import { useContext } from "react";
+import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 
 const CreateQuiz = ({ setOpenCreateQuiz }) => {
+  const {open,setOpen} = useContext(CreateQuizContex)
   const [componentsToRender, setComponentsToRender] = useState([]);
-  const [open, setOpen] = useState(false);
+  
   ///for title edit////
   const [value, setValue] = useState("Untitled Quiz");
   const [isEditing, setIsEditing] = useState(false);
