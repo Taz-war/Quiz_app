@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import {
   Box,
   Button,
@@ -8,114 +9,67 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
-import MultipleChoice from "../Components/CreateQuiz_Components/MultipleChoice/MultipleChoice";
-import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestion";
-import TrueFalse from "../Components/CreateQuiz_Components/TureFalse/TrueFalse";
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
-import { useContext } from "react";
+import MultipleChoice from "../Components/CreateQuiz_Components/MultipleChoice/MultipleChoice";
+import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestion";
+import TrueFalse from "../Components/CreateQuiz_Components/TureFalse/TrueFalse"; // Corrected the import statement
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
+import MultipleChoiceShowData from "../Components/CreateQuiz_Components/MultipleChoice/MultipleChoiceShowData";
+import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestionShowData";
+import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData"; // Corrected the import statement
 
-const CreateQuiz = ({ setOpenCreateQuiz,quizzes,id }) => {
-  // console.log({quizzes})
-  const {open,setOpen} = useContext(CreateQuizContex)
+const CreateQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
+  const { open, setOpen } = useContext(CreateQuizContex);
   const [componentsToRender, setComponentsToRender] = useState([]);
-  let question=quizzes.find(quiz => quiz.id === id);
-  
-  ///for title edit////
   const [value, setValue] = useState("Untitled Quiz");
   const [isEditing, setIsEditing] = useState(false);
   const [questionSet, setQuestionSet] = useState([]);
-  // const [question, setQuestion] = useState({
-  //   id: null,
-  //   questionSetTitle: "",
-  //   questions: [],
-  // });
 
-  const { v4: uuidv4 } = require("uuid");
+  let question = quizzes.find(quiz => quiz.id === id);
+  console.log(question.questions[0].QuestionTitle)
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
+  const handleEditClick = () => setIsEditing(true);
+  const handleSaveClick = () => setIsEditing(false);
 
-  const handleSaveClick = () => {
-    setIsEditing(false);
-  };
-
-  ////save question set/// and   ////post question///
   const handleSave = async () => {
-    const date = new Date();
-
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let currentDate = `${day}/${month}/${year}`;
+    const currentDate = new Date().toLocaleDateString();
     const newQuestion = {
       id: uuidv4(),
-      date:currentDate,
+      date: currentDate,
       questionSetTitle: value,
-      questions: [...questionSet],
+      questions: questionSet,
     };
-
-    // Now, set the question in your state if necessary or directly post it
-    // setQuestion(newQuestion); // Only if you need to update the state
 
     try {
       const response = await fetch(`http://localhost:8080/Questions`, {
         method: "POST",
         body: JSON.stringify(newQuestion),
-        headers: {
-          "Content-type": "application/json",
-        },
+        headers: { "Content-type": "application/json" },
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       console.log(data);
-      // Handle success here
     } catch (error) {
       console.error("Error posting question:", error);
-      // Handle errors here
     }
 
     setOpenCreateQuiz(false);
   };
 
-  ////fetch question ///
-  useEffect(()=>{
-    question.questions.map((item)=>{
-      if (item.QuestionType ==='multipleChoice') {
-        setOpen(true)
-        addComponent(MultipleChoice,item)
-      }else if (item.QuestionType ==='shortQuestion') {
-        setOpen(true)
-        addComponent(ShortQuestion,item)
-      }else{
-        setOpen(true)
-        addComponent(TrueFalse,item)
-      }
-    })
-  },[])
+  useEffect(() => {
+    question.questions.forEach((item) => {
+      setOpen(true);
+      addComponent(item.QuestionType === 'multipleChoice' ? MultipleChoice :
+        item.QuestionType === 'shortQuestion' ? ShortQuestion : TrueFalse, item);
+    });
+  }, [question.questions]);
 
-  // console.log(question);
-
-  // Function to add components to the list
-  const addComponent = (Component,item) => {
-    
-    setComponentsToRender((prevComponents) => [
-      ...prevComponents,
-      <Component
-        key={prevComponents.length}
-        index={prevComponents.length}
-        open={open}
-        setOpen={setOpen}
-        setQuestionSet={setQuestionSet}
-        questionSet={questionSet}
-        item={item}
-      />,
+  const addComponent = (Component, item) => {
+    setComponentsToRender(prev => [
+      ...prev,
+      <Component key={uuidv4()} item={item} open={open} setOpen={setOpen} setQuestionSet={setQuestionSet} questionSet={questionSet} />
     ]);
   };
 
@@ -225,6 +179,13 @@ const CreateQuiz = ({ setOpenCreateQuiz,quizzes,id }) => {
           </Button>
         </Box>
       </Paper>
+      {open && question.questions.map((item, index) => (
+        item.QuestionType === 'multipleChoice' ?
+          <MultipleChoiceShowData key={index} quizzes={item} /> :
+          item.QuestionType === 'shortQuestion' ?
+            <ShortQuestionShowData key={index} quizzes={item} /> :
+            <TrueFalseShowData key={index} item={item} />
+      ))}
     </Container>
   );
 };

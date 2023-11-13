@@ -2,7 +2,7 @@ import { Box, Card, Grid, IconButton, Typography } from '@mui/material'
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import React from 'react'
 
-const MultipleChoiceShowData = () => {
+const MultipleChoiceShowData = ({ key, quizzes }) => {
   return (
     <Box>
           <Card
@@ -19,17 +19,17 @@ const MultipleChoiceShowData = () => {
                   <Grid item xs={10}>
                       {
                           <Typography fontSize={"x-large"} fontWeight={"bolder"}>
-                              {`${serialNum + 1} . ${tempQuestion.QuestionTitle}`}
+                              {`${key + 1} . ${quizzes.QuestionTitle}`}
                           </Typography>
                       }
-                      {multipleChoice.map((data, i) => (
+                      {quizzes.Options.map((data, i) => (
                           <Typography key={i} ml={3}>
                               <b>{`${String.fromCharCode(i + 65)} .`}</b> {` ${data}`}
                           </Typography>
                       ))}
                   </Grid>
                   <Grid item xs={2} textAlign={"right"}>
-                      <IconButton onClick={() => setOpen(false)}>
+                      <IconButton >
                           <BorderColorTwoToneIcon
                               sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
                           />
