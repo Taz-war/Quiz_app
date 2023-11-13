@@ -124,7 +124,7 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet,open,setOpen  }) => {
         </Card>
       </Collapse>
       <Collapse in={open}>
-        {open && (
+        
           <Card
             sx={{
               minWidth: 275,
@@ -160,7 +160,7 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet,open,setOpen  }) => {
               </Grid>
             </Grid>
           </Card>
-        )}
+       
       </Collapse>
     </>
   );

@@ -8,9 +8,9 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
-import MultipleChoice from "../Components/CreateQuiz_Components/MultipleChoice";
-import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion";
-import TrueFalse from "../Components/CreateQuiz_Components/TrueFalse";
+import MultipleChoice from "../Components/CreateQuiz_Components/MultipleChoice/MultipleChoice";
+import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestion";
+import TrueFalse from "../Components/CreateQuiz_Components/TureFalse/TrueFalse";
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import { useContext } from "react";
