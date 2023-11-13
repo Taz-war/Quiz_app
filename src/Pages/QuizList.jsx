@@ -29,11 +29,12 @@ import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 
 const QuizList = () => {
-  const {open,setOpen} =useContext(CreateQuizContex)
+  
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [openCreateQuiz, setOpenCreateQuiz] = useState(false);
+  const [id,setId] =useState('')
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -196,7 +197,7 @@ const QuizList = () => {
                         id={labelId}
                         scope="row"
                         padding="none"
-                        onClick={() => { setOpenCreateQuiz(true)}}
+                        onClick={() => { setOpenCreateQuiz(true);setId(row.id)}}
                       >
                         {row.questionSetTitle}
                       </TableCell>
@@ -228,7 +229,7 @@ const QuizList = () => {
           />
         </Container>
       </Collapse>
-      {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} />}
+      {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} quizzes={quizzes} id={id}/>}
     </Box>
   );
 };

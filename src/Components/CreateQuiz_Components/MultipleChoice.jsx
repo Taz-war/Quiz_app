@@ -17,13 +17,15 @@ import AddIcon from "@mui/icons-material/Add";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import { v4 as uuidv4 } from 'uuid';
 
-const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
+const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen,item }) => {
   let serialNum = index;
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [multipleChoice, setMultipleChoice] = useState(["", ""]);
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
   const [answer, setAnswer] = useState(null);
+
+  console.log({item})
 
   let tempQuestion = {
     id:uuidv4(),

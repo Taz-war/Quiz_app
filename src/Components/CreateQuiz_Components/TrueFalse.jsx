@@ -11,9 +11,9 @@ import React, { useState } from "react";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import { v4 as uuidv4 } from 'uuid';
 
-const TrueFalse = ({ index,setQuestionSet,questionSet }) => {
+const TrueFalse = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
   let serialNum = index;
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
   const [value, setValue] = useState(null);

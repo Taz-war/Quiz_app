@@ -16,19 +16,21 @@ import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 
-const CreateQuiz = ({ setOpenCreateQuiz }) => {
+const CreateQuiz = ({ setOpenCreateQuiz,quizzes,id }) => {
+  // console.log({quizzes})
   const {open,setOpen} = useContext(CreateQuizContex)
   const [componentsToRender, setComponentsToRender] = useState([]);
+  let question=quizzes.find(quiz => quiz.id === id);
   
   ///for title edit////
   const [value, setValue] = useState("Untitled Quiz");
   const [isEditing, setIsEditing] = useState(false);
   const [questionSet, setQuestionSet] = useState([]);
-  const [question, setQuestion] = useState({
-    id: null,
-    questionSetTitle: "",
-    questions: [],
-  });
+  // const [question, setQuestion] = useState({
+  //   id: null,
+  //   questionSetTitle: "",
+  //   questions: [],
+  // });
 
   const { v4: uuidv4 } = require("uuid");
 
@@ -82,11 +84,27 @@ const CreateQuiz = ({ setOpenCreateQuiz }) => {
     setOpenCreateQuiz(false);
   };
 
-  console.log(question);
+  ////fetch question ///
+  useEffect(()=>{
+    question.questions.map((item)=>{
+      if (item.QuestionType ==='multipleChoice') {
+        setOpen(true)
+        addComponent(MultipleChoice,item)
+      }else if (item.QuestionType ==='shortQuestion') {
+        setOpen(true)
+        addComponent(ShortQuestion,item)
+      }else{
+        setOpen(true)
+        addComponent(TrueFalse,item)
+      }
+    })
+  },[])
+
+  // console.log(question);
 
   // Function to add components to the list
-  const addComponent = (Component) => {
-    setOpen(false);
+  const addComponent = (Component,item) => {
+    
     setComponentsToRender((prevComponents) => [
       ...prevComponents,
       <Component
@@ -96,6 +114,7 @@ const CreateQuiz = ({ setOpenCreateQuiz }) => {
         setOpen={setOpen}
         setQuestionSet={setQuestionSet}
         questionSet={questionSet}
+        item={item}
       />,
     ]);
   };
