@@ -119,6 +119,13 @@ const CreateQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
         </Grid>
       </Grid>
       <Paper sx={{ p: 2, mt: 2 }}>
+      {open && question.questions.map((item, index) => (
+        item.QuestionType === 'multipleChoice' ?
+          <MultipleChoiceShowData key={index} i={index} quizzes={item} /> :
+          item.QuestionType === 'shortQuestion' ?
+            <ShortQuestionShowData key={index} i={index} quizzes={item} /> :
+            <TrueFalseShowData key={index} i={index} item={item} />
+      ))}
         {componentsToRender.map((component, index) => (
           <Box key={index}>{component}</Box>
         ))}
@@ -179,13 +186,7 @@ const CreateQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
           </Button>
         </Box>
       </Paper>
-      {open && question.questions.map((item, index) => (
-        item.QuestionType === 'multipleChoice' ?
-          <MultipleChoiceShowData key={index} quizzes={item} /> :
-          item.QuestionType === 'shortQuestion' ?
-            <ShortQuestionShowData key={index} quizzes={item} /> :
-            <TrueFalseShowData key={index} item={item} />
-      ))}
+      
     </Container>
   );
 };

@@ -2,7 +2,8 @@ import { Box, Card, Grid, IconButton, Typography } from '@mui/material'
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import React from 'react'
 
-const MultipleChoiceShowData = ({ key, quizzes }) => {
+const MultipleChoiceShowData = ({ i, quizzes }) => {
+    console.log({i})
   return (
     <Box>
           <Card
@@ -19,7 +20,7 @@ const MultipleChoiceShowData = ({ key, quizzes }) => {
                   <Grid item xs={10}>
                       {
                           <Typography fontSize={"x-large"} fontWeight={"bolder"}>
-                              {`${key + 1} . ${quizzes.QuestionTitle}`}
+                              {`${i + 1} . ${quizzes.QuestionTitle}`}
                           </Typography>
                       }
                       {quizzes.Options.map((data, i) => (

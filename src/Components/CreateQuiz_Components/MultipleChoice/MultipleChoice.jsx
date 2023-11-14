@@ -70,7 +70,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen,item }) 
 
   return (
     <>
-      <Collapse in={open === false}>
+      <Collapse >
         <Card
           sx={{
             minWidth: 275,
@@ -154,7 +154,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen,item }) 
           </Button>
         </Card>
       </Collapse>
-      <Collapse in={open}>
+      {/* <Collapse in={open}>
         <Card
           sx={{
             minWidth: 275,
@@ -187,7 +187,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen,item }) 
             </Grid>
           </Grid>
         </Card>
-      </Collapse>
+      </Collapse> */}
     </>
   );
 };

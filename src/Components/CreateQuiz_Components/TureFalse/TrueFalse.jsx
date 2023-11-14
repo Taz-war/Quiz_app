@@ -35,7 +35,7 @@ const TrueFalse = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
   // console.log(tempTrueFalseQuestion);
   return (
     <>
-      <Collapse in={open === false}>
+      <Collapse >
         <Card
           sx={{
             minWidth: 275,
@@ -92,7 +92,7 @@ const TrueFalse = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
           </Button>
         </Card>
       </Collapse>
-      <Collapse in={open}>
+      {/* <Collapse in={open}>
         <Card
           sx={{
             minWidth: 275,
@@ -126,7 +126,7 @@ const TrueFalse = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
             </Grid>
           </Grid>
         </Card>
-      </Collapse>
+      </Collapse> */}
     </>
   );
 };
