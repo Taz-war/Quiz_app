@@ -25,9 +25,12 @@ const CreateQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
   const [value, setValue] = useState("Untitled Quiz");
   const [isEditing, setIsEditing] = useState(false);
   const [questionSet, setQuestionSet] = useState([]);
-
-  let question = quizzes.find(quiz => quiz.id === id);
-  console.log(question.questions[0].QuestionTitle)
+  const [question,setQuestion]=useState({})
+if (quizzes) {
+  
+  setQuestion(quizzes.find(quiz => quiz.id === id));
+}
+  // console.log(question.questions[0].QuestionTitle)
 
   const handleEditClick = () => setIsEditing(true);
   const handleSaveClick = () => setIsEditing(false);
