@@ -15,21 +15,18 @@ import MultipleChoice from "../Components/CreateQuiz_Components/MultipleChoice/M
 import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestion";
 import TrueFalse from "../Components/CreateQuiz_Components/TureFalse/TrueFalse"; // Corrected the import statement
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
-import MultipleChoiceShowData from "../Components/CreateQuiz_Components/MultipleChoice/MultipleChoiceShowData";
-import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestionShowData";
-import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData"; // Corrected the import statement
+// import MultipleChoiceShowData from "../Components/CreateQuiz_Components/MultipleChoice/MultipleChoiceShowData";
+// import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestionShowData";
+// import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData"; // Corrected the import statement
 
-const CreateQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
+const CreateQuiz = ({ setOpenCreateQuiz }) => {
   const { open, setOpen } = useContext(CreateQuizContex);
   const [componentsToRender, setComponentsToRender] = useState([]);
   const [value, setValue] = useState("Untitled Quiz");
   const [isEditing, setIsEditing] = useState(false);
   const [questionSet, setQuestionSet] = useState([]);
   const [question,setQuestion]=useState({})
-if (quizzes) {
-  
-  setQuestion(quizzes.find(quiz => quiz.id === id));
-}
+
   // console.log(question.questions[0].QuestionTitle)
 
   const handleEditClick = () => setIsEditing(true);
@@ -61,18 +58,19 @@ if (quizzes) {
     setOpenCreateQuiz(false);
   };
 
-  useEffect(() => {
-    question.questions.forEach((item) => {
-      setOpen(true);
-      addComponent(item.QuestionType === 'multipleChoice' ? MultipleChoice :
-        item.QuestionType === 'shortQuestion' ? ShortQuestion : TrueFalse, item);
-    });
-  }, [question.questions]);
+  // useEffect(() => {
+  //   question.questions.forEach((item) => {
+  //     setOpen(true);
+  //     addComponent(item.QuestionType === 'multipleChoice' ? MultipleChoice :
+  //       item.QuestionType === 'shortQuestion' ? ShortQuestion : TrueFalse, item);
+  //   });
+  // }, [question.questions]);
 
-  const addComponent = (Component, item) => {
+  const addComponent = (Component) => {
+    setOpen(false)
     setComponentsToRender(prev => [
       ...prev,
-      <Component key={uuidv4()} item={item} open={open} setOpen={setOpen} setQuestionSet={setQuestionSet} questionSet={questionSet} />
+      <Component key={uuidv4()}  open={open} setOpen={setOpen} setQuestionSet={setQuestionSet} questionSet={questionSet} />
     ]);
   };
 
@@ -122,13 +120,13 @@ if (quizzes) {
         </Grid>
       </Grid>
       <Paper sx={{ p: 2, mt: 2 }}>
-      {open && question.questions.map((item, index) => (
+      {/* {open && question.questions.map((item, index) => (
         item.QuestionType === 'multipleChoice' ?
           <MultipleChoiceShowData key={index} i={index} quizzes={item} /> :
           item.QuestionType === 'shortQuestion' ?
             <ShortQuestionShowData key={index} i={index} quizzes={item} /> :
             <TrueFalseShowData key={index} i={index} item={item} />
-      ))}
+      ))} */}
         {componentsToRender.map((component, index) => (
           <Box key={index}>{component}</Box>
         ))}

@@ -27,6 +27,7 @@ import EnhancedTableHead from "../Components/QuizList_Components/EnhancedTableHe
 import CreateQuiz from "./CreateQuiz";
 import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
+import EditQuiz from "./EditQuiz";
 
 const QuizList = () => {
   
@@ -229,7 +230,8 @@ const QuizList = () => {
           />
         </Container>
       </Collapse>
-      {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} quizzes={quizzes} id={id}/>}
+      {/* {openCreateQuiz && <EditQuiz setOpenCreateQuiz={setOpenCreateQuiz} quizzes={quizzes} id={id}/>} */}
+      {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} />}/
     </Box>
   );
 };

@@ -17,15 +17,15 @@ import AddIcon from "@mui/icons-material/Add";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import { v4 as uuidv4 } from 'uuid';
 
-const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen,item }) => {
+const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
   let serialNum = index;
-  // const [open, setOpen] = useState(false);
+  const [openData, setOpenData] = useState(false);
   const [multipleChoice, setMultipleChoice] = useState(["", ""]);
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
   const [answer, setAnswer] = useState(null);
 
-  console.log({item})
+  // console.log({item})
 
   let tempQuestion = {
     id:uuidv4(),
@@ -39,6 +39,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen,item }) 
   ////on submit button click////
   const  handleSubmit =()=>{
     setOpen(true)
+    setOpenData(true)
     setQuestionSet([...questionSet,tempQuestion])
   }
   ///add options////
@@ -70,7 +71,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen,item }) 
 
   return (
     <>
-      <Collapse >
+      <Collapse in={open === false || openData === false}>
         <Card
           sx={{
             minWidth: 275,
@@ -154,7 +155,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen,item }) 
           </Button>
         </Card>
       </Collapse>
-      {/* <Collapse in={open}>
+      <Collapse in={open || openData}>
         <Card
           sx={{
             minWidth: 275,
@@ -187,7 +188,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen,item }) 
             </Grid>
           </Grid>
         </Card>
-      </Collapse> */}
+      </Collapse>
     </>
   );
 };
