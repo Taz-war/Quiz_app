@@ -17,7 +17,7 @@ import AddIcon from "@mui/icons-material/Add";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import { v4 as uuidv4 } from 'uuid';
 
-const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
+const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
   let serialNum = index;
   const [openData, setOpenData] = useState(false);
   const [multipleChoice, setMultipleChoice] = useState(["", ""]);
@@ -38,7 +38,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
   
   ////on submit button click////
   const  handleSubmit =()=>{
-    setOpen(true)
+    // setOpen(true)
     setOpenData(true)
     setQuestionSet([...questionSet,tempQuestion])
   }
@@ -71,7 +71,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
 
   return (
     <>
-      <Collapse in={open === false || openData === false}>
+      <Collapse in={ openData === false}>
         <Card
           sx={{
             minWidth: 275,
@@ -155,7 +155,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
           </Button>
         </Card>
       </Collapse>
-      <Collapse in={open || openData}>
+      <Collapse in={ openData}>
         <Card
           sx={{
             minWidth: 275,
@@ -180,7 +180,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
               ))}
             </Grid>
             <Grid item xs={2} textAlign={"right"}>
-              <IconButton onClick={() => setOpen(false)}>
+              <IconButton onClick={() => setOpenData(false)}>
                 <BorderColorTwoToneIcon
                   sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
                 />

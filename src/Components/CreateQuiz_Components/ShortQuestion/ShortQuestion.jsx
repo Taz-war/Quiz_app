@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const ShortQuestion = ({ index,setQuestionSet,questionSet,open,setOpen  }) => {
   let serialNum = index;
-  // const [open, setOpen] = useState(false);
+  const [openData, setOpenData] = useState(false);
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
   const [shortAnswers, setShortAnswers] = useState([""]);
@@ -54,12 +54,12 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet,open,setOpen  }) => {
     if (shortAnswers[0] === "") {
       setShortAnswers([]);
     }
-    setOpen(true);
+    setOpenData(true);
     setQuestionSet([...questionSet,tempShortQuestion])
   };
   return (
     <>
-      <Collapse in={open === false}>
+      <Collapse in={openData === false}>
         <Card
           sx={{
             minWidth: 275,
@@ -123,7 +123,7 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet,open,setOpen  }) => {
           </Button>
         </Card>
       </Collapse>
-      <Collapse in={open}>
+      <Collapse in={openData}>
         
           <Card
             sx={{

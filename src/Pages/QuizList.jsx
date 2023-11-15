@@ -35,6 +35,7 @@ const QuizList = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [openCreateQuiz, setOpenCreateQuiz] = useState(false);
+  const [openEditQuiz,setOpenEditQuiz] = useState(false)
   const [id,setId] =useState('')
 
   const handleSelectAllClick = (event) => {
@@ -102,7 +103,7 @@ const QuizList = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Collapse in={openCreateQuiz === false}>
+      <Collapse in={openCreateQuiz === false && openEditQuiz ===false}>
         <Container sx={{ p: 2 }}>
           <Box
             sx={{
@@ -198,7 +199,7 @@ const QuizList = () => {
                         id={labelId}
                         scope="row"
                         padding="none"
-                        onClick={() => { setOpenCreateQuiz(true);setId(row.id)}}
+                        onClick={() => { setOpenEditQuiz(true);setId(row.id)}}
                       >
                         {row.questionSetTitle}
                       </TableCell>
@@ -230,8 +231,8 @@ const QuizList = () => {
           />
         </Container>
       </Collapse>
-      {/* {openCreateQuiz && <EditQuiz setOpenCreateQuiz={setOpenCreateQuiz} quizzes={quizzes} id={id}/>} */}
-      {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} />}/
+      {openEditQuiz && <EditQuiz setOpenCreateQuiz={setOpenCreateQuiz} quizzes={quizzes} id={id}/>}
+      {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} />}
     </Box>
   );
 };

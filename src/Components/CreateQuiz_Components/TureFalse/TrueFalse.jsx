@@ -11,9 +11,9 @@ import React, { useState } from "react";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import { v4 as uuidv4 } from 'uuid';
 
-const TrueFalse = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
+const TrueFalse = ({ index,setQuestionSet,questionSet }) => {
   let serialNum = index;
-  // const [open, setOpen] = useState(false);
+  const [openData, setOpenData] = useState(false);
   const [question, setQuestion] = useState("");
   const [point, setPoint] = useState(0);
   const [value, setValue] = useState(null);
@@ -28,14 +28,14 @@ const TrueFalse = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
   };
   
   const handleSubmit =()=>{
-    setOpen(true)
+    setOpenData(true)
     setQuestionSet([...questionSet,tempTrueFalseQuestion])
   }
 
   // console.log(tempTrueFalseQuestion);
   return (
     <>
-      <Collapse in={open === false}>
+      <Collapse in={openData === false}>
         <Card
           sx={{
             minWidth: 275,
@@ -92,7 +92,7 @@ const TrueFalse = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
           </Button>
         </Card>
       </Collapse>
-      <Collapse in={open}>
+      <Collapse in={openData}>
         <Card
           sx={{
             minWidth: 275,
@@ -118,7 +118,7 @@ const TrueFalse = ({ index,setQuestionSet,questionSet,open,setOpen }) => {
               </Button>
             </Grid>
             <Grid item xs={2} textAlign={'right'}>
-              <IconButton onClick={()=>setOpen(false)}>
+              <IconButton onClick={()=>setOpenData(false)}>
                 <BorderColorTwoToneIcon
                   sx={{ bgcolor: "skyblue", color: "white",p:1 }}
                 />

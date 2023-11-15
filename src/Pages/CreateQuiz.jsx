@@ -58,19 +58,13 @@ const CreateQuiz = ({ setOpenCreateQuiz }) => {
     setOpenCreateQuiz(false);
   };
 
-  // useEffect(() => {
-  //   question.questions.forEach((item) => {
-  //     setOpen(true);
-  //     addComponent(item.QuestionType === 'multipleChoice' ? MultipleChoice :
-  //       item.QuestionType === 'shortQuestion' ? ShortQuestion : TrueFalse, item);
-  //   });
-  // }, [question.questions]);
 
+ 
   const addComponent = (Component) => {
-    setOpen(false)
+    // setOpenData(false)
     setComponentsToRender(prev => [
       ...prev,
-      <Component key={uuidv4()}  open={open} setOpen={setOpen} setQuestionSet={setQuestionSet} questionSet={questionSet} />
+      <Component key={uuidv4()}   index={prev.length} setQuestionSet={setQuestionSet} questionSet={questionSet} />
     ]);
   };
 
