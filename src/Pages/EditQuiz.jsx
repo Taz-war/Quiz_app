@@ -61,13 +61,13 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
         setOpenCreateQuiz(false);
     };
 
-    useEffect(() => {
-        question.questions.forEach((item) => {
-            setOpen(true);
-            addComponent(item.QuestionType === 'multipleChoice' ? MultipleChoice :
-                item.QuestionType === 'shortQuestion' ? ShortQuestion : TrueFalse, item);
-        });
-    }, [question.questions]);
+    // useEffect(() => {
+    //     question.questions.forEach((item) => {
+    //         setOpen(true);
+    //         addComponent(item.QuestionType === 'multipleChoice' ? MultipleChoice :
+    //             item.QuestionType === 'shortQuestion' ? ShortQuestion : TrueFalse, item);
+    //     });
+    // }, [question.questions]);
 
     const addComponent = (Component, item) => {
         setComponentsToRender(prev => [
@@ -122,7 +122,7 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
                 </Grid>
             </Grid>
             <Paper sx={{ p: 2, mt: 2 }}>
-                {open && question.questions.map((item, index) => (
+                {question.questions.map((item, index) => (
                     item.QuestionType === 'multipleChoice' ?
                         <MultipleChoiceShowData key={index} i={index} quizzes={item} /> :
                         item.QuestionType === 'shortQuestion' ?
