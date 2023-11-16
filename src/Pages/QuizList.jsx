@@ -28,6 +28,7 @@ import CreateQuiz from "./CreateQuiz";
 import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import EditQuiz from "./EditQuiz";
+import Navbar from "../Components/NavBar/NavBar";
 
 const QuizList = () => {
   
@@ -103,6 +104,7 @@ const QuizList = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
+      <Navbar />
       <Collapse in={openCreateQuiz === false && openEditQuiz ===false}>
         <Container sx={{ p: 2 }}>
           <Box

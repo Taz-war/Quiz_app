@@ -18,19 +18,21 @@ import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import MultipleChoiceShowData from "../Components/CreateQuiz_Components/MultipleChoice/MultipleChoiceShowData";
 import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestionShowData";
 import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData";
+import Navbar from "../Components/NavBar/NavBar";
 
 const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
     const { open, setOpen } = useContext(CreateQuizContex);
     const [componentsToRender, setComponentsToRender] = useState([]);
-    const [value, setValue] = useState("Untitled Quiz");
+    let question = quizzes.find(quiz => quiz.id === id);
+    const [value, setValue] = useState(question.questionSetTitle);
     const [isEditing, setIsEditing] = useState(false);
     const [questionSet, setQuestionSet] = useState([]);
     // const [question, setQuestion] = useState({})
     
 
-    let question=quizzes.find(quiz => quiz.id === id);
+    
    
-    console.log(question.questions[0].QuestionTitle)
+    console.log(question.questionSetTitle)
 
     const handleEditClick = () => setIsEditing(true);
     const handleSaveClick = () => setIsEditing(false);
@@ -77,6 +79,8 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
     };
 
     return (
+        <>
+        {/* <Navbar /> */}
         <Container>
             <Grid container columns={12} columnSpacing={2} mt={2}>
                 <Grid item xs={6} p={2}>
@@ -191,6 +195,7 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
             </Paper>
 
         </Container>
+        </>
     );
 }
 
