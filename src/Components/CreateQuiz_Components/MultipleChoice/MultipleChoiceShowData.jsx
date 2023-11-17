@@ -1,4 +1,4 @@
-import { Box, Card, Grid, IconButton, Typography } from '@mui/material'
+import { Box, Card, Collapse, Grid, IconButton, Typography } from '@mui/material'
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import React from 'react'
 
@@ -6,6 +6,7 @@ const MultipleChoiceShowData = ({ i, quizzes }) => {
     console.log({i})
   return (
     <Box>
+        <Collapse ></Collapse>
           <Card
               sx={{
                   minWidth: 275,

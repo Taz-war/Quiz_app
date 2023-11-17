@@ -15,7 +15,7 @@ import AddIcon from "@mui/icons-material/Add";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import { v4 as uuidv4 } from 'uuid';
 
-const ShortQuestion = ({ index,setQuestionSet,questionSet,open,setOpen  }) => {
+const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
   let serialNum = index;
   const [openData, setOpenData] = useState(false);
   const [question, setQuestion] = useState("");
@@ -152,7 +152,7 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet,open,setOpen  }) => {
                   ))}
               </Grid>
               <Grid item xs={2} textAlign={"right"}>
-                <IconButton onClick={()=>setOpen(false)}>
+              <IconButton onClick={() => setOpenData(false)}>
                   <BorderColorTwoToneIcon
                     sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
                   />

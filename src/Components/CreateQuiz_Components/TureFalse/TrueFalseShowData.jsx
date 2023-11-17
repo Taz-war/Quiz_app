@@ -2,7 +2,7 @@ import { Box, Button, Card, Grid, IconButton, Typography } from '@mui/material'
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
 import React from 'react'
 
-const TrueFalseShowData = ({ i, item }) => {
+const TrueFalseShowData = ({ i, quizzes }) => {
   return (
     <Box>
           <Card
@@ -18,14 +18,14 @@ const TrueFalseShowData = ({ i, item }) => {
               <Grid container columns={12} columnSpacing={2}>
                   <Grid item xs={10}>
                       <Typography fontSize={"x-large"} fontWeight={"bolder"} mb={2}>
-                          {`${i + 1} . ${item.QuestionTitle}`}
+                          {`${i + 1} . ${quizzes.QuestionTitle}`}
                       </Typography>
                       <Button
                           variant="contained"
-                          color={`${item.Answer === true ? "success" : "error"
+                          color={`${quizzes.Answer === true ? "success" : "error"
                               }`}
                       >
-                          {item.Answer === true ? "True" : "False"}
+                          {quizzes.Answer === true ? "True" : "False"}
                       </Button>
                   </Grid>
                   <Grid item xs={2} textAlign={'right'}>

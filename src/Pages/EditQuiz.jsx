@@ -27,12 +27,13 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
     const [value, setValue] = useState(question.questionSetTitle);
     const [isEditing, setIsEditing] = useState(false);
     const [questionSet, setQuestionSet] = useState([]);
+    const [questionSetLength, setQuestionSetLength] =useState(question.questions.length)
     // const [question, setQuestion] = useState({})
     
 
     
    
-    console.log(question.questionSetTitle)
+    console.log(question.questions.length)
 
     const handleEditClick = () => setIsEditing(true);
     const handleSaveClick = () => setIsEditing(false);
@@ -63,18 +64,13 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
         setOpenCreateQuiz(false);
     };
 
-    // useEffect(() => {
-    //     question.questions.forEach((item) => {
-    //         setOpen(true);
-    //         addComponent(item.QuestionType === 'multipleChoice' ? MultipleChoice :
-    //             item.QuestionType === 'shortQuestion' ? ShortQuestion : TrueFalse, item);
-    //     });
-    // }, [question.questions]);
+   
 
-    const addComponent = (Component, item) => {
+    const addComponent = (Component) => {
+        
         setComponentsToRender(prev => [
             ...prev,
-            <Component key={uuidv4()} item={item} open={open} setOpen={setOpen} setQuestionSet={setQuestionSet} questionSet={questionSet} />
+            <Component key={uuidv4()}  index={questionSetLength} setQuestionSet={setQuestionSet} questionSet={questionSet} />
         ]);
     };
 
@@ -90,6 +86,9 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
                         fullWidth
                         sx={{ fontWeight: "bolder" }}
                         InputProps={{
+                            style:{
+                                fontWeight:"bolder",fontSize:'x-large'
+                            },
                             endAdornment: (
                                 <InputAdornment position="end">
                                     {isEditing ? (
@@ -126,13 +125,16 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
                 </Grid>
             </Grid>
             <Paper sx={{ p: 2, mt: 2 }}>
-                {question.questions.map((item, index) => (
+                {question.questions.map((item, index) =>{
+                    
+                return (
                     item.QuestionType === 'multipleChoice' ?
                         <MultipleChoiceShowData key={index} i={index} quizzes={item} /> :
                         item.QuestionType === 'shortQuestion' ?
                             <ShortQuestionShowData key={index} i={index} quizzes={item} /> :
-                            <TrueFalseShowData key={index} i={index} item={item} />
-                ))}
+                            <TrueFalseShowData key={index} i={index} quizzes={item} />
+                    )
+                })}
                 {componentsToRender.map((component, index) => (
                     <Box key={index}>{component}</Box>
                 ))}
@@ -151,7 +153,7 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
                                 color: "#F3AF46",
                             },
                         }}
-                        onClick={() => addComponent(MultipleChoice)}
+                            onClick={() => { setQuestionSetLength(questionSetLength + 1) ;addComponent(MultipleChoice)}}
                     >
                         Multiple Choice
                     </Button>
@@ -169,7 +171,7 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
                                 color: "#5971B7",
                             },
                         }}
-                        onClick={() => addComponent(ShortQuestion)}
+                            onClick={() => { setQuestionSetLength(questionSetLength + 1); addComponent(ShortQuestion)}}
                     >
                         Short Answer
                     </Button>
@@ -187,7 +189,7 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
                                 color: "#FF7B64",
                             },
                         }}
-                        onClick={() => addComponent(TrueFalse)}
+                            onClick={() => { setQuestionSetLength(questionSetLength + 1); addComponent(TrueFalse)}}
                     >
                         True/False
                     </Button>
