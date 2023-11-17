@@ -26,14 +26,14 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
     let question = quizzes.find(quiz => quiz.id === id);
     const [value, setValue] = useState(question.questionSetTitle);
     const [isEditing, setIsEditing] = useState(false);
-    const [questionSet, setQuestionSet] = useState([]);
+    const [questionSet, setQuestionSet] = useState([...question.questions]);
     const [questionSetLength, setQuestionSetLength] =useState(question.questions.length)
     // const [question, setQuestion] = useState({})
     
 
     
    
-    console.log(question.questions.length)
+    console.log(questionSet)
 
     const handleEditClick = () => setIsEditing(true);
     const handleSaveClick = () => setIsEditing(false);
@@ -48,8 +48,8 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
         };
 
         try {
-            const response = await fetch(`http://localhost:8080/Questions`, {
-                method: "POST",
+            const response = await fetch(`http://localhost:8080/Questions/${id}`, {
+                method: "PUT",
                 body: JSON.stringify(newQuestion),
                 headers: { "Content-type": "application/json" },
             });
