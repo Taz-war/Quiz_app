@@ -29,6 +29,7 @@ import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import EditQuiz from "./EditQuiz";
 import Navbar from "../Components/NavBar/NavBar";
+import { Link } from "react-router-dom";
 
 const QuizList = () => {
   
@@ -149,7 +150,9 @@ const QuizList = () => {
                 onClick={() => setOpenCreateQuiz(true)}
                 sx={{ mr: 1 }}
               >
+                <Link to={'/CreateQuiz'} style={{ color: 'inherit', textDecoration: 'none' }}>
                 Create Quiz
+                </Link>
               </Button>
             </Box>
 
@@ -203,7 +206,9 @@ const QuizList = () => {
                         padding="none"
                         onClick={() => { setOpenEditQuiz(true);setId(row.id)}}
                       >
+                        <Link to={`/EditQuiz/${row.id}`} style={{color:'inherit',textDecoration:'none'}}>
                         {row.questionSetTitle}
+                        </Link>
                       </TableCell>
                       <TableCell align="left">{row.date}</TableCell>
                     </TableRow>
@@ -233,7 +238,7 @@ const QuizList = () => {
           />
         </Container>
       </Collapse>
-      {openEditQuiz && <EditQuiz setOpenCreateQuiz={setOpenCreateQuiz} quizzes={quizzes} id={id}/>}
+      {/* {openEditQuiz && <EditQuiz setOpenCreateQuiz={setOpenCreateQuiz} quizzes={quizzes} id={id}/>} */}
       {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} />}
     </Box>
   );
