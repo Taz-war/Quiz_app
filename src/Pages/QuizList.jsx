@@ -99,7 +99,7 @@ const QuizList = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <Container sx={{ p: 2 }}>
         <Box
