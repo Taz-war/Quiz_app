@@ -22,6 +22,7 @@ import Navbar from "../Components/NavBar/NavBar";
 
 const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
     const { open, setOpen } = useContext(CreateQuizContex);
+    
     const [componentsToRender, setComponentsToRender] = useState([]);
     let question = quizzes.find(quiz => quiz.id === id);
     const [value, setValue] = useState(question.questionSetTitle);

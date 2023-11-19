@@ -3,12 +3,15 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import QuizList from '../Pages/QuizList'
 import EditQuiz from '../Pages/EditQuiz'
 import CreateQuiz from '../Pages/CreateQuiz'
+import { useContext } from 'react'
+import { CreateQuizContex } from '../Context_Api/CreateQuizStateProvider'
 const Router = () => {
+    const { id,quizzes } = useContext(CreateQuizContex);
     return (
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<QuizList />}/>
-                <Route path='/EditQuiz/:QId' element={<EditQuiz />} />
+                <Route path='/EditQuiz/:QId' element={<EditQuiz quizzes={quizzes} id={id}/>} />
                 <Route path='/CreateQuiz' element={<CreateQuiz />} />
             </Routes>
         </BrowserRouter>

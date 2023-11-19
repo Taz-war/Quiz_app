@@ -32,13 +32,10 @@ import Navbar from "../Components/NavBar/NavBar";
 import { Link } from "react-router-dom";
 
 const QuizList = () => {
-  
+  const { id, setId, quizzes, setQuizzes } = useContext(CreateQuizContex);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [openCreateQuiz, setOpenCreateQuiz] = useState(false);
-  const [openEditQuiz,setOpenEditQuiz] = useState(false)
-  const [id,setId] =useState('')
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -79,10 +76,7 @@ const QuizList = () => {
   };
 
   ////fetch api call////
-  const [quizzes, setQuizzes] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [hover, setHover] = useState(false);
-
   const getAllQuizes = async () => {
     try {
       const response = await fetch(`http://localhost:8080/Questions`);
@@ -106,140 +100,145 @@ const QuizList = () => {
   return (
     <Box sx={{ width: "100%" }}>
       <Navbar />
-      <Collapse in={openCreateQuiz === false && openEditQuiz ===false}>
-        <Container sx={{ p: 2 }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              p: 2,
-              bgcolor: "background.paper",
-            }}
-          >
-            {/* Left-aligned buttons and search */}
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              {/* Search Field */}
-              <TextField
-                variant="outlined"
-                placeholder="Search…"
-                size="small"
-                InputProps={{
-                  endAdornment: (
-                    <IconButton type="submit" aria-label="search">
-                      <SearchIcon />
-                    </IconButton>
-                  ),
-                }}
-                sx={{ mr: 1 }}
-              />
 
-              {/* New Folder Button */}
-              <Button
-                variant="contained"
-                startIcon={<AddCircleOutlineIcon />}
-                sx={{ mr: 1 }}
-              >
-                New Folder
-              </Button>
+      <Container sx={{ p: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            p: 2,
+            bgcolor: "background.paper",
+          }}
+        >
+          {/* Left-aligned buttons and search */}
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            {/* Search Field */}
+            <TextField
+              variant="outlined"
+              placeholder="Search…"
+              size="small"
+              InputProps={{
+                endAdornment: (
+                  <IconButton type="submit" aria-label="search">
+                    <SearchIcon />
+                  </IconButton>
+                ),
+              }}
+              sx={{ mr: 1 }}
+            />
 
-              {/* Add Quiz Button */}
-              <Button
-                variant="contained"
-                startIcon={<AddCircleOutlineIcon />}
-                onClick={() => setOpenCreateQuiz(true)}
-                sx={{ mr: 1 }}
+            {/* New Folder Button */}
+            <Button
+              variant="contained"
+              startIcon={<AddCircleOutlineIcon />}
+              sx={{ mr: 1 }}
+            >
+              New Folder
+            </Button>
+
+            {/* Add Quiz Button */}
+            <Button
+              variant="contained"
+              startIcon={<AddCircleOutlineIcon />}
+              sx={{ mr: 1 }}
+            >
+              <Link
+                to={"/CreateQuiz"}
+                style={{ color: "inherit", textDecoration: "none" }}
               >
-                <Link to={'/CreateQuiz'} style={{ color: 'inherit', textDecoration: 'none' }}>
                 Create Quiz
-                </Link>
-              </Button>
-            </Box>
-
-            {/* Right-aligned Deleted button */}
-            <Button variant="outlined" sx={{ mr: 1 }}>
-              Deleted
+              </Link>
             </Button>
           </Box>
 
-          <TableContainer>
-            <Table
-              sx={{ minWidth: 750 }}
-              aria-labelledby="tableTitle"
-              size={"medium"}
-            >
-              <EnhancedTableHead
-                numSelected={selected.length}
-                onSelectAllClick={handleSelectAllClick}
-                rowCount={quizzes.length}
-              />
-              <TableBody>
-                {quizzes.map((row, index) => {
-                  console.log(row);
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+          {/* Right-aligned Deleted button */}
+          <Button variant="outlined" sx={{ mr: 1 }}>
+            Deleted
+          </Button>
+        </Box>
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.id)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.id}
-                      selected={isItemSelected}
-                      sx={{ cursor: "pointer" }}
-                    >
-                      <TableCell padding="checkbox">
-                        <Radio
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                        onClick={() => { setOpenEditQuiz(true);setId(row.id)}}
-                      >
-                        <Link to={`/EditQuiz/${row.id}`} style={{color:'inherit',textDecoration:'none'}}>
-                        {row.questionSetTitle}
-                        </Link>
-                      </TableCell>
-                      <TableCell align="left">{row.date}</TableCell>
-                    </TableRow>
-                  );
-                })}
-                {emptyRows > 0 && (
+        <TableContainer>
+          <Table
+            sx={{ minWidth: 750 }}
+            aria-labelledby="tableTitle"
+            size={"medium"}
+          >
+            <EnhancedTableHead
+              numSelected={selected.length}
+              onSelectAllClick={handleSelectAllClick}
+              rowCount={quizzes.length}
+            />
+            <TableBody>
+              {quizzes.map((row, index) => {
+                console.log(row);
+                const isItemSelected = isSelected(row.id);
+                const labelId = `enhanced-table-checkbox-${index}`;
+
+                return (
                   <TableRow
-                    style={{
-                      height: 53 * emptyRows,
-                    }}
+                    hover
+                    onClick={(event) => handleClick(event, row.id)}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.id}
+                    selected={isItemSelected}
+                    sx={{ cursor: "pointer" }}
                   >
-                    <TableCell colSpan={6} />
+                    <TableCell padding="checkbox">
+                      <Radio
+                        color="primary"
+                        checked={isItemSelected}
+                        inputProps={{
+                          "aria-labelledby": labelId,
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell
+                      component="th"
+                      id={labelId}
+                      scope="row"
+                      padding="none"
+                      onClick={() => setId(row.id)}
+                    >
+                      <Link
+                        to={`/EditQuiz/${row.id}`}
+                        style={{ color: "inherit", textDecoration: "none" }}
+                      >
+                        {row.questionSetTitle}
+                      </Link>
+                    </TableCell>
+                    <TableCell align="left">{row.date}</TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                );
+              })}
+              {emptyRows > 0 && (
+                <TableRow
+                  style={{
+                    height: 53 * emptyRows,
+                  }}
+                >
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={quizzes.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Container>
-      </Collapse>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={quizzes.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Container>
+
       {/* {openEditQuiz && <EditQuiz setOpenCreateQuiz={setOpenCreateQuiz} quizzes={quizzes} id={id}/>} */}
-      {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} />}
+      {/* {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} />} */}
     </Box>
   );
 };
