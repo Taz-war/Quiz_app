@@ -79,7 +79,7 @@ const QuizList = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const getAllQuizes = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/Questions`);
+      const response = await fetch(`http://localhost:5000/questionSet`);
       const data = await response.json();
       setQuizzes(data);
     } catch (error) {

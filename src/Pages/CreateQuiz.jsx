@@ -20,7 +20,7 @@ import Navbar from "../Components/NavBar/NavBar";
 // import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestionShowData";
 // import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData"; // Corrected the import statement
 
-const CreateQuiz = ({ setOpenCreateQuiz }) => {
+const CreateQuiz = () => {
   const { open, setOpen } = useContext(CreateQuizContex);
   const [componentsToRender, setComponentsToRender] = useState([]);
   const [value, setValue] = useState("Untitled Quiz");
@@ -36,14 +36,13 @@ const CreateQuiz = ({ setOpenCreateQuiz }) => {
   const handleSave = async () => {
     const currentDate = new Date().toLocaleDateString();
     const newQuestion = {
-      id: uuidv4(),
       date: currentDate,
       questionSetTitle: value,
       questions: questionSet,
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/Questions`, {
+      const response = await fetch(`http://localhost:5000/questionSet`, {
         method: "POST",
         body: JSON.stringify(newQuestion),
         headers: { "Content-type": "application/json" },
@@ -56,7 +55,7 @@ const CreateQuiz = ({ setOpenCreateQuiz }) => {
       console.error("Error posting question:", error);
     }
 
-    setOpenCreateQuiz(false);
+  
   };
 
 
