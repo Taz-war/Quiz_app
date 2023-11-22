@@ -24,12 +24,10 @@ import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutl
 import RadioButtonUncheckedOutlinedIcon from "@mui/icons-material/RadioButtonUncheckedOutlined";
 import { useState } from "react";
 import EnhancedTableHead from "../Components/QuizList_Components/EnhancedTableHead";
-import CreateQuiz from "./CreateQuiz";
 import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
-import EditQuiz from "./EditQuiz";
-import Navbar from "../Components/NavBar/NavBar";
 import { Link } from "react-router-dom";
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 
 const QuizList = () => {
   const { id, setId, quizzes, setQuizzes } = useContext(CreateQuizContex);
@@ -211,6 +209,11 @@ const QuizList = () => {
                       </Link>
                     </TableCell>
                     <TableCell align="left">{row.date}</TableCell>
+                    <TableCell align="right">
+                      <IconButton>
+                        <DeleteTwoToneIcon sx={{ color: "red", ml: 1, fontSize: "xx-large" }} />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -237,9 +240,6 @@ const QuizList = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Container>
-
-      {/* {openEditQuiz && <EditQuiz setOpenCreateQuiz={setOpenCreateQuiz} quizzes={quizzes} id={id}/>} */}
-      {/* {openCreateQuiz && <CreateQuiz setOpenCreateQuiz={setOpenCreateQuiz} />} */}
     </Box>
   );
 };

@@ -8,6 +8,7 @@ import { CreateQuizContex } from '../Context_Api/CreateQuizStateProvider'
 import Navbar from '../Components/NavBar/NavBar'
 const Router = () => {
     const { id,quizzes } = useContext(CreateQuizContex);
+    console.log({id})
     return (
         <BrowserRouter>
             <Navbar />

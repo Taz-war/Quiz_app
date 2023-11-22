@@ -25,6 +25,7 @@ const EnhancedTableHead = (props) => {
           <TableCell align='left' >
             Modified date
           </TableCell>
+          <TableCell></TableCell>
       </TableRow>
     </TableHead>
 )}

@@ -20,20 +20,33 @@ import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQues
 import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData";
 import Navbar from "../Components/NavBar/NavBar";
 
-const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
+const EditQuiz = ({quizzes, id }) => {
   const { open, setOpen } = useContext(CreateQuizContex);
-
   const [componentsToRender, setComponentsToRender] = useState([]);
   let question = quizzes.find((quiz) => quiz._id === id);
-  const [value, setValue] = useState(question.questionSetTitle);
+  console.log( question )
+  const [value, setValue] = useState(question?.questionSetTitle);
   const [isEditing, setIsEditing] = useState(false);
-  const [questionSet, setQuestionSet] = useState([...question.questions]);
+  const [questionSet, setQuestionSet] = useState([...question?.questions]);
   const [questionSetLength, setQuestionSetLength] = useState(
-    question.questions.length
+    question?.questions.length
   );
   // const [question, setQuestion] = useState({})
 
-  console.log({question});
+  const getAllQuizes = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/EditQuiz/${id}`);
+      const data = await response.json();
+      console.log({fahim:data})
+      // setQuizzes(data);
+    } catch (error) {
+      // setErrorMessage(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getAllQuizes();
+  }, []);
 
   const handleEditClick = () => setIsEditing(true);
   const handleSaveClick = () => setIsEditing(false);
@@ -47,7 +60,7 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000//EditQuiz/${question._id}`, {
+      const response = await fetch(`http://localhost:5000/EditQuiz/${question._id}`, {
         method: "PUT",
         body: JSON.stringify(newQuestion),
         headers: { "Content-type": "application/json" },
