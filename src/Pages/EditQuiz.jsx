@@ -33,7 +33,7 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
   );
   // const [question, setQuestion] = useState({})
 
-  console.log(questionSet);
+  console.log({question});
 
   const handleEditClick = () => setIsEditing(true);
   const handleSaveClick = () => setIsEditing(false);
@@ -47,7 +47,7 @@ const EditQuiz = ({ setOpenCreateQuiz, quizzes, id }) => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000//EditQuiz/${id}`, {
+      const response = await fetch(`http://localhost:5000//EditQuiz/${question._id}`, {
         method: "PUT",
         body: JSON.stringify(newQuestion),
         headers: { "Content-type": "application/json" },
