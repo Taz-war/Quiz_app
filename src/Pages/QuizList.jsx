@@ -92,6 +92,7 @@ const QuizList = () => {
   }, []);
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
+  console.log({quizzes})
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -172,17 +173,17 @@ const QuizList = () => {
             <TableBody>
               {quizzes.map((row, index) => {
                 console.log(row);
-                const isItemSelected = isSelected(row.id);
+                const isItemSelected = isSelected(row._id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    onClick={(event) => handleClick(event, row._id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.id}
+                    key={row._id}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
                   >
@@ -200,10 +201,10 @@ const QuizList = () => {
                       id={labelId}
                       scope="row"
                       padding="none"
-                      onClick={() => setId(row.id)}
+                      onClick={() => setId(row._id)}
                     >
                       <Link
-                        to={`/EditQuiz/${row.id}`}
+                        to={`/EditQuiz/${row._id}`}
                         style={{ color: "inherit", textDecoration: "none" }}
                       >
                         {row.questionSetTitle}

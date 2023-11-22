@@ -54,11 +54,11 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
     setMultipleChoice(updatedAnswers);
   };
 
-  const handleOptionChange = debounce((index, newValue) => {
+  const handleOptionChange = (index, newValue) => {
     const updatedAnswers = [...multipleChoice];
     updatedAnswers[index] = newValue;
     setMultipleChoice(updatedAnswers);
-  });
+  };
   function debounce(func, timeout = 50) {
     let timer;
     return (...args) => {
