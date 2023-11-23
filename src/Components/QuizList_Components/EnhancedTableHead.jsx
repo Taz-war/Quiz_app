@@ -1,9 +1,9 @@
-import { Checkbox, TableCell, TableHead, TableRow } from '@mui/material';
+import { Button, Checkbox, TableCell, TableHead, TableRow } from '@mui/material';
 import React from 'react'
 
 const EnhancedTableHead = (props) => {
-    const { onSelectAllClick,  numSelected, rowCount} =props;
-
+    const { onSelectAllClick,  numSelected, rowCount,selected} =props;
+    console.log({selected})
 
   return (
     <TableHead>
@@ -25,7 +25,11 @@ const EnhancedTableHead = (props) => {
           <TableCell align='left' >
             Modified date
           </TableCell>
-          <TableCell></TableCell>
+          <TableCell align='right'>
+            {selected.length>0 ?<Button variant='contained' color="error" >Delete All</Button>:
+            <Button variant='contained' color="error" disabled>Delete Selected</Button>
+            }
+          </TableCell>
       </TableRow>
     </TableHead>
 )}

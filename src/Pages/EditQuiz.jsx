@@ -33,20 +33,7 @@ const EditQuiz = ({quizzes, id }) => {
   );
   // const [question, setQuestion] = useState({})
 
-  const getAllQuizes = async () => {
-    try {
-      const response = await fetch(`http://localhost:5000/EditQuiz/${id}`);
-      const data = await response.json();
-      console.log({fahim:data})
-      // setQuizzes(data);
-    } catch (error) {
-      // setErrorMessage(error.message);
-    }
-  };
 
-  useEffect(() => {
-    getAllQuizes();
-  }, []);
 
   const handleEditClick = () => setIsEditing(true);
   const handleSaveClick = () => setIsEditing(false);

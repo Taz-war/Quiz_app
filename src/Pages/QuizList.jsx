@@ -28,16 +28,18 @@ import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import { Link } from "react-router-dom";
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import DeleteModal from "../Components/QuizList_Components/DeleteModal";
 
 const QuizList = () => {
-  const { id, setId, quizzes, setQuizzes } = useContext(CreateQuizContex);
+  const {  setId, quizzes, setQuizzes } = useContext(CreateQuizContex);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [openDeleteModal,setOpenDeleteModal] =useState(false)
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = quizzes.map((n) => n.id);
+      const newSelected = quizzes.map((n) => n._id);
       setSelected(newSelected);
       return;
     } else {
@@ -63,7 +65,7 @@ const QuizList = () => {
     }
     setSelected(newSelected);
   };
-
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -167,6 +169,7 @@ const QuizList = () => {
               numSelected={selected.length}
               onSelectAllClick={handleSelectAllClick}
               rowCount={quizzes.length}
+              selected={selected}
             />
             <TableBody>
               {quizzes.map((row, index) => {
@@ -210,7 +213,7 @@ const QuizList = () => {
                     </TableCell>
                     <TableCell align="left">{row.date}</TableCell>
                     <TableCell align="right">
-                      <IconButton>
+                      <IconButton onClick={()=>{setId(row._id);setOpenDeleteModal(true)}}>
                         <DeleteTwoToneIcon sx={{ color: "red", ml: 1, fontSize: "xx-large" }} />
                       </IconButton>
                     </TableCell>
@@ -240,7 +243,9 @@ const QuizList = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Container>
+      {openDeleteModal && <DeleteModal openDeleteModal={openDeleteModal} setOpenDeleteModal={setOpenDeleteModal}/>}
     </Box>
+
   );
 };
 
