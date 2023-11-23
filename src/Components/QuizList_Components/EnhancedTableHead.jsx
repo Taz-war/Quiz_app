@@ -4,6 +4,20 @@ import React from 'react'
 const EnhancedTableHead = (props) => {
     const { onSelectAllClick,  numSelected, rowCount,selected} =props;
     console.log({selected})
+    const handleDeleteSelected =async()=>{
+      try {
+        const response = await fetch(`http://localhost:5000/questionset`, {
+          method: 'DELETE'
+        });
+  
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        // setErrorMessage(error.message);
+      }
+    }
 
   return (
     <TableHead>
@@ -26,7 +40,7 @@ const EnhancedTableHead = (props) => {
             Modified date
           </TableCell>
           <TableCell align='right'>
-            {selected.length>0 ?<Button variant='contained' color="error" >Delete All</Button>:
+            {selected.length>0 ?<Button variant='contained' color="error" onClick={()=>handleDeleteSelected()}>Delete All</Button>:
             <Button variant='contained' color="error" disabled>Delete Selected</Button>
             }
           </TableCell>
