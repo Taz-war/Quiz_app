@@ -77,9 +77,11 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
                 label="Question"
                 fullWidth
                 sx={{ mb: 2, mt: 2 }}
-                value={question}
+                
                 onChange={(e) => setQuestion(e.target.value)}
-              />
+              >
+                Question
+              </TextField>
             </Grid>
             <Grid item xs={4}>
               <TextField
@@ -87,9 +89,10 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
                 label="Point"
                 fullWidth
                 sx={{ mb: 2, mt: 2 }}
-                value={point}
                 onChange={(e) => setPoint(e.target.value)}
-              />
+              >
+                Point
+              </TextField>
             </Grid>
           </Grid>
           {shortAnswers.length > 0 &&

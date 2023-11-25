@@ -5,6 +5,7 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
   InputAdornment,
   Paper,
   TextField,
@@ -18,13 +19,14 @@ import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import MultipleChoiceShowData from "../Components/CreateQuiz_Components/MultipleChoice/MultipleChoiceShowData";
 import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestionShowData";
 import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData";
-import Navbar from "../Components/NavBar/NavBar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Link } from "react-router-dom";
 
-const EditQuiz = ({quizzes, id }) => {
+const EditQuiz = ({ quizzes, id }) => {
   const { open, setOpen } = useContext(CreateQuizContex);
   const [componentsToRender, setComponentsToRender] = useState([]);
   let question = quizzes.find((quiz) => quiz._id === id);
-  console.log( question )
+  console.log(question);
   const [value, setValue] = useState(question?.questionSetTitle);
   const [isEditing, setIsEditing] = useState(false);
   const [questionSet, setQuestionSet] = useState([...question?.questions]);
@@ -32,8 +34,6 @@ const EditQuiz = ({quizzes, id }) => {
     question?.questions.length
   );
   // const [question, setQuestion] = useState({})
-
-
 
   const handleEditClick = () => setIsEditing(true);
   const handleSaveClick = () => setIsEditing(false);
@@ -47,11 +47,14 @@ const EditQuiz = ({quizzes, id }) => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000/EditQuiz/${question._id}`, {
-        method: "PUT",
-        body: JSON.stringify(newQuestion),
-        headers: { "Content-type": "application/json" },
-      });
+      const response = await fetch(
+        `http://localhost:5000/EditQuiz/${question._id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(newQuestion),
+          headers: { "Content-type": "application/json" },
+        }
+      );
 
       if (!response.ok)
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -78,6 +81,13 @@ const EditQuiz = ({quizzes, id }) => {
     <>
       <Container>
         <Grid container columns={12} columnSpacing={2} mt={2}>
+          <Grid item xs={12} textAlign={'left'}>
+            <Link to={`/`} style={{ color: "inherit", textDecoration: "none" }}>
+              <IconButton>
+                <ArrowBackIcon />
+              </IconButton>
+            </Link>
+          </Grid>
           <Grid item xs={6} p={2}>
             <TextField
               value={value}
@@ -120,7 +130,12 @@ const EditQuiz = ({quizzes, id }) => {
               }}
               onClick={() => handleSave()}
             >
-              Save and Exit
+              <Link
+                to={`/`}
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Save and Exit
+              </Link>
             </Button>
           </Grid>
         </Grid>

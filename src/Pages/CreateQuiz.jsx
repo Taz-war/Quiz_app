@@ -5,6 +5,7 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
   InputAdornment,
   Paper,
   TextField,
@@ -15,7 +16,8 @@ import MultipleChoice from "../Components/CreateQuiz_Components/MultipleChoice/M
 import ShortQuestion from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestion";
 import TrueFalse from "../Components/CreateQuiz_Components/TureFalse/TrueFalse"; // Corrected the import statement
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
-import Navbar from "../Components/NavBar/NavBar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Link } from "react-router-dom";
 // import MultipleChoiceShowData from "../Components/CreateQuiz_Components/MultipleChoice/MultipleChoiceShowData";
 // import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestionShowData";
 // import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData"; // Corrected the import statement
@@ -75,6 +77,13 @@ const CreateQuiz = () => {
       {/* <Navbar /> */}
       <Container>
         <Grid container columns={12} columnSpacing={2} mt={2}>
+          <Grid item xs={12} textAlign={"left"}>
+            <Link to={`/`} style={{ color: "inherit", textDecoration: "none" }}>
+              <IconButton>
+                <ArrowBackIcon />
+              </IconButton>
+            </Link>
+          </Grid>
           <Grid item xs={6} p={2}>
             <TextField
               value={value}
@@ -117,7 +126,12 @@ const CreateQuiz = () => {
               }}
               onClick={() => handleSave()}
             >
-              Save and Exit
+              <Link
+                to={`/`}
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Save and Exit
+              </Link>
             </Button>
           </Grid>
         </Grid>
