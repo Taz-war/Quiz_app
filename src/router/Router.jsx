@@ -6,6 +6,10 @@ import CreateQuiz from '../Pages/CreateQuiz'
 import { useContext } from 'react'
 import { CreateQuizContex } from '../Context_Api/CreateQuizStateProvider'
 import Navbar from '../Components/NavBar/NavBar'
+import Launch from '../Pages/Launch'
+import Rooms from '../Pages/Rooms'
+import Reports from '../Pages/Reports'
+import LiveResults from '../Pages/LiveResults'
 const Router = () => {
     const { id,quizzes } = useContext(CreateQuizContex);
     console.log({id})
@@ -13,9 +17,13 @@ const Router = () => {
         <BrowserRouter>
             <Navbar />
             <Routes>
-                <Route path='/' element={<QuizList />}/>
+                <Route path='/Library' element={<QuizList />}/>
                 <Route path='/EditQuiz/:QId' element={<EditQuiz quizzes={quizzes} id={id}/>} />
                 <Route path='/CreateQuiz' element={<CreateQuiz />} />
+                <Route path='/Launch' element={<Launch />} />
+                <Route path='/Rooms' element={<Rooms />} />
+                <Route path='/Reports' element={<Reports />} />
+                <Route path='/LiveResult' element={<LiveResults />} />
             </Routes>
         </BrowserRouter>
     )

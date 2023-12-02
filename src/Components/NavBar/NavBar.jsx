@@ -18,28 +18,33 @@ const Navbar = () => {
         </IconButton>
 
         {/* The main logo or title with flex-grow to push everything else to the right */}
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Launch
-        </Typography>
+        </Typography> */}
 
         {/* Navigation buttons */}
         <Button color="inherit" sx={{ marginX: 1 }}>
-          <Link to={`/`} style={{ color: "inherit", textDecoration: "none" }}>
+          <Link to={`/Launch`} style={{ color: "inherit", textDecoration: "none" }}>
+            Launch
+          </Link>
+        </Button>
+        <Button color="inherit" sx={{ marginX: 1 }}>
+          <Link to={`/Library`} style={{ color: "inherit", textDecoration: "none" }}>
             Library
           </Link>
         </Button>
         <Button color="inherit" sx={{ marginX: 1 }}>
-          <Link to={`/`} style={{ color: "inherit", textDecoration: "none" }}>
+          <Link to={`/Rooms`} style={{ color: "inherit", textDecoration: "none" }}>
             Rooms
           </Link>
         </Button>
         <Button color="inherit" sx={{ marginX: 1 }}>
-          <Link to={`/`} style={{ color: "inherit", textDecoration: "none" }}>
+          <Link to={`/Reports`} style={{ color: "inherit", textDecoration: "none" }}>
             Reports
           </Link>
         </Button>
         <Button color="inherit" sx={{ marginX: 1 }}>
-          <Link to={`/`} style={{ color: "inherit", textDecoration: "none" }}>
+          <Link to={`/LiveResult`} style={{ color: "inherit", textDecoration: "none" }}>
             Live Results
           </Link>
         </Button>
