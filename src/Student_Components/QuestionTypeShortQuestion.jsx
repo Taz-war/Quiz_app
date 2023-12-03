@@ -19,7 +19,8 @@ const QuestionTypeShortQuestion = ({ question, answer, onChange }) => {
         variant="outlined"
         value={answer || ""}
         onChange={onChange}
-        style={{ marginBottom: "10px" }}
+        
+        sx={{ marginBottom: "10px",bgcolor:'white' }}
       />
     </div>
   );
