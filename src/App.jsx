@@ -6,13 +6,17 @@ import DataTable from './Pages/test';
 import MyComponent from './Pages/test';
 import Navbar from './Components/NavBar/NavBar';
 import Router from './router/Router';
+import Quiz from './Pages/student_portal/Quiz';
+import { CssBaseline } from '@mui/material';
 
 function App() {
   return (
     <div className="App">
       {/* <CreateQuiz /> */}
       {/* <QuizList /> */}
-      <Router />
+      {/* <Router /> */}
+      <CssBaseline />
+      <Quiz />
       {/* <Navbar /> */}
       {/* <DataTable /> */}
       
