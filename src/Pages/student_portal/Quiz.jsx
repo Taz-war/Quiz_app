@@ -101,7 +101,7 @@ const Quiz = () => {
       <Typography variant="h5" style={{ marginBottom: "20px" }}>
         {`${currentQuestionIndex + 1} of ${quizData.questions.length}`}
       </Typography>
-      <Container sx={{bgcolor:'#DFEAF3',p:4}}>
+      <Container sx={{bgcolor:'#DFEAF3',p:4,textAlign:'left'}}>
         <QuestionRenderer
           question={currentQuestion}
           answer={answers[currentQuestion.id]}

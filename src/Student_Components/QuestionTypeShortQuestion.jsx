@@ -12,14 +12,13 @@ import {
 const QuestionTypeShortQuestion = ({ question, answer, onChange }) => {
   return (
     <div>
-      <Typography>{question.QuestionTitle}</Typography>
+      <Typography  sx={{ fontWeight: "bolder", fontSize: "x-large",mb:2 }}>{question.QuestionTitle}</Typography>
       <TextField
         fullWidth
         label={question.QuestionTitle}
         variant="outlined"
         value={answer || ""}
-        onChange={onChange}
-        
+        onChange={onChange}       
         sx={{ marginBottom: "10px",bgcolor:'white' }}
       />
     </div>
