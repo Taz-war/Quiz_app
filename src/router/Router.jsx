@@ -20,7 +20,7 @@ const Router = () => {
                 <Route path='/Library' element={<QuizList />}/>
                 <Route path='/EditQuiz/:QId' element={<EditQuiz quizzes={quizzes} id={id}/>} />
                 <Route path='/CreateQuiz' element={<CreateQuiz />} />
-                <Route path='/Launch' element={<Launch />} />
+                <Route path='/' element={<Launch />} />
                 <Route path='/Rooms' element={<Rooms />} />
                 <Route path='/Reports' element={<Reports />} />
                 <Route path='/LiveResult' element={<LiveResults />} />

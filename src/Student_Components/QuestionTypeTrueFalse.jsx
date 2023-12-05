@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 
 const QuestionTypeTrueFalse = ({ question, answer, onChange }) => {
+  console.log({answer})
   return (
     <div>
       <Paper style={{ padding: "20px", marginBottom: "10px" }}>
@@ -39,7 +40,7 @@ const QuestionTypeTrueFalse = ({ question, answer, onChange }) => {
                   border={"1px solid #DEEAF3"}
                   width={"100%"}
                   color={"black"}
-                  // sx={{ bgcolor: answer === option ? "#DEEAF3" : "inherit" }}
+                  sx={{ bgcolor: answer === 'true' ? "#DEEAF3" : "inherit" }}
                 >
                   True
                 </Typography>
@@ -55,7 +56,7 @@ const QuestionTypeTrueFalse = ({ question, answer, onChange }) => {
                   border={"1px solid #DEEAF3"}
                   width={"100%"}
                   color={"black"}
-                  // sx={{ bgcolor: answer === option ? "#DEEAF3" : "inherit" }}
+                  sx={{ bgcolor: answer === 'false' ? "#DEEAF3" : "inherit" }}
                 >
                   False
                 </Typography>

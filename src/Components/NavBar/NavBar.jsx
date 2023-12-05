@@ -2,8 +2,22 @@ import React from "react";
 import { AppBar, Toolbar, Typography, Button, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [activeButton, setActiveButton] = useState('');
+
+  // Function to handle button click
+  const handleButtonClick = (buttonName) => {
+    setActiveButton(buttonName);
+  };
+
+  // Function to apply conditional styles
+  const getButtonStyle = (buttonName) => ({
+    color: activeButton === buttonName ? 'red' : 'inherit', // Change 'red' to your desired active color
+    textDecoration: "none",
+    marginX: 1
+  });
   return (
     <AppBar position="static" sx={{ bgcolor: "#e8eaf6", color: "#5c6bc0" }}>
       <Toolbar>
@@ -23,27 +37,27 @@ const Navbar = () => {
         </Typography> */}
 
         {/* Navigation buttons */}
-        <Button color="inherit" sx={{ marginX: 1 }}>
-          <Link to={`/Launch`} style={{ color: "inherit", textDecoration: "none" }}>
+        <Button color="inherit" sx={getButtonStyle('Launch')} onClick={() => handleButtonClick('Launch')} >
+          <Link to={`/`} style={{ color: "inherit", textDecoration: "none" }}>
             Launch
           </Link>
         </Button>
-        <Button color="inherit" sx={{ marginX: 1 }}>
+        <Button color="inherit" sx={getButtonStyle('Library')} onClick={() => handleButtonClick('Library')}>
           <Link to={`/Library`} style={{ color: "inherit", textDecoration: "none" }}>
             Library
           </Link>
         </Button>
-        <Button color="inherit" sx={{ marginX: 1 }}>
+        <Button color="inherit" sx={getButtonStyle('Rooms')} onClick={() => handleButtonClick('Rooms')}>
           <Link to={`/Rooms`} style={{ color: "inherit", textDecoration: "none" }}>
             Rooms
           </Link>
         </Button>
-        <Button color="inherit" sx={{ marginX: 1 }}>
+        <Button color="inherit" sx={getButtonStyle('Reports')} onClick={() => handleButtonClick('Reports')}>
           <Link to={`/Reports`} style={{ color: "inherit", textDecoration: "none" }}>
             Reports
           </Link>
         </Button>
-        <Button color="inherit" sx={{ marginX: 1 }}>
+        <Button color="inherit" sx={getButtonStyle('Live Results')} onClick={() => handleButtonClick('Live Results')}>
           <Link to={`/LiveResult`} style={{ color: "inherit", textDecoration: "none" }}>
             Live Results
           </Link>

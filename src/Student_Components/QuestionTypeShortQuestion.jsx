@@ -15,6 +15,8 @@ const QuestionTypeShortQuestion = ({ question, answer, onChange }) => {
       <Typography  sx={{ fontWeight: "bolder", fontSize: "x-large",mb:2 }}>{question.QuestionTitle}</Typography>
       <TextField
         fullWidth
+        multiline
+        rows={4}
         label={question.QuestionTitle}
         variant="outlined"
         value={answer || ""}
