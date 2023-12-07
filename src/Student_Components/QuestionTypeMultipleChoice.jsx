@@ -33,7 +33,7 @@ const QuestionTypeMultipleChoice = ({ question, answer, onChange }) => {
             <FormControlLabel
               key={option}
               value={option}
-              control={<Radio size="large"/>}
+              control={<Radio size="medium"/>}
               label={
                 <Typography
                   p={2}

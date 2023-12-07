@@ -33,7 +33,7 @@ const QuestionTypeTrueFalse = ({ question, answer, onChange }) => {
           >
             <FormControlLabel
               value="true"
-              control={<Radio size="large" />}
+              control={<Radio size="medium" />}
               label={
                 <Typography
                   p={2}
@@ -49,7 +49,7 @@ const QuestionTypeTrueFalse = ({ question, answer, onChange }) => {
             />
             <FormControlLabel
               value="false"
-              control={<Radio size="large" />}
+              control={<Radio size="medium" />}
               label={
                 <Typography
                   p={2}
