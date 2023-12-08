@@ -14,38 +14,39 @@ import {
 import QuestionTypeMultipleChoice from "../../Student_Components/QuestionTypeMultipleChoice";
 import QuestionTypeShortQuestion from "../../Student_Components/QuestionTypeShortQuestion";
 import QuestionTypeTrueFalse from "../../Student_Components/QuestionTypeTrueFalse";
+import { useLocation } from "react-router-dom";
 
-const quizData = {
-  _id: {
-    $oid: "65618bc7285d9f041f7f8dca",
-  },
-  date: "11/25/2023",
-  questionSetTitle: "Fahims first quiz",
-  questions: [
-    {
-      id: "8488dca5-1f5c-478b-9a02-303372d3446f",
-      QuestionType: "multipleChoice",
-      QuestionTitle: "What is your name?",
-      Options: ["Fahim", "shezan"],
-      Point: "10",
-      Answer: null,
-    },
-    {
-      id: "60b44b52-de64-434d-8748-509516214901",
-      QuestionType: "shortQuestion",
-      QuestionTitle: "Describe yourself",
-      Point: "05",
-      Answer: ["im very good person"],
-    },
-    {
-      id: "e284550d-df34-4644-958e-923f2d817af6",
-      QuestionType: "trueFalse",
-      QuestionTitle: "is ur job safe?",
-      Point: "10",
-      Answer: true,
-    },
-  ],
-};
+// const quizData = {
+//   _id: {
+//     $oid: "65618bc7285d9f041f7f8dca",
+//   },
+//   date: "11/25/2023",
+//   questionSetTitle: "Fahims first quiz",
+//   questions: [
+//     {
+//       id: "8488dca5-1f5c-478b-9a02-303372d3446f",
+//       QuestionType: "multipleChoice",
+//       QuestionTitle: "What is your name?",
+//       Options: ["Fahim", "shezan"],
+//       Point: "10",
+//       Answer: null,
+//     },
+//     {
+//       id: "60b44b52-de64-434d-8748-509516214901",
+//       QuestionType: "shortQuestion",
+//       QuestionTitle: "Describe yourself",
+//       Point: "05",
+//       Answer: ["im very good person"],
+//     },
+//     {
+//       id: "e284550d-df34-4644-958e-923f2d817af6",
+//       QuestionType: "trueFalse",
+//       QuestionTitle: "is ur job safe?",
+//       Point: "10",
+//       Answer: true,
+//     },
+//   ],
+// };
 
 const QuestionRenderer = ({ question, answer, onChange }) => {
   switch (question.QuestionType) {
@@ -79,6 +80,9 @@ const QuestionRenderer = ({ question, answer, onChange }) => {
 };
 
 const Quiz = () => {
+  const location = useLocation()
+  const quizData = location.state?.data;
+  console.log({ quizData })
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const currentQuestion = quizData.questions[currentQuestionIndex];
