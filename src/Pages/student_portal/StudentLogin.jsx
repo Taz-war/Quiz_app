@@ -12,7 +12,7 @@ const StudentLogin = () => {
     const response = await fetch(`http://localhost:5000/student/${enteredRoomName}`);
     const data = await response.json();
     console.log('fahim',data)
-    if (data == true) {
+    if (data.result == true) {
         navigate("/student/quiz");
     }else{
         alert('The Room name you have entered is wrong')
