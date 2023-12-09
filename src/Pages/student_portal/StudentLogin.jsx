@@ -17,7 +17,7 @@ const StudentLogin = () => {
         .then(res => res.json())
         .then(data => {
           console.log('tazwer',data)
-          navigate("/student/quiz", { state: { data: data } });
+          navigate("/student/studentLoginInfo", { state: { id: data._id } });
         })
     }else{
         alert('The Room name you have entered is wrong')
