@@ -13,12 +13,7 @@ const StudentLogin = () => {
     const data = await response.json();
     console.log('fahim',data)
     if (data.result == true) {
-      fetch(`http://localhost:5000/EditQuiz/${data._id}`)
-        .then(res => res.json())
-        .then(data => {
-          console.log('tazwer',data)
-          navigate("/student/studentLoginInfo", { state: { id: data._id } });
-        })
+      navigate("/student/studentLoginInfo", { state: { id: data._id } });
     }else{
         alert('The Room name you have entered is wrong')
     }
