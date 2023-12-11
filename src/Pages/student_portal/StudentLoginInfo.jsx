@@ -3,6 +3,7 @@ import { Button, Container, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 const StudentLoginInfo = () => {
   const [enteredRoomName, setEnteredRoomName] = useState("");
@@ -13,6 +14,7 @@ const StudentLoginInfo = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const StudentInfo = {
+      id: uuidv4(),
       name: event.target.name.value,
       email: event.target.email.value,
     };
