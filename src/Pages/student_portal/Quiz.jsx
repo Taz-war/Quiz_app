@@ -55,6 +55,7 @@ const Quiz = () => {
   console.log({ quizData })
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [studentInfo,setStudentInfo] = useState({})
   const currentQuestion = quizData.questions[currentQuestionIndex];
   const socket = io('http://localhost:5000');
 
@@ -83,8 +84,9 @@ const Quiz = () => {
     }
   };
 
-  const handleChange = (event) => {
-    setAnswers({ ...answers, [currentQuestion.id]: event.target.value });
+  const handleChange = async(event) => {
+    await setAnswers({ ...answers, [currentQuestion.id]: event.target.value });
+    await setStudentInfo({...s})
   };
 
   return (

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
-const StudentLoginInfo = () => {
+const StudentLoginInfo = ({onChange}) => {
   const [enteredRoomName, setEnteredRoomName] = useState("");
   const location = useLocation();
   const id = location.state?.id;
