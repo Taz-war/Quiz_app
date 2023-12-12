@@ -13,7 +13,7 @@ const StudentLogin = () => {
     const data = await response.json();
     console.log('fahim',data)
     if (data.result == true) {
-      navigate("/student/studentLoginInfo", { state: { id: data._id } });
+      navigate("/student/studentLoginInfo", { state: { id: data._id,roomName:enteredRoomName } });
     }else{
         alert('The Room name you have entered is wrong')
     }

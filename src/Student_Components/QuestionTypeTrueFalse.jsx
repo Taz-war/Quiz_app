@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 const QuestionTypeTrueFalse = ({ question, answer, onChange }) => {
-  console.log({answer})
+  // console.log({answer})
   return (
     <div>
       <Paper style={{ padding: "20px", marginBottom: "10px" }}>

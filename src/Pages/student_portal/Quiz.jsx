@@ -15,8 +15,8 @@ import QuestionTypeMultipleChoice from "../../Student_Components/QuestionTypeMul
 import QuestionTypeShortQuestion from "../../Student_Components/QuestionTypeShortQuestion";
 import QuestionTypeTrueFalse from "../../Student_Components/QuestionTypeTrueFalse";
 import { useLocation } from "react-router-dom";
-import io from 'socket.io-client';
-
+import io from "socket.io-client";
+import { useEffect } from "react";
 
 const QuestionRenderer = ({ question, answer, onChange }) => {
   switch (question.QuestionType) {
@@ -50,43 +50,65 @@ const QuestionRenderer = ({ question, answer, onChange }) => {
 };
 
 const Quiz = () => {
-  const location = useLocation()
+  const location = useLocation();
   const quizData = location.state?.data;
-  console.log({ quizData })
+  const studenData = location.state?.studentData;
+  const id = location.state?.id;
+  const roomName = location.state?.roomName;
+  console.log({ id });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [studentInfo,setStudentInfo] = useState({})
+  const [studentInfo, setStudentInfo] = useState({ ...studenData });
   const currentQuestion = quizData.questions[currentQuestionIndex];
-  const socket = io('http://localhost:5000');
+  const socket = io("http://localhost:5000");
 
-  
 
-  const handleNext = () => {
+
+  const handleNext = async () => {
     if (currentQuestionIndex < quizData.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       socket.on('connect', () => {
         console.log('Connected to server');
       });
-      socket.emit('joinRoom', 'C7h9EM');
-      socket.emit('sendMessage', { room:'C7h9EM', message:'message' });
+      socket.emit('joinRoom', roomName);
+      socket.on('connectedRoom',(data)=>{
+        console.log('socketroom',data)
+      })
+    
       socket.on('message', (message) => {
-        console.log('fahimTazwer',message);
+        console.log('fahimTazwer', message);
       });
-      // socket.on('connectQuiz', () => {
-      //   socket.emit('connectQuiz',{
-      //     text:'"hello im fahim"'
-      //   })
-      //   console.log('Connected to server');
-      // });
+      socket.emit('sendMessage', { room: 'C7h9EM', message: 'message' });
     } else {
       // Handle quiz completion
       console.log("Quiz Completed", answers);
+      const updatedStudentInfo = { ...studentInfo, answer: answers };
+      setStudentInfo(updatedStudentInfo);
+      // setStudentInfo({ ...studentInfo, answer: answers });
+
+      try {
+        const response = await fetch(
+          `http://localhost:5000/student/loginInfo/${id}`,
+          {
+            method: "PUT",
+            body: JSON.stringify(updatedStudentInfo),
+            headers: { "Content-type": "application/json" },
+          }
+        );
+
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error("Error posting question:", error);
+      }
     }
   };
+  console.log("final answer", studentInfo);
 
-  const handleChange = async(event) => {
-    await setAnswers({ ...answers, [currentQuestion.id]: event.target.value });
-    await setStudentInfo({...s})
+  const handleChange = (event) => {
+    setAnswers({ ...answers, [currentQuestion.id]: event.target.value });
   };
 
   return (
@@ -94,7 +116,7 @@ const Quiz = () => {
       <Typography variant="h5" style={{ marginBottom: "20px" }}>
         {`${currentQuestionIndex + 1} of ${quizData.questions.length}`}
       </Typography>
-      <Container sx={{bgcolor:'#DFEAF3',p:4,textAlign:'left'}}>
+      <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left" }}>
         <QuestionRenderer
           question={currentQuestion}
           answer={answers[currentQuestion.id]}

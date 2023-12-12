@@ -5,10 +5,10 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
-const StudentLoginInfo = ({onChange}) => {
-  const [enteredRoomName, setEnteredRoomName] = useState("");
+const StudentLoginInfo = () => {
   const location = useLocation();
   const id = location.state?.id;
+  const roomName = location.state?.roomName;
   console.log(id);
   let navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -19,27 +19,13 @@ const StudentLoginInfo = ({onChange}) => {
       email: event.target.email.value,
     };
     try {
-      const response = await fetch(
-        `http://localhost:5000/student/loginInfo/${id}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(StudentInfo),
-          headers: { "Content-type": "application/json" },
-        }
-      );
-
-      if (!response.ok)
-        throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      console.log(data);
-      if (data.modifiedCount ===1) {
         fetch(`http://localhost:5000/EditQuiz/${id}`)
         .then(res => res.json())
         .then(data => {
           console.log('tazwer',data)
-          navigate("/student/quiz", { state: { data: data } });
+          navigate("/student/quiz", { state: { data: data,studentData:StudentInfo,id:id ,roomName: roomName } });
         })
-      }
+      
     } catch (error) {
       console.error("Error posting question:", error);
     }
