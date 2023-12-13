@@ -67,6 +67,7 @@ const Quiz = () => {
   const handleNext = async () => {
     if (currentQuestionIndex < quizData.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      
       socket.on('connect', () => {
         console.log('Connected to server');
       });
