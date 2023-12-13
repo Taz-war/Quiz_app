@@ -62,6 +62,9 @@ const Quiz = () => {
   const currentQuestion = quizData.questions[currentQuestionIndex];
   const socket = io("http://localhost:5000");
 
+  useEffect(()=>{
+    socket.emit('totalQuestions', {steps:quizData.questions.length,studenData:studenData})
+  },[])
 
 
   const handleNext = async () => {
@@ -71,7 +74,8 @@ const Quiz = () => {
       socket.on('connect', () => {
         console.log('Connected to server');
       });
-      socket.emit('joinRoom', roomName);
+      socket.emit('questionComplete',   currentQuestionIndex + 1)
+      // socket.emit('joinRoom', roomName);
       socket.on('connectedRoom',(data)=>{
         console.log('socketroom',data)
       })
