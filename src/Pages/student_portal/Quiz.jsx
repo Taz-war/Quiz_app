@@ -62,9 +62,12 @@ const Quiz = () => {
   const currentQuestion = quizData.questions[currentQuestionIndex];
   const socket = io("http://localhost:5000");
 
-  useEffect(()=>{
-    socket.emit('totalQuestions', {steps:quizData.questions.length,studenData:studenData})
-  },[])
+  // useEffect(()=>{
+  //   socket.on('connect', () => {
+  //     console.log('Connected to server');
+  //   });
+  //   socket.emit('totalQuestions', {steps:quizData.questions.length,studenData:studenData})
+  // },[])
 
 
   const handleNext = async () => {
@@ -74,11 +77,13 @@ const Quiz = () => {
       socket.on('connect', () => {
         console.log('Connected to server');
       });
-      socket.emit('questionComplete',   currentQuestionIndex + 1)
-      // socket.emit('joinRoom', roomName);
-      socket.on('connectedRoom',(data)=>{
-        console.log('socketroom',data)
-      })
+      // socket.emit('questionComplete',   currentQuestionIndex + 1)
+      socket.emit('joinRoom', 'C7h9EM',studenData,quizData.questions.length,currentQuestionIndex + 1);
+
+      // socket.on('connectedRoom',(data)=>{
+      //   console.log('socketroom',data)
+      // })
+      // socket.emit('totalQuestions', {steps:quizData.questions.length,studenData:studenData})
     
       socket.on('message', (message) => {
         console.log('fahimTazwer', message);
