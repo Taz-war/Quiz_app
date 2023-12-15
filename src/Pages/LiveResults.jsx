@@ -4,6 +4,7 @@ import { useState } from "react";
 import io from "socket.io-client";
 import { red, green, blue } from "@ant-design/colors";
 import {
+  Box,
   Paper,
   Table,
   TableBody,
@@ -11,6 +12,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import Item from "antd/es/list/Item";
 const LiveResults = () => {
@@ -29,10 +31,10 @@ const LiveResults = () => {
 
     socket.emit("joinAdminRoom", "admin");
     // socket.emit("joinRoom", "C7h9EM");
-    socket.on("userJoined", (userData, step, completedQuestions) => {
+    socket.on("userJoined", (userData, step) => {
       console.log({ userData });
-      setQuestionCompleted(completedQuestions);
-      setEnteredStudents([...enteredStudents, userData.name]);
+      // setQuestionCompleted(userData.questionCompleted);
+      setEnteredStudents([...enteredStudents, userData]);
       setSteps(step);
     });
     console.log(enteredStudents);
@@ -57,39 +59,22 @@ const LiveResults = () => {
     <div>
       <h1>{`This is live results ${roomData}`}</h1>
       <h2>{QuestionCompleted}</h2>
-      {/* <TableContainer component={Paper}>
-        <Table>
-          <TableHead></TableHead>
-          <TableBody>
-            {JSON.stringify(enteredStudents)}
-            {enteredStudents.length > 0 &&
-              enteredStudents.map((item, index) => {
-                return <p>{item}</p>;
-                <TableRow key={index}>
-                  <TableCell>{item}</TableCell>
-                  <TableCell>
-                    <Space size={70}>
-                      <Progress
-                        percent={60}
-                        size={[50, 20]}
-                        steps={steps}
-                        strokeColor={[green[6], blue[6], red[5]]}
-                      />
-                    </Space>
-                  </TableCell>
-                </TableRow>;
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer> */}
-      <Space size={70}>
-        <Progress
-          percent={(QuestionCompleted / steps) * 100}
-          size={[50, 20]}
-          steps={steps}
-          strokeColor={[green[6], blue[6], red[5]]}
-        />
-      </Space>
+      {enteredStudents.map((item) => {
+        return (
+          <Box display={"flex"}>
+            <Typography display={"inline-block"}>{item.studentName}</Typography>
+            <Space size={70}>
+              <Progress
+                percent={(item.questionCompleted / steps) * 100}
+                size={[50, 20]}
+                steps={steps}
+                strokeColor={[green[6], blue[6], red[5]]}
+              />
+            </Space>
+          </Box>
+        )
+      })}
+
     </div>
   );
 };

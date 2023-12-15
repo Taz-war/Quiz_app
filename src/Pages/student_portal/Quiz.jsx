@@ -62,33 +62,38 @@ const Quiz = () => {
   const currentQuestion = quizData.questions[currentQuestionIndex];
   const socket = io("http://localhost:5000");
 
-  // useEffect(()=>{
-  //   socket.on('connect', () => {
-  //     console.log('Connected to server');
-  //   });
-  //   socket.emit('totalQuestions', {steps:quizData.questions.length,studenData:studenData})
-  // },[])
+  useEffect(()=>{
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+    socket.emit('joinRoom', 'C7h9EM', studenData, quizData.questions.length, currentQuestionIndex + 1);
+
+    socket.on('message', (message) => {
+      console.log('fahimTazwer', message);
+    });
+    socket.emit('sendMessage', { room: 'C7h9EM', message: 'message' });
+  },[socket,currentQuestionIndex])
 
 
   const handleNext = async () => {
     if (currentQuestionIndex < quizData.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       
-      socket.on('connect', () => {
-        console.log('Connected to server');
-      });
+      // socket.on('connect', () => {
+      //   console.log('Connected to server');
+      // });
       // socket.emit('questionComplete',   currentQuestionIndex + 1)
-      socket.emit('joinRoom', 'C7h9EM',studenData,quizData.questions.length,currentQuestionIndex + 1);
+      // socket.emit('joinRoom', 'C7h9EM',studenData,quizData.questions.length,currentQuestionIndex + 1);
 
       // socket.on('connectedRoom',(data)=>{
       //   console.log('socketroom',data)
       // })
       // socket.emit('totalQuestions', {steps:quizData.questions.length,studenData:studenData})
     
-      socket.on('message', (message) => {
-        console.log('fahimTazwer', message);
-      });
-      socket.emit('sendMessage', { room: 'C7h9EM', message: 'message' });
+      // socket.on('message', (message) => {
+      //   console.log('fahimTazwer', message);
+      // });
+      // socket.emit('sendMessage', { room: 'C7h9EM', message: 'message' });
     } else {
       // Handle quiz completion
       console.log("Quiz Completed", answers);
