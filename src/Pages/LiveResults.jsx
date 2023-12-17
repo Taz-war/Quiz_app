@@ -13,14 +13,19 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from "@mui/material";
 import Item from "antd/es/list/Item";
+import TimerComponent from "../Components/Timer_Component/TimerComponent";
 const LiveResults = () => {
   const [roomData, setRoomData] = useState("");
   const [steps, setSteps] = useState(0);
   const [QuestionCompleted, setQuestionCompleted] = useState(0);
   const [enteredStudents, setEnteredStudents] = useState([]);
+  const [examDuration,setExamDuration] =useState(0)
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 60);
 
   const socket = io("http://localhost:5000");
   useEffect(() => {
@@ -59,7 +64,15 @@ const LiveResults = () => {
   console.log({ enteredStudents });
   return (
     <div>
+      <Container>
       <h1>{`This is live results ${roomData}`}</h1>
+        <Box display={'flex'}>
+          <Box width={'50%'} textAlign={'left'} pl={3}>
+          <Typography variant="h6" mb={2}>Fix exam duration(in minutes) :</Typography>
+          <TextField size="small" onChange={(e)=>setExamDuration((e.target.value)*60)}>Exam duration</TextField>
+          </Box>
+          <TimerComponent  examDuration={examDuration}/>
+        </Box>
       <TableContainer component={Container}>
         <Table>
           <TableHead>
@@ -128,6 +141,7 @@ const LiveResults = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      </Container>
     </div>
   );
 };
