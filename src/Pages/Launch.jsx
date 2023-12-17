@@ -37,7 +37,6 @@ const Launch = () => {
       setErrorMessage(error.message);
     }
   };
-
   useEffect(() => {
     getAllQuizes();
   }, []);

@@ -22,8 +22,6 @@ const LiveResults = () => {
   const [QuestionCompleted, setQuestionCompleted] = useState(0);
   const [enteredStudents, setEnteredStudents] = useState([]);
 
-
-
   const socket = io("http://localhost:5000");
   useEffect(() => {
     socket.on("connect", () => {
@@ -34,16 +32,11 @@ const LiveResults = () => {
     // socket.emit("joinRoom", "C7h9EM");
     socket.on("userJoined", (userData, step) => {
       console.log({ userData });
-      // setQuestionCompleted(userData.questionCompleted);
-      // enteredStudents.map((item)=>{
-      //   if (item.id === userData.id) {
-          
-      //   }else{
       //     setEnteredStudents([...enteredStudents, userData]);
-      //   }
-      // })
       setEnteredStudents((prevItems) => {
-        const existingItemIndex = prevItems.findIndex(item => item.id === userData.id);
+        const existingItemIndex = prevItems.findIndex(
+          (item) => item.id === userData.id
+        );
         if (existingItemIndex !== -1) {
           return prevItems.map((item, index) =>
             index === existingItemIndex ? userData : item
@@ -51,7 +44,7 @@ const LiveResults = () => {
         } else {
           return [...prevItems, userData];
         }
-      })
+      });
       setSteps(step);
     });
     console.log(enteredStudents);
@@ -61,67 +54,80 @@ const LiveResults = () => {
 
       setRoomData(data);
     });
-    // socket.on("steps", (data) => {
-    //   // console.log("aha", data.studenData.name);
-    //   setEnteredStudents([...enteredStudents, data.studenData.name]);
-    //   setSteps(data.steps);
-    // });
-    // socket.on("questionCompleted", (data) => {
-    //   setQuestionCompleted(data);
-    // });
   }, [socket]);
 
   console.log({ enteredStudents });
   return (
     <div>
       <h1>{`This is live results ${roomData}`}</h1>
-      <h2>{QuestionCompleted}</h2>
       <TableContainer component={Container}>
-        <Table sx={{ bgcolor:"#E7EDF0"}}>
+        <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{fontSize:'x-large',fontWeight:'bolder',color:'#0075A3'}} >Name</TableCell>
-              <TableCell sx={{fontSize:'x-large',fontWeight:'bolder',color:'#0075A3'}}>Progress (%)</TableCell>
+              <TableCell sx={{ p: 1 }}>
+                <Box
+                  sx={{
+                    fontSize: "x-large",
+                    fontWeight: "bolder",
+                    color: "#0075A3",
+                    bgcolor: "#E7EDF0",
+                    p: 1,
+                  }}
+                >
+                  Name
+                </Box>
+              </TableCell>
+              <TableCell>
+                <Box
+                  sx={{
+                    fontSize: "x-large",
+                    fontWeight: "bolder",
+                    color: "#0075A3",
+                    bgcolor: "#E7EDF0",
+                    p: 1,
+                  }}
+                >
+                  Progress (%)
+                </Box>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {enteredStudents.length > 0 &&
               enteredStudents.map((item, index) => {
                 return (
-                <TableRow key={index} sx={{mb:2}}>
-                    <TableCell sx={{fontWeight:'bold',fontSize:'large'}}>{item.studentName}</TableCell>
-                  <TableCell>
-                    <Space size={70}>
+                  <TableRow key={index} sx={{ mb: 2 }}>
+                    <TableCell >
+                      <Box
+                        sx={{
+                          fontSize: "x-large",
+                          fontWeight: "bolder",
+                          bgcolor: "#F5F7F8",
+                          p: 1,
+                        }}
+                      >
+                        {item.studentName}
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Space size={70}>
                         <Progress
-                          percent={Math.floor((item.questionCompleted / steps) * 100)}
+                          percent={Math.floor(
+                            (item.questionCompleted / steps) * 100
+                          )}
                           size={[50, 20]}
                           steps={steps}
-                          strokeColor={[green[6], blue[6], red[5]]}
+                          strokeColor={blue[3]}
+                          trailColor="#E7EDF0"
                         />
-                    </Space>
-                  </TableCell>
-                </TableRow>
+                      </Space>
+                    </TableCell>
+                  </TableRow>
                 );
               })}
           </TableBody>
         </Table>
       </TableContainer>
-      {/* {enteredStudents.map((item) => {
-        return (
-          <Box display={"flex"}>
-            <Typography display={"inline-block"}>{item.studentName}</Typography>
-            <Space size={70}>
-              <Progress
-                percent={(item.questionCompleted / steps) * 100}
-                size={[50, 20]}
-                steps={steps}
-                strokeColor={[green[6], blue[6], red[5]]}
-              />
-            </Space>
-          </Box>
-        )
-      })} */}
-
     </div>
   );
 };
