@@ -11,6 +11,8 @@ const StudentLoginInfo = () => {
   const roomName = location.state?.roomName;
   console.log(id);
   let navigate = useNavigate();
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const StudentInfo = {
@@ -51,7 +53,7 @@ const StudentLoginInfo = () => {
   };
   return (
     <div>
-      <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left" }}>
+      <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left",mt:4 }}>
         <Typography variant="h5" textAlign={"center"} fontWeight={"bolder"}>
           Please enter your name and email
         </Typography>

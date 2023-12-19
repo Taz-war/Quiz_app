@@ -27,7 +27,8 @@ const LiveResults = () => {
   const { startExam,setStartExam } = useContext(CreateQuizContex);
   const [roomData, setRoomData] = useState("");
   const [steps, setSteps] = useState(0);
-  const [QuestionCompleted, setQuestionCompleted] = useState(0);
+  const [roomName,setRoomName] = useState('')
+  const [totalStudentsEntered, setTotalStudentsEntered] = useState(0);
   const [enteredStudents, setEnteredStudents] = useState([]);
   const [examDuration, setExamDuration] = useState(0);
 
@@ -39,11 +40,12 @@ const LiveResults = () => {
 
     socket.emit("joinAdminRoom", "admin");
 
-    // socket.emit('startExam',{examStarted:startExam})
+    socket.emit('startExam',{examStarted:startExam,roomName:roomName})
     // socket.emit("joinRoom", "C7h9EM");
-    socket.on("userJoined", (userData, step) => {
-      console.log({ userData });
-      //     setEnteredStudents([...enteredStudents, userData]);
+    socket.on("userJoined", (userData, step,room,userEntered) => {
+      console.log({ userEntered });
+      setTotalStudentsEntered(userEntered)
+      setRoomName(room)
       setEnteredStudents((prevItems) => {
         const existingItemIndex = prevItems.findIndex(
           (item) => item.id === userData.id
@@ -81,7 +83,7 @@ const LiveResults = () => {
   return (
     <div>
       <Container>
-        <h1>{`This is live results ${roomData}`}</h1>      
+            
           <TimerComponent />
         <TableContainer component={Container}>
           <Table>
@@ -127,6 +129,7 @@ const LiveResults = () => {
                             fontWeight: "bolder",
                             bgcolor: "#F5F7F8",
                             p: 1,
+                            borderRadius:'10px'
                           }}
                         >
                           {item.studentName}
@@ -148,6 +151,36 @@ const LiveResults = () => {
                     </TableRow>
                   );
                 })}
+                <TableRow>
+                  <TableCell sx={{p:1}}>
+                    <Box
+                    sx={{
+                      fontSize: "large",
+                      fontWeight: "bold",
+                      color: "#0075A3",
+                      bgcolor: "#e9eaf5",
+                      p: 1,
+                      borderRadius:'10px'
+                    }}
+                  >
+                    Class Total
+                  </Box>
+                  </TableCell>
+                  <TableCell>
+                  <Box
+                    sx={{
+                      fontSize: "large",
+                      fontWeight: "bold",
+                      color: "#0075A3",
+                      bgcolor: "#e9eaf5",
+                      p: 1,
+                      borderRadius:'10px'
+                    }}
+                  >
+                    {totalStudentsEntered}
+                  </Box>
+                  </TableCell>
+                </TableRow>
             </TableBody>
           </Table>
         </TableContainer>

@@ -54,10 +54,10 @@ const TimerComponent = () => {
     return String(time).padStart(2, "0");
   };
   return (
-    <Box display={"flex"}>
+    <Box display={"flex"} mt={4}>
       <Box width={"50%"} textAlign={"left"} pl={3}>
-        <Typography variant="h6" mb={2}>
-          Fix exam duration(in minutes) :
+        <Typography variant="h6" fontWeight={'bolder'} mb={2}>
+          Exam duration(in minutes) :
         </Typography>
         {/* <TextField size="small" onChange={(e)=>setExamDuration((e.target.value)*60)}>Exam duration</TextField> */}
         <TextField
@@ -81,7 +81,7 @@ const TimerComponent = () => {
           <span
             style={{
               backgroundColor: "#E7EDF0",
-              borderRadius: "10px",
+              borderRadius: "6px",
               padding: 1,
             }}
           >
@@ -91,7 +91,7 @@ const TimerComponent = () => {
           <span
             style={{
               backgroundColor: "#E7EDF0",
-              borderRadius: "10px",
+              borderRadius: "6px",
               padding: 1,
             }}
           >
@@ -101,7 +101,7 @@ const TimerComponent = () => {
           <span
             style={{
               backgroundColor: "#E7EDF0",
-              borderRadius: "10px",
+              borderRadius: "6px",
               padding: 1,
             }}
           >
@@ -110,7 +110,7 @@ const TimerComponent = () => {
         </div>
         {/* <p>{isRunning ? 'Running' : 'Not running'}</p> */}
         <Button
-          variant="contained"
+          variant="outlined"
           title="start"
           sx={{
             bgcolor: "#E8EAF6",
@@ -127,7 +127,7 @@ const TimerComponent = () => {
           />
         </Button>
         <Button
-          variant="contained"
+          variant="outlined"
           title="pause"
           sx={{
             bgcolor: "#E8EAF6",
@@ -140,7 +140,7 @@ const TimerComponent = () => {
           <PauseCircleRoundedIcon sx={{ color: "#6161c9" }} fontSize="medium" />
         </Button>
         <Button
-          variant="contained"
+          variant="outlined"
           title="resume"
           sx={{
             bgcolor: "#E8EAF6",

@@ -42,7 +42,9 @@ const Launch = () => {
   }, []);
 
   ///launch quiz live///
-  const handleLive = async (id) => {
+  const handleLive = async (id,title) => {
+    const questionTitle ={questionTitle: title}
+    
     const response = await fetch(`http://localhost:5000/questionSet/${id}`);
     const data = await response.text();
     // setQuizzes(data);
@@ -93,7 +95,7 @@ const Launch = () => {
                     <Button
                       variant="contained"
                       color="success"
-                      onClick={() => handleLive(row._id)}
+                      onClick={() => handleLive(row._id,row.questionSetTitle)}
                     >
                       Live
                     </Button>

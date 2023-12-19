@@ -10,6 +10,7 @@ import {
   Paper,
   FormLabel,
   Container,
+  Collapse,
 } from "@mui/material";
 import QuestionTypeMultipleChoice from "../../Student_Components/QuestionTypeMultipleChoice";
 import QuestionTypeShortQuestion from "../../Student_Components/QuestionTypeShortQuestion";
@@ -17,6 +18,7 @@ import QuestionTypeTrueFalse from "../../Student_Components/QuestionTypeTrueFals
 import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
 import { useEffect } from "react";
+import { Alert, Spin } from "antd";
 
 const QuestionRenderer = ({ question, answer, onChange }) => {
   switch (question.QuestionType) {
@@ -58,44 +60,40 @@ const Quiz = () => {
   console.log({ id });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [examStarted, setExamStarted] = useState(false);
   const [studentInfo, setStudentInfo] = useState({ ...studenData });
   const currentQuestion = quizData.questions[currentQuestionIndex];
   const socket = io("http://localhost:5000");
 
-  useEffect(()=>{
-    socket.on('connect', () => {
-      console.log('Connected to server');
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to server");
     });
-    socket.emit('joinRoom', 'C7h9EM', studenData, quizData.questions.length, currentQuestionIndex + 1);
+    socket.emit(
+      "joinRoom",
+      roomName,
+      studenData,
+      quizData.questions.length,
+      currentQuestionIndex
+    );
 
-    socket.on('message', (message) => {
-      console.log('fahimTazwer', message);
+    socket.on("examStarted", (data) => {
+      console.log("examStarted", data.examStarted);
+      setExamStarted(data.examStarted);
     });
-    socket.emit('sendMessage', { room: 'C7h9EM', message: 'message' });
-  },[socket,currentQuestionIndex])
 
+    socket.on("message", (message) => {
+      console.log("fahimTazwer", message);
+    });
+    // socket.emit("sendMessage", { room: "C7h9EM", message: "message" });
+  }, [socket, currentQuestionIndex]);
 
   const handleNext = async () => {
     if (currentQuestionIndex < quizData.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      
-      // socket.on('connect', () => {
-      //   console.log('Connected to server');
-      // });
-      // socket.emit('questionComplete',   currentQuestionIndex + 1)
-      // socket.emit('joinRoom', 'C7h9EM',studenData,quizData.questions.length,currentQuestionIndex + 1);
-
-      // socket.on('connectedRoom',(data)=>{
-      //   console.log('socketroom',data)
-      // })
-      // socket.emit('totalQuestions', {steps:quizData.questions.length,studenData:studenData})
-    
-      // socket.on('message', (message) => {
-      //   console.log('fahimTazwer', message);
-      // });
-      // socket.emit('sendMessage', { room: 'C7h9EM', message: 'message' });
     } else {
       // Handle quiz completion
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
       console.log("Quiz Completed", answers);
       const updatedStudentInfo = { ...studentInfo, answer: answers };
       setStudentInfo(updatedStudentInfo);
@@ -127,26 +125,42 @@ const Quiz = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <Typography variant="h5" style={{ marginBottom: "20px" }}>
-        {`${currentQuestionIndex + 1} of ${quizData.questions.length}`}
-      </Typography>
-      <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left" }}>
-        <QuestionRenderer
-          question={currentQuestion}
-          answer={answers[currentQuestion.id]}
-          onChange={handleChange}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleNext}
-          style={{ marginTop: "20px" }}
-        >
-          Submit Answer
-        </Button>
-      </Container>
-    </div>
+    <>
+      <Collapse in={examStarted}>
+        <div style={{ padding: "20px" }}>
+          <Typography variant="h5" style={{ marginBottom: "20px" }}>
+            {`${currentQuestionIndex + 1} of ${quizData.questions.length}`}
+          </Typography>
+          <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left" }}>
+            <QuestionRenderer
+              question={currentQuestion}
+              answer={answers[currentQuestion.id]}
+              onChange={handleChange}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleNext}
+              style={{ marginTop: "20px" }}
+            >
+              Submit Answer
+            </Button>
+          </Container>
+        </div>
+      </Collapse>
+      <Collapse in={examStarted === false}>
+        <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left",mt:4 }}>
+          
+          <Spin tip="Loading..." size="large">
+            <Alert
+              type="info"
+              message="Quiz hasn't started yet"
+              description="When the quiz starts you'll automatically able to access the quiz"
+            />
+          </Spin>
+        </Container>
+      </Collapse>
+    </>
   );
 };
 
