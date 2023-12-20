@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -10,61 +10,73 @@ import {
   IconButton,
   TextField,
   InputAdornment,
-} from '@mui/material';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SearchIcon from '@mui/icons-material/Search';
-
-
-const initialData = [
-  { id: 1, name: 'World Facts Quiz', date: '12/3/2023', room: 'TAZWER', type: 'Quiz' },
-  { id: 2, name: 'Untitled Quiz', date: '12/5/2023', room: 'TAZWER', type: 'Quiz' },
-  { id: 3, name: 'World new Facts Quiz', date: '12/7/2023', room: 'TAZWER', type: 'Quiz' },
-  { id: 4, name: 'World Facts Quiz', date: '12/8/2023', room: 'TAZWER', type: 'Quiz' },
-  // ... other rows
-];
+  Container,
+  Link,
+} from "@mui/material";
+import ArchiveIcon from "@mui/icons-material/Archive";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SearchIcon from "@mui/icons-material/Search";
+import { useEffect } from "react";
 
 const Reports = () => {
-  const [data, setData] = useState(initialData);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [rows, setRows] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
+  ///get published quizes
+  const getAllQuizes = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/publishedQuestions`);
+      const data = await response.json();
+      setRows(data);
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
+  useEffect(() => {
+    getAllQuizes();
+  }, []);
+
+  console.log(rows);
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearch = () => {
-    setData(data.filter(row => row.name.toLowerCase().includes(searchTerm.toLowerCase())));
+  // Filter rows based on the search term
+  const getFilteredRows = (data, term) => {
+    return data?.filter((row) => {
+      return row?.questionTitle.toLowerCase().includes(term.toLowerCase());
+    });
   };
 
-  const handleArchive = (id) => {
-    // Placeholder for archive functionality
-    console.log('Archive item with id:', id);
-  };
+  const filteredRows = getFilteredRows(rows, searchTerm);
 
   const handleDelete = (id) => {
-    setData(data.filter(row => row.id !== id));
+    setRows(rows.filter((row) => row.id !== id));
   };
 
   return (
-    <Paper sx={{ padding: '1em' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1em' }}>
-        <IconButton onClick={() => data.forEach(row => handleArchive(row.id))}>
+    <Container sx={{ padding: "1em" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "1em",
+        }}
+      >
+        <IconButton>
+          {/* Implement archive functionality here */}
           <ArchiveIcon />
         </IconButton>
         <TextField
           placeholder="Search"
+          size="small"
           value={searchTerm}
           onChange={handleSearchChange}
-          onKeyPress={(ev) => {
-            if (ev.key === 'Enter') {
-              handleSearch();
-              ev.preventDefault();
-            }
-          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={handleSearch}>
+                <IconButton onClick={() => setSearchTerm("")}>
                   <SearchIcon />
                 </IconButton>
               </InputAdornment>
@@ -76,22 +88,64 @@ const Reports = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Room</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell sx={{fontSize:'large',fontWeight:'bolder',color:'#1E75A3'}}>Name</TableCell>
+              <TableCell sx={{fontSize:'large',fontWeight:'bolder',color:'#1E75A3'}}>Date</TableCell>
+              <TableCell sx={{fontSize:'large',fontWeight:'bolder',color:'#1E75A3'}}>Room</TableCell>
+              <TableCell sx={{fontSize:'large',fontWeight:'bolder',color:'#1E75A3'}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.date}</TableCell>
-                <TableCell>{row.room}</TableCell>
-                <TableCell>{row.type}</TableCell>
+            {filteredRows.map((row) => (
+              <TableRow key={row._id}>
                 <TableCell>
-                  <IconButton onClick={() => handleArchive(row.id)}>
+                  <Link
+                    sx={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      fontWeight:'bold',
+                      "&:hover": {
+                        fontWeight:'bolder',
+                        color: "#1E75A3", 
+                      },
+                    }}
+                  >
+                    {row.questionTitle}
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  <Link
+                    sx={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      fontWeight:'bold',
+                      "&:hover": {
+                        fontWeight:'bolder',
+                        color: "#1E75A3", 
+                      },
+                    }}
+                  >
+                    {row.publishedDate}
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  <Link
+                    sx={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      fontWeight:'bold',
+                      "&:hover": {
+                        fontWeight:'bolder',
+                        color: "#1E75A3", 
+                      },
+                    }}
+                  >
+                    {row.roomName}
+                  </Link>
+                </TableCell>
+
+                <TableCell>
+                  {/* Implement archive action here */}
+                  <IconButton>
                     <ArchiveIcon />
                   </IconButton>
                   <IconButton onClick={() => handleDelete(row.id)}>
@@ -103,9 +157,8 @@ const Reports = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Paper>
+    </Container>
   );
+};
 
-}
-
-export default Reports
+export default Reports;
