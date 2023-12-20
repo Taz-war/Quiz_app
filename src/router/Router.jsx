@@ -13,6 +13,7 @@ import LiveResults from '../Pages/LiveResults'
 import StudentLogin from '../Pages/student_portal/StudentLogin'
 import Quiz from '../Pages/student_portal/Quiz'
 import StudentLoginInfo from '../Pages/student_portal/StudentLoginInfo'
+import ShowReport from '../Components/Show_report/ShowReport'
 const Router = () => {
     const { id,quizzes } = useContext(CreateQuizContex);
     console.log({id})
@@ -31,6 +32,7 @@ const Router = () => {
                 <Route path='/student/login' element={<StudentLogin />}/>
                 <Route path='/student/quiz' element={<Quiz />} />
                 <Route path='/student/studentLoginInfo' element={<StudentLoginInfo />} />
+                <Route path='/teacher/reports/:id' element={<ShowReport />} />
             </Routes>
         </BrowserRouter>
         {/* <BrowserRouter>

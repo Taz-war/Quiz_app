@@ -17,11 +17,13 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Reports = () => {
   const [rows, setRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  let navigate = useNavigate();
 
   ///get published quizes
   const getAllQuizes = async () => {
@@ -37,7 +39,11 @@ const Reports = () => {
     getAllQuizes();
   }, []);
 
-  console.log(rows);
+  ////navigate component///
+  const handleClick=(id)=>{
+    navigate(`/teacher/reports/${id}`, { state: { id: id} })
+  }
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -97,8 +103,9 @@ const Reports = () => {
           <TableBody>
             {filteredRows.map((row) => (
               <TableRow key={row._id}>
-                <TableCell>
+                <TableCell >
                   <Link
+                  onClick={()=>handleClick(row._id)}
                     sx={{
                       textDecoration: "none",
                       color: "inherit",
@@ -114,6 +121,7 @@ const Reports = () => {
                 </TableCell>
                 <TableCell>
                   <Link
+                    onClick={() => handleClick(row._id)}
                     sx={{
                       textDecoration: "none",
                       color: "inherit",
@@ -129,6 +137,7 @@ const Reports = () => {
                 </TableCell>
                 <TableCell>
                   <Link
+                    onClick={() => handleClick(row._id)}
                     sx={{
                       textDecoration: "none",
                       color: "inherit",
