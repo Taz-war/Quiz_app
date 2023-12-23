@@ -31,11 +31,11 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import DeleteModal from "../Components/QuizList_Components/DeleteModal";
 
 const QuizList = () => {
-  const {  setId, quizzes, setQuizzes } = useContext(CreateQuizContex);
+  const { setId, quizzes, setQuizzes } = useContext(CreateQuizContex);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [openDeleteModal,setOpenDeleteModal] =useState(false)
+  const [openDeleteModal, setOpenDeleteModal] = useState(false)
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -65,7 +65,7 @@ const QuizList = () => {
     }
     setSelected(newSelected);
   };
-  
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -81,7 +81,7 @@ const QuizList = () => {
     try {
       const response = await fetch(`http://localhost:5000/questionSet`);
       const data = await response.json();
-      setQuizzes(data);
+      setQuizzes(data.questions);
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -92,7 +92,7 @@ const QuizList = () => {
   }, []);
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
-  console.log({quizzes})
+  console.log({ quizzes })
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -203,6 +203,13 @@ const QuizList = () => {
                       scope="row"
                       padding="none"
                       onClick={() => setId(row._id)}
+                      sx={{
+                        fontWeight: 'bold',
+                        "&:hover": {
+                          fontWeight: 'bolder',
+                          color: "#1E75A3",
+                        },
+                      }}
                     >
                       <Link
                         to={`/EditQuiz/${row._id}`}
@@ -211,9 +218,18 @@ const QuizList = () => {
                         {row.questionSetTitle}
                       </Link>
                     </TableCell>
-                    <TableCell align="left">{row.date}</TableCell>
+                    <TableCell align="left"
+                      sx={{
+                        fontWeight: 'bold',
+                        "&:hover": {
+                          fontWeight: 'bolder',
+                          color: "#1E75A3",
+                        },
+                      }}>
+                      {row.date}
+                    </TableCell>
                     <TableCell align="right">
-                      <IconButton onClick={()=>{setId(row._id);setOpenDeleteModal(true)}}>
+                      <IconButton onClick={() => { setId(row._id); setOpenDeleteModal(true) }}>
                         <DeleteTwoToneIcon sx={{ color: "red", ml: 1, fontSize: "xx-large" }} />
                       </IconButton>
                     </TableCell>
@@ -243,7 +259,7 @@ const QuizList = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Container>
-      {openDeleteModal && <DeleteModal openDeleteModal={openDeleteModal} setOpenDeleteModal={setOpenDeleteModal}/>}
+      {openDeleteModal && <DeleteModal openDeleteModal={openDeleteModal} setOpenDeleteModal={setOpenDeleteModal} />}
     </Box>
 
   );

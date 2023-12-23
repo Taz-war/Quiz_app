@@ -34,10 +34,10 @@ const EnhancedTableHead = (props) => {
             }}
           />
         </TableCell>
-        <TableCell align='left' >
+        <TableCell align='left' sx={{ fontWeight: "bolder", fontSize: "large", color: '#1E75A3' }}>
             Name
           </TableCell>
-          <TableCell align='left' >
+        <TableCell align='left' sx={{ fontWeight: "bolder", fontSize: "large", color: '#1E75A3' }}>
             Modified date
           </TableCell>
           <TableCell align='right'>

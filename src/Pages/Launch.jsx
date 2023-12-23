@@ -22,8 +22,9 @@ import { useEffect } from "react";
 const Launch = () => {
   const { setId, quizzes, setQuizzes } = useContext(CreateQuizContex);
   const [errorMessage, setErrorMessage] = useState("");
-  const [roomName,setRoomName] =useState("")
-  const [open,setOpen] = useState(false)
+  const [publishedQuestions, setPublishedQuestions] = useState([])
+  const [roomName, setRoomName] = useState("")
+  const [open, setOpen] = useState(false)
 
   // const socket = io('http://localhost:5000');
   // console.log({socket})
@@ -32,7 +33,8 @@ const Launch = () => {
     try {
       const response = await fetch(`http://localhost:5000/questionSet`);
       const data = await response.json();
-      setQuizzes(data);
+      setQuizzes(data.questions);
+      setPublishedQuestions(data.studentIds)
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -42,9 +44,9 @@ const Launch = () => {
   }, []);
 
   ///launch quiz live///
-  const handleLive = async (id,title) => {
-    const questionTitle ={questionTitle: title}
-    
+  const handleLive = async (id, title) => {
+    const questionTitle = { questionTitle: title }
+
     const response = await fetch(`http://localhost:5000/questionSet/${id}`);
     const data = await response.text();
     // setQuizzes(data);
@@ -67,7 +69,7 @@ const Launch = () => {
           >
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: "bolder", fontSize: "large" }}>
+                <TableCell sx={{ fontWeight: "bolder", fontSize: "large", color: '#1E75A3' }}>
                   Title
                 </TableCell>
                 <TableCell
@@ -75,6 +77,7 @@ const Launch = () => {
                     fontWeight: "bolder",
                     fontSize: "large",
                     textAlign: "left",
+                    color: '#1E75A3'
                   }}
                 >
                   Status
@@ -83,25 +86,40 @@ const Launch = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {quizzes.map((row, index) => (
-                <TableRow key={index} hover sx={{ cursor: "pointer" }}>
-                  <TableCell component="th" scope="row">
-                    {row.questionSetTitle}
-                  </TableCell>
-                  <TableCell align="right" sx={{ textAlign: "left" }}>
-                    Unpublished
-                  </TableCell>
-                  <TableCell align="right">
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={() => handleLive(row._id,row.questionSetTitle)}
-                    >
-                      Live
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {quizzes.map((row, index) => {
+                const isPublished = publishedQuestions.some(pq => pq._id === row._id);
+                return (
+                  <TableRow key={index} hover sx={{ cursor: "pointer" }}>
+                    <TableCell component="th" scope="row" sx={{
+                      fontWeight: 'bold',
+                      "&:hover": {
+                        fontWeight: 'bolder',
+                        color: "#1E75A3",
+                      },
+                    }}>
+                      {row.questionSetTitle}
+                    </TableCell>
+                    <TableCell align="right" sx={{
+                      textAlign: "left", fontWeight: 'bold',
+                      "&:hover": {
+                        fontWeight: 'bolder',
+                        color: "#1E75A3",
+                      }
+                    }}>
+                      {isPublished ? 'Published' : 'Unpublished'}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Button
+                        variant="contained"
+                        color="success"
+                        onClick={() => handleLive(row._id, row.questionSetTitle)}
+                      >
+                        Live
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -109,18 +127,18 @@ const Launch = () => {
       <Drawer
         anchor={'right'}
         open={open}
-        onClose={()=>setOpen(false)}
-        
+        onClose={() => setOpen(false)}
+
       >
-        <Box sx={{maxWidth:'720px',minWidth:'400px'}}>
+        <Box sx={{ maxWidth: '720px', minWidth: '400px' }}>
           <Typography variant="h4" fontWeight={'bold'}>
-                Invite Students
+            Invite Students
           </Typography>
           <Container>
             <br />
-          <Typography variant="h3" >
-               Visit <b>gosocrative.com</b> and enter room name <span style={{color:'skyblue'}}>'{roomName}'</span>
-          </Typography>
+            <Typography variant="h3" >
+              Visit <b>gosocrative.com</b> and enter room name <span style={{ color: 'skyblue' }}>'{roomName}'</span>
+            </Typography>
           </Container>
         </Box>
         {/* {list(anchor)} */}
