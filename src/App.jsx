@@ -8,13 +8,15 @@ import Navbar from './Components/NavBar/NavBar';
 import Router from './router/Router';
 import Quiz from './Pages/student_portal/Quiz';
 import { CssBaseline } from '@mui/material';
+import TeacherLogin from './Pages/Login_portal/TeacherLogin';
 
 function App() {
   return (
     <div className="App">
       {/* <CreateQuiz /> */}
       {/* <QuizList /> */}
-      <Router />
+      {/* <Router /> */}
+      <TeacherLogin />
       {/* <CssBaseline />
       <Quiz /> */}
       {/* <Navbar /> */}
