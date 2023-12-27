@@ -15,7 +15,7 @@ import {
   Container,
 } from "@mui/material";
 
-const SignUpForm = () => {
+const TeacherSignUpForm = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -48,21 +48,14 @@ const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch(`http://localhost:5000/teacher/signUp/1`, {
-      method: "POST",
-      body: "hello",
-      //   headers: { "Content-type": "application/json" },
-    });
-    const data = await response.json();
-    console.log(data);
-    return;
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
         formData.password
       );
-      // Handle the user information, possibly storing additional data in Firestore
+      console.log('Firebase Auth User Created', userCredential.user);
+
       const newUser = {
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -71,24 +64,29 @@ const SignUpForm = () => {
         role: formData.role,
         phoneNumber: formData.phoneNumber,
       };
-      console.log(userCredential.user.uid);
-      const response = await fetch(
-        `http://localhost:5000/teacher/signUp/${userCredential.user.uid}`,
-        {
-          method: "POST",
-          body: JSON.stringify(newUser),
-          headers: { "Content-type": "application/json" },
-        }
-      );
 
-      if (!response.ok)
+      const apiURL = `http://localhost:5000/teacher/signUp/${userCredential.user.uid}`;
+      console.log('API URL', apiURL);
+
+      const response = await fetch(apiURL, {
+        method: "POST",
+        body: JSON.stringify(newUser),
+        headers: { "Content-type": "application/json" },
+      });
+
+      if (!response.ok) {
+        // This will catch HTTP errors like 404 or 500
         throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      console.log(data);
+      } else {
+        // Successful response
+        const data = await response.json();
+        console.log('Server Response Data', data);
+      }
     } catch (error) {
-      console.error("Error creating an account: ", error);
+      console.error("Error creating an account or making API call: ", error);
     }
   };
+
 
   return (
     <Container>
@@ -208,4 +206,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default TeacherSignUpForm;
