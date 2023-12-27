@@ -1,37 +1,49 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase.config';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import { Button, TextField, Container, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
-import { Container } from '@mui/material';
 
 const TeacherLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-  
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
     const handleLogin = async (event) => {
       event.preventDefault();
+      setLoading(true);
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        // handle successful login
+        navigate('/teacher/SignUp'); // Redirect to dashboard on successful login
+        console.log('go to next page')
       } catch (error) {
-        // handle errors
+        setError('Failed to log in'); // Display error message
       }
+      setLoading(false);
     };
   
     const handleGoogleSignIn = async () => {
       const provider = new GoogleAuthProvider();
+      setLoading(true);
       try {
         await signInWithPopup(auth, provider);
-        // handle successful login
+        // navigate('/dashboard');
+        console.log('go to next page')
       } catch (error) {
-        // handle errors
+        setError('Failed to log in with Google');
       }
+      setLoading(false);
     };
   
     return (
       <Container>
+        <Typography variant="h4" style={{ textAlign: 'center', margin: '20px 0' }}>
+          Teacher Login
+        </Typography>
+        {error && <Typography color="error">{error}</Typography>}
         <form onSubmit={handleLogin}>
           <TextField
             label="Email"
@@ -50,11 +62,21 @@ const TeacherLogin = () => {
             fullWidth
             margin="normal"
           />
-          <Button variant="contained" color="primary" type="submit" fullWidth>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            type="submit" 
+            fullWidth 
+            disabled={loading}>
             Sign In
           </Button>
           <div style={{ margin: '20px 0', textAlign: 'center' }}>Or</div>
-          <Button variant="outlined" startIcon={<GoogleIcon />} onClick={handleGoogleSignIn} fullWidth>
+          <Button 
+            variant="outlined" 
+            startIcon={<GoogleIcon />} 
+            onClick={handleGoogleSignIn} 
+            fullWidth 
+            disabled={loading}>
             Sign in with Google
           </Button>
         </form>
@@ -62,4 +84,4 @@ const TeacherLogin = () => {
     );
 }
 
-export default TeacherLogin
+export default TeacherLogin;

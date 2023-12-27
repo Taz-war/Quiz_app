@@ -14,12 +14,14 @@ import StudentLogin from '../Pages/student_portal/StudentLogin'
 import Quiz from '../Pages/student_portal/Quiz'
 import StudentLoginInfo from '../Pages/student_portal/StudentLoginInfo'
 import ShowReport from '../Components/Show_report/ShowReport'
+import TeacherLogin from '../Pages/Login_portal/TeacherLogin'
+import TeacherSignUp from '../Pages/Login_portal/TeacherSignUp'
 const Router = () => {
     const { id,quizzes } = useContext(CreateQuizContex);
     console.log({id})
     return (
         <>
-        <BrowserRouter>
+        {/* <BrowserRouter>
             <Navbar />
             <Routes>
                 <Route path='/Library' element={<QuizList />}/>
@@ -34,18 +36,18 @@ const Router = () => {
                 <Route path='/student/studentLoginInfo' element={<StudentLoginInfo />} />
                 <Route path='/teacher/reports/:id' element={<ShowReport />} />
             </Routes>
-        </BrowserRouter>
-        {/* <BrowserRouter>
+        </BrowserRouter> */}
+        <BrowserRouter>
             <Navbar />
             <Routes>
                 
-                <Route path='/CreateQuiz' element={<CreateQuiz />} />
-                <Route path='/' element={<Launch />} />
-                <Route path='/Rooms' element={<Rooms />} />
-                <Route path='/Reports' element={<Reports />} />
-                <Route path='/LiveResult' element={<LiveResults />} />
+                {/* <Route path='/CreateQuiz' element={<CreateQuiz />} /> */}
+                <Route path='/' element={<TeacherLogin />} />
+                <Route path='/teacher/SignUp' element={<TeacherSignUp />} />
+                {/* <Route path='/Reports' element={<Reports />} />
+                <Route path='/LiveResult' element={<LiveResults />} /> */}
             </Routes>
-        </BrowserRouter> */}
+        </BrowserRouter>
         </>
     )
 }

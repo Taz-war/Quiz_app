@@ -15,8 +15,8 @@ function App() {
     <div className="App">
       {/* <CreateQuiz /> */}
       {/* <QuizList /> */}
-      {/* <Router /> */}
-      <TeacherLogin />
+      <Router />
+      {/* <TeacherLogin /> */}
       {/* <CssBaseline />
       <Quiz /> */}
       {/* <Navbar /> */}
