@@ -21,13 +21,15 @@ const Router = () => {
     console.log({id})
     return (
         <>
-        {/* <BrowserRouter>
+        <BrowserRouter>
             <Navbar />
             <Routes>
+                <Route path='/' element={<TeacherLogin />} />
+                <Route path='/teacher/SignUp' element={<TeacherSignUp />} />
                 <Route path='/Library' element={<QuizList />}/>
                 <Route path='/EditQuiz/:QId' element={<EditQuiz quizzes={quizzes} id={id}/>} />
                 <Route path='/CreateQuiz' element={<CreateQuiz />} />
-                <Route path='/' element={<Launch />} />
+                <Route path='/Launch' element={<Launch />} />
                 <Route path='/Rooms' element={<Rooms />} />
                 <Route path='/Reports' element={<Reports />} />
                 <Route path='/LiveResult' element={<LiveResults />} />
@@ -36,18 +38,18 @@ const Router = () => {
                 <Route path='/student/studentLoginInfo' element={<StudentLoginInfo />} />
                 <Route path='/teacher/reports/:id' element={<ShowReport />} />
             </Routes>
-        </BrowserRouter> */}
-        <BrowserRouter>
+        </BrowserRouter>
+        {/* <BrowserRouter>
             <Navbar />
             <Routes>
                 
-                {/* <Route path='/CreateQuiz' element={<CreateQuiz />} /> */}
+                <Route path='/CreateQuiz' element={<CreateQuiz />} />
                 <Route path='/' element={<TeacherLogin />} />
                 <Route path='/teacher/SignUp' element={<TeacherSignUp />} />
-                {/* <Route path='/Reports' element={<Reports />} />
-                <Route path='/LiveResult' element={<LiveResults />} /> */}
+                <Route path='/Reports' element={<Reports />} />
+                <Route path='/LiveResult' element={<LiveResults />} />
             </Routes>
-        </BrowserRouter>
+        </BrowserRouter> */}
         </>
     )
 }

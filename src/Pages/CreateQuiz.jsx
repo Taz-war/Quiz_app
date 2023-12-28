@@ -23,7 +23,7 @@ import { Link } from "react-router-dom";
 // import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData"; // Corrected the import statement
 
 const CreateQuiz = () => {
-  const { open, setOpen } = useContext(CreateQuizContex);
+  const { open, setOpen,userId } = useContext(CreateQuizContex);
   const [componentsToRender, setComponentsToRender] = useState([]);
   const [value, setValue] = useState("Untitled Quiz");
   const [isEditing, setIsEditing] = useState(false);
@@ -31,6 +31,7 @@ const CreateQuiz = () => {
   const [question, setQuestion] = useState({});
 
   // console.log(question.questions[0].QuestionTitle)
+  console.log(userId)
 
   const handleEditClick = () => setIsEditing(true);
   const handleSaveClick = () => setIsEditing(false);
@@ -44,7 +45,7 @@ const CreateQuiz = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000/questionSet`, {
+      const response = await fetch(`http://localhost:5000/questionSet/${userId}`, {
         method: "POST",
         body: JSON.stringify(newQuestion),
         headers: { "Content-type": "application/json" },
@@ -127,7 +128,7 @@ const CreateQuiz = () => {
               onClick={() => handleSave()}
             >
               <Link
-                to={`/`}
+                to={`/Launch`}
                 style={{ color: "inherit", textDecoration: "none" }}
               >
                 Save and Exit

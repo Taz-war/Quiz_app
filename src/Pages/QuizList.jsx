@@ -31,7 +31,7 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import DeleteModal from "../Components/QuizList_Components/DeleteModal";
 
 const QuizList = () => {
-  const { setId, quizzes, setQuizzes } = useContext(CreateQuizContex);
+  const { setId, quizzes, setQuizzes,userId } = useContext(CreateQuizContex);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -79,7 +79,7 @@ const QuizList = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const getAllQuizes = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/questionSet`);
+      const response = await fetch(`http://localhost:5000/questionSet/${userId}`);
       const data = await response.json();
       setQuizzes(data.questions);
     } catch (error) {

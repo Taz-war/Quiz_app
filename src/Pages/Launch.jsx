@@ -17,21 +17,19 @@ import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 // import io from "socket.io-client";
 
 const Launch = () => {
-  const { setId, quizzes, setQuizzes } = useContext(CreateQuizContex);
+  const { setId, quizzes, setQuizzes,setUserId,userId } = useContext(CreateQuizContex);
   const [errorMessage, setErrorMessage] = useState("");
   const [publishedQuestions, setPublishedQuestions] = useState([])
   const [roomName, setRoomName] = useState("")
   const [open, setOpen] = useState(false)
 
-  // const socket = io('http://localhost:5000');
-  // console.log({socket})
-
   const getAllQuizes = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/questionSet`);
+      const response = await fetch(`http://localhost:5000/questionSet/${userId}`);
       const data = await response.json();
       setQuizzes(data.questions);
       setPublishedQuestions(data.studentIds)

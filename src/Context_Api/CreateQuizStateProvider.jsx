@@ -7,9 +7,10 @@ const CreateQuizStateProvider = ({children}) => {
   const [id,setId] =useState('')
   const [open, setOpen] = useState(false);
   const [startExam,setStartExam] = useState(false)
+  const [userId,setUserId] =useState('')
   return (
     <div>
-        <CreateQuizContex.Provider value={{open,setOpen,id,setId,quizzes, setQuizzes,startExam,setStartExam}}>
+        <CreateQuizContex.Provider value={{open,setOpen,id,setId,quizzes, setQuizzes,startExam,setStartExam,setUserId,userId}}>
             {children}
         </CreateQuizContex.Provider>
     </div>

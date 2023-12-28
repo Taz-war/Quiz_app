@@ -4,8 +4,11 @@ import { auth } from '../../firebase.config';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { Button, TextField, Container, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useContext } from 'react';
+import { CreateQuizContex } from '../../Context_Api/CreateQuizStateProvider';
 
 const TeacherLogin = () => {
+  const { setUserId,userId } = useContext(CreateQuizContex);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -16,8 +19,10 @@ const TeacherLogin = () => {
       event.preventDefault();
       setLoading(true);
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        navigate('/teacher/SignUp'); // Redirect to dashboard on successful login
+        const userCredential= await signInWithEmailAndPassword(auth, email, password);
+        console.log({userCredential})
+        await setUserId(userCredential.user.uid )
+        navigate('/Launch',{ state: { id: userCredential.user.uid }}); // Redirect to dashboard on successful login
         console.log('go to next page')
       } catch (error) {
         setError('Failed to log in'); // Display error message

@@ -14,8 +14,12 @@ import {
   FormControlLabel,
   Container,
 } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
 
 const TeacherSignUpForm = () => {
+  const { setUserId,userId } = useContext(CreateQuizContex);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -28,6 +32,7 @@ const TeacherSignUpForm = () => {
     phoneNumber: "",
     agreeToTerms: false,
   });
+  const navigate = useNavigate();
 
   const handleNext = () => {
     if (step < 3) setStep(step + 1);
@@ -55,7 +60,7 @@ const TeacherSignUpForm = () => {
         formData.password
       );
       console.log('Firebase Auth User Created', userCredential.user);
-
+      await setUserId(userCredential.user.uid)
       const newUser = {
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -73,6 +78,7 @@ const TeacherSignUpForm = () => {
         body: JSON.stringify(newUser),
         headers: { "Content-type": "application/json" },
       });
+      navigate('/Launch');
 
       if (!response.ok) {
         // This will catch HTTP errors like 404 or 500

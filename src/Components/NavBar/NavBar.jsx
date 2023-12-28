@@ -43,7 +43,7 @@ const Navbar = () => {
           onClick={() => handleButtonClick("Launch")}
         >
           <NavLink
-            to={`/`}
+            to={`/Launch`}
             style={({ isActive, isPending, isTransitioning }) => {
               return {
                 fontWeight: isActive ? "bold" : "",
