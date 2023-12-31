@@ -14,13 +14,15 @@ import {
   FormControlLabel,
   Container,
 } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from "react";
 import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
 
 
 const TeacherSignUpForm = () => {
   const { setUserId,userId } = useContext(CreateQuizContex);
+  const location = useLocation();
+  const id = location.state?.id;
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",

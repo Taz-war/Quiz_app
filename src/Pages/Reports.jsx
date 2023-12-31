@@ -18,8 +18,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 
 const Reports = () => {
+  const { userId } = useContext(CreateQuizContex);
   const [rows, setRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -28,7 +31,7 @@ const Reports = () => {
   ///get published quizes
   const getAllQuizes = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/publishedQuestions`);
+      const response = await fetch(`http://localhost:5000/publishedQuestions/${userId}`);
       const data = await response.json();
       setRows(data);
     } catch (error) {

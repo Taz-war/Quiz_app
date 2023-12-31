@@ -41,12 +41,15 @@ const Launch = () => {
     getAllQuizes();
   }, []);
 
+  console.log('faky',publishedQuestions)
   ///launch quiz live///
   const handleLive = async (id, title) => {
     const questionTitle = { questionTitle: title }
 
-    const response = await fetch(`http://localhost:5000/questionSet/${id}`);
+    const response = await fetch(`http://localhost:5000/LaunchQuestionSet/${id}`);
     const data = await response.text();
+
+    // const studentCollectionResponse = await fetch(`http://localhost:5000/launchedQuestions/${id}`)
     // setQuizzes(data);
     console.log(data);
     setRoomName(data)

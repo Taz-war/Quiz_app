@@ -39,13 +39,14 @@ const CreateQuiz = () => {
   const handleSave = async () => {
     const currentDate = new Date().toLocaleDateString();
     const newQuestion = {
+      userId:userId,
       date: currentDate,
       questionSetTitle: value,
       questions: questionSet,
     };
 
     try {
-      const response = await fetch(`http://localhost:5000/questionSet/${userId}`, {
+      const response = await fetch(`http://localhost:5000/questionSet`, {
         method: "POST",
         body: JSON.stringify(newQuestion),
         headers: { "Content-type": "application/json" },
