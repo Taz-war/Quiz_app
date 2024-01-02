@@ -17,25 +17,26 @@ import {
   TextField,
   Button,
   Collapse,
+  Slide,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import SearchIcon from "@mui/icons-material/Search";
-import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 import RadioButtonUncheckedOutlinedIcon from "@mui/icons-material/RadioButtonUncheckedOutlined";
 import { useState } from "react";
 import EnhancedTableHead from "../Components/QuizList_Components/EnhancedTableHead";
 import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import { Link } from "react-router-dom";
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import DeleteModal from "../Components/QuizList_Components/DeleteModal";
 
 const QuizList = () => {
-  const { setId, quizzes, setQuizzes,userId } = useContext(CreateQuizContex);
+  const { setId, quizzes, setQuizzes, userId } = useContext(CreateQuizContex);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false)
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -79,7 +80,9 @@ const QuizList = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const getAllQuizes = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/questionSet/${userId}`);
+      const response = await fetch(
+        `http://localhost:5000/questionSet/${userId}`
+      );
       const data = await response.json();
       setQuizzes(data.questions);
     } catch (error) {
@@ -92,7 +95,7 @@ const QuizList = () => {
   }, []);
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
-  console.log({ quizzes })
+  console.log({ quizzes });
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -130,13 +133,13 @@ const QuizList = () => {
             />
 
             {/* New Folder Button */}
-            <Button
+            {/* <Button
               variant="contained"
               startIcon={<AddCircleOutlineIcon />}
               sx={{ mr: 1 }}
             >
               New Folder
-            </Button>
+            </Button> */}
 
             {/* Add Quiz Button */}
             <Button
@@ -158,110 +161,144 @@ const QuizList = () => {
             Deleted
           </Button>
         </Box>
+        {quizzes.length === 0 ? (
+          <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+            <Box
+              sx={{
+                textAlign: "center",
+                my: 5,
+                p: 3,
+                boxShadow: 3,
+                borderRadius: 2,
+                backgroundColor: "#f5f5f5",
+              }}
+            >
+              <MenuBookIcon sx={{ fontSize: 60, color: "primary.main" }} />
+              <Typography variant="h4" color="primary" gutterBottom fontWeight={'bolder'} fontFamily={'Raleway'}>
+                No quizzes available
+              </Typography>
+              <Typography variant="h6">Start by creating a new quiz</Typography>
+            </Box>
+          </Slide>
+        ) : (
+          <>
+            <TableContainer>
+              <Table
+                sx={{ minWidth: 750 }}
+                aria-labelledby="tableTitle"
+                size={"medium"}
+              >
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  onSelectAllClick={handleSelectAllClick}
+                  rowCount={quizzes.length}
+                  selected={selected}
+                />
+                <TableBody>
+                  {quizzes.map((row, index) => {
+                    console.log(row);
+                    const isItemSelected = isSelected(row._id);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={"medium"}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              onSelectAllClick={handleSelectAllClick}
-              rowCount={quizzes.length}
-              selected={selected}
-            />
-            <TableBody>
-              {quizzes.map((row, index) => {
-                console.log(row);
-                const isItemSelected = isSelected(row._id);
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row._id)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row._id}
-                    selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Radio
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                      onClick={() => setId(row._id)}
-                      sx={{
-                        fontWeight: 'bold',
-                        "&:hover": {
-                          fontWeight: 'bolder',
-                          color: "#1E75A3",
-                        },
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, row._id)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row._id}
+                        selected={isItemSelected}
+                        sx={{ cursor: "pointer" }}
+                      >
+                        <TableCell padding="checkbox">
+                          <Radio
+                            color="primary"
+                            checked={isItemSelected}
+                            inputProps={{
+                              "aria-labelledby": labelId,
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                          onClick={() => setId(row._id)}
+                          sx={{
+                            fontWeight: "bold",
+                            "&:hover": {
+                              fontWeight: "bolder",
+                              color: "#1E75A3",
+                            },
+                          }}
+                        >
+                          <Link
+                            to={`/EditQuiz/${row._id}`}
+                            style={{ color: "inherit", textDecoration: "none" }}
+                          >
+                            {row.questionSetTitle}
+                          </Link>
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            fontWeight: "bold",
+                            "&:hover": {
+                              fontWeight: "bolder",
+                              color: "#1E75A3",
+                            },
+                          }}
+                        >
+                          {row.date}
+                        </TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            onClick={() => {
+                              setId(row._id);
+                              setOpenDeleteModal(true);
+                            }}
+                          >
+                            <DeleteTwoToneIcon
+                              sx={{ color: "red", ml: 1, fontSize: "xx-large" }}
+                            />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                  {emptyRows > 0 && (
+                    <TableRow
+                      style={{
+                        height: 53 * emptyRows,
                       }}
                     >
-                      <Link
-                        to={`/EditQuiz/${row._id}`}
-                        style={{ color: "inherit", textDecoration: "none" }}
-                      >
-                        {row.questionSetTitle}
-                      </Link>
-                    </TableCell>
-                    <TableCell align="left"
-                      sx={{
-                        fontWeight: 'bold',
-                        "&:hover": {
-                          fontWeight: 'bolder',
-                          color: "#1E75A3",
-                        },
-                      }}>
-                      {row.date}
-                    </TableCell>
-                    <TableCell align="right">
-                      <IconButton onClick={() => { setId(row._id); setOpenDeleteModal(true) }}>
-                        <DeleteTwoToneIcon sx={{ color: "red", ml: 1, fontSize: "xx-large" }} />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: 53 * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={quizzes.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={quizzes.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </>
+        )}
       </Container>
-      {openDeleteModal && <DeleteModal openDeleteModal={openDeleteModal} setOpenDeleteModal={setOpenDeleteModal} />}
+      {openDeleteModal && (
+        <DeleteModal
+          openDeleteModal={openDeleteModal}
+          setOpenDeleteModal={setOpenDeleteModal}
+        />
+      )}
     </Box>
-
   );
 };
 

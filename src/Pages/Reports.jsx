@@ -12,6 +12,9 @@ import {
   InputAdornment,
   Container,
   Link,
+  Slide,
+  Box,
+  Typography,
 } from "@mui/material";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -20,6 +23,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 const Reports = () => {
   const { userId } = useContext(CreateQuizContex);
@@ -93,6 +97,20 @@ const Reports = () => {
           }}
         />
       </div>
+      {rows.length === 0 ? (
+          <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <Box sx={{ textAlign: 'center', my: 5, p: 3, boxShadow: 3, borderRadius: 2, backgroundColor: '#f5f5f5' }}>
+            <MenuBookIcon sx={{ fontSize: 60, color: 'primary.main' }} />
+            <Typography variant="h4" color="primary" gutterBottom fontWeight={'bolder'} fontFamily={'Raleway'} >
+              No quiz published yet
+            </Typography>
+            <Typography variant="h6">
+              Start by launching a quiz
+            </Typography>
+          </Box>
+        </Slide>
+
+        ):(
       <TableContainer>
         <Table>
           <TableHead>
@@ -169,6 +187,7 @@ const Reports = () => {
           </TableBody>
         </Table>
       </TableContainer>
+        )}
     </Container>
   );
 };

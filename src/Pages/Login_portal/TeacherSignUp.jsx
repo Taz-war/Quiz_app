@@ -23,21 +23,30 @@ const TeacherSignUpForm = () => {
   const { setUserId,userId } = useContext(CreateQuizContex);
   const location = useLocation();
   const id = location.state?.id;
+  console.log('tazz',id)
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
+    confirmPassword: "",
     organizationType: "",
     organizationName: "",
     role: "",
     phoneNumber: "",
     agreeToTerms: false,
   });
+  const [validationMessage, setValidationMessage] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
 
   const handleNext = () => {
+    setPasswordError('');
+    if (step === 1 && formData.password !== formData.confirmPassword) {
+      setPasswordError('Passwords do not match');
+      return; // Prevent going to next step
+    }
     if (step < 3) setStep(step + 1);
   };
 
@@ -56,6 +65,11 @@ const TeacherSignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setValidationMessage('');
+    if (formData.password !== formData.confirmPassword) {
+      setValidationMessage('Passwords do not match');
+      return; // Stop the form submission
+    }
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -131,6 +145,16 @@ const TeacherSignUpForm = () => {
               onChange={handleInputChange}
               fullWidth
               margin="normal"
+            />
+            <TextField
+              label="Confirm Password"
+              name="confirmPassword"
+              type="password"
+              onChange={handleInputChange}
+              fullWidth
+              margin="normal"
+              error={!!passwordError} // Show error style if there is a password error
+              helperText={passwordError} // Display the password error message
             />
             <Button variant="contained" onClick={handleNext}>
               Next

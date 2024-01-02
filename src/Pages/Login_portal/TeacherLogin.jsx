@@ -56,7 +56,7 @@ const TeacherLogin = () => {
             navigate('/Launch', { state: { id: user.uid }});
         } else {
             // User doesn't exist, navigate to sign-up page
-            navigate('/teacher/signup',{ state: { id: user.uid }});
+            navigate('/teacher/GoogleSignUp',{ state: { id: user.uid }});
         }
     } catch (error) {
         setError('Failed to log in with Google');

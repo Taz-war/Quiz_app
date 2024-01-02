@@ -3,7 +3,9 @@ import {
   Button,
   Container,
   Drawer,
+  Fade,
   Paper,
+  Slide,
   Table,
   TableBody,
   TableCell,
@@ -17,8 +19,7 @@ import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-// import io from "socket.io-client";
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 const Launch = () => {
   const { setId, quizzes, setQuizzes,setUserId,userId } = useContext(CreateQuizContex);
@@ -59,9 +60,24 @@ const Launch = () => {
     console.log("live", id);
   };
 
+console.log('heda',quizzes)
   return (
     <>
       <Container sx={{ mt: 2 }}>
+        {quizzes.length === 0 ? (
+          <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <Box sx={{ textAlign: 'center', my: 5, p: 3, boxShadow: 3, borderRadius: 2, backgroundColor: '#f5f5f5' }}>
+            <MenuBookIcon sx={{ fontSize: 60, color: 'primary.main' }} />
+            <Typography variant="h4" color="primary" gutterBottom fontWeight={'bolder'} fontFamily={'Raleway'}>
+              No quizzes available
+            </Typography>
+            <Typography variant="h6">
+              Start by creating a new quiz
+            </Typography>
+          </Box>
+        </Slide>
+
+        ) :(
         <TableContainer component={Paper}>
           <Table
             sx={{ minWidth: 750 }}
@@ -124,6 +140,8 @@ const Launch = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        )
+        }
       </Container>
       <Drawer
         anchor={'right'}
