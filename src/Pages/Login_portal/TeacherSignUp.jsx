@@ -13,6 +13,7 @@ import {
   Checkbox,
   FormControlLabel,
   Container,
+  Grid,
 } from "@mui/material";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from "react";
@@ -84,6 +85,7 @@ const TeacherSignUpForm = () => {
         organizationType: formData.organizationType,
         organizationName: formData.organizationName,
         role: formData.role,
+        email:formData.email,
         phoneNumber: formData.phoneNumber,
       };
 
@@ -114,126 +116,170 @@ const TeacherSignUpForm = () => {
   return (
     <Container>
       <form onSubmit={handleSubmit}>
-        {step === 1 && (
-          <>
-            <TextField
-              label="First Name"
-              name="firstName"
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Last Name"
-              name="lastName"
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Email"
-              name="email"
-              type="email"
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Password"
-              name="password"
-              type="password"
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Confirm Password"
-              name="confirmPassword"
-              type="password"
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-              error={!!passwordError} // Show error style if there is a password error
-              helperText={passwordError} // Display the password error message
-            />
-            <Button variant="contained" onClick={handleNext}>
-              Next
-            </Button>
-          </>
-        )}
-
-        {step === 2 && (
-          <>
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Organization Type</InputLabel>
-              <Select
-                name="organizationType"
-                value={formData.organizationType}
-                onChange={handleInputChange}
-                label="Organization Type"
-              >
-                <MenuItem value="school">Primary/Secondary School</MenuItem>
-                <MenuItem value="university">University</MenuItem>
-                <MenuItem value="corporate">Corporate</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
-              </Select>
-            </FormControl>
-            {formData.organizationType === "other" && (
-              <TextField
-                label="Organization Name"
-                name="organizationName"
-                onChange={handleInputChange}
-                fullWidth
-                margin="normal"
-              />
-            )}
-            <Button variant="contained" onClick={handlePrevious}>
-              Previous
-            </Button>
-            <Button variant="contained" onClick={handleNext}>
-              Next
-            </Button>
-          </>
-        )}
-
-        {step === 3 && (
-          <>
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Role</InputLabel>
-              <Select
-                name="role"
-                value={formData.role}
-                onChange={handleInputChange}
-                label="Role"
-              >
-                {/* Roles options here */}
-              </Select>
-            </FormControl>
-            <TextField
-              label="Phone Number (optional)"
-              name="phoneNumber"
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={formData.agreeToTerms}
-                  onChange={handleCheckboxChange}
-                  name="agreeToTerms"
+          {step === 1 && (
+            <>
+        <Grid container spacing={2} alignItems="center" justifyContent="center">
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="First Name"
+                  name="firstName"
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
                 />
-              }
-              label="I agree to the terms and privacy policy."
-            />
-            <Button variant="contained" onClick={handlePrevious}>
-              Previous
-            </Button>
-            <Button type="submit" variant="contained">
-              Finish
-            </Button>
-          </>
-        )}
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="Last Name"
+                  name="lastName"
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="Email"
+                  name="email"
+                  type="email"
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="Password"
+                  name="password"
+                  type="password"
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  type="password"
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                  error={!!passwordError}
+                  helperText={passwordError}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}></Grid>
+              </Grid>
+                <Button variant="contained" onClick={handleNext} sx={{mt:2}}>
+                  Next
+                </Button>
+              
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Organization Type</InputLabel>
+                  <Select
+                    name="organizationType"
+                    value={formData.organizationType}
+                    onChange={handleInputChange}
+                    label="Organization Type"
+                  >
+                    <MenuItem value="school">Primary/Secondary School</MenuItem>
+                    <MenuItem value="university">University</MenuItem>
+                    <MenuItem value="corporate">Corporate</MenuItem>
+                    <MenuItem value="other">Other</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              {formData.organizationType !== "" && (
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    label="Organization Name"
+                    name="organizationName"
+                    onChange={handleInputChange}
+                    fullWidth
+                    margin="normal"
+                  />
+                </Grid>
+              )}
+            </Grid>
+            <Grid container spacing={2} alignItems="center" justifyContent="center" mt={3}>
+              <Grid item xs={12} md={6}>
+                <Button variant="contained" onClick={handlePrevious}>
+                  Previous
+                </Button>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Button variant="contained" onClick={handleNext}>
+                  Next
+                </Button>
+              </Grid>
+            </Grid>
+            </>
+          )}
+
+          {step === 3 && (
+            <>
+            <Grid container spacing={2} alignItems="center" justifyContent="center">
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Role</InputLabel>
+                  <Select
+                    name="role"
+                    value={formData.role}
+                    onChange={handleInputChange}
+                    label="Role"
+                  >
+                    <MenuItem value="teacher">Teacher</MenuItem>
+                    <MenuItem value="administrator">Administrator</MenuItem>
+                    <MenuItem value="it">IT/Technology</MenuItem>
+                    <MenuItem value="other">Other</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="Phone Number (optional)"
+                  name="phoneNumber"
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={formData.agreeToTerms}
+                      onChange={handleCheckboxChange}
+                      name="agreeToTerms"
+                    />
+                  }
+                  label="I agree to the terms and privacy policy."
+                />
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} alignItems="center" justifyContent="center">
+              <Grid item xs={12} md={6}>
+                <Button variant="contained" onClick={handlePrevious}>
+                  Previous
+                </Button>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Button type="submit" variant="contained">
+                  Finish
+                </Button>
+              </Grid>
+            </Grid>
+            </>
+          )}
+
       </form>
     </Container>
   );

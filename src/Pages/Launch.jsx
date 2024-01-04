@@ -22,12 +22,12 @@ import { useEffect } from "react";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 const Launch = () => {
-  const { setId, quizzes, setQuizzes,setUserId,userId,setUserName } = useContext(CreateQuizContex);
+  const {quizzes, setQuizzes, userId, setUserName, userInfo, setUserInfo } = useContext(CreateQuizContex);
   const [errorMessage, setErrorMessage] = useState("");
   const [publishedQuestions, setPublishedQuestions] = useState([])
   const [roomName, setRoomName] = useState("")
   const [open, setOpen] = useState(false)
-  const [userInfo,setUserInfo] = useState()
+  // const [userInfo,setUserInfo] = useState()
 
   console.log(userId)
   const getAllQuizes = async () => {
@@ -45,7 +45,7 @@ const Launch = () => {
       const response = await fetch(`http://localhost:5000/userInfo/${userId}`);
       const data = await response.json();
       setUserInfo(data);
-      setUserName(data[0].userName)
+      setUserName(data.userName)
     } catch (error) {
       setErrorMessage(error.message);
     }
