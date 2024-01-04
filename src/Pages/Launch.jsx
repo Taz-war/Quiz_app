@@ -22,12 +22,14 @@ import { useEffect } from "react";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 const Launch = () => {
-  const { setId, quizzes, setQuizzes,setUserId,userId } = useContext(CreateQuizContex);
+  const { setId, quizzes, setQuizzes,setUserId,userId,setUserName } = useContext(CreateQuizContex);
   const [errorMessage, setErrorMessage] = useState("");
   const [publishedQuestions, setPublishedQuestions] = useState([])
   const [roomName, setRoomName] = useState("")
   const [open, setOpen] = useState(false)
+  const [userInfo,setUserInfo] = useState()
 
+  console.log(userId)
   const getAllQuizes = async () => {
     try {
       const response = await fetch(`http://localhost:5000/questionSet/${userId}`);
@@ -38,9 +40,22 @@ const Launch = () => {
       setErrorMessage(error.message);
     }
   };
+  const getUserInfo = async () =>{
+    try {
+      const response = await fetch(`http://localhost:5000/userInfo/${userId}`);
+      const data = await response.json();
+      setUserInfo(data);
+      setUserName(data[0].userName)
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  }
   useEffect(() => {
     getAllQuizes();
+    getUserInfo();
   }, []);
+
+  console.log(userInfo)
 
   console.log('faky',publishedQuestions)
   ///launch quiz live///

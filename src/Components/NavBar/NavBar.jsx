@@ -1,12 +1,48 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Button, IconButton } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useContext } from "react";
+import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
+import { auth } from "../../firebase.config";
+import { signOut } from "firebase/auth";
 
 const Navbar = () => {
+  const { userName,userId } = useContext(CreateQuizContex);
   const [activeButton, setActiveButton] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
+  console.log('intake',userId)
+  // Function to handle sign-out
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      // Sign-out successful, navigate to login page or handle as needed
+      navigate("/"); // Replace '/login' with your login route
+      console.log("User signed out successfully");
+    } catch (error) {
+      // An error happened.
+      console.error("Error signing out: ", error);
+    }
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   // Function to handle button click
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
@@ -49,7 +85,7 @@ const Navbar = () => {
                 fontWeight: isActive ? "bold" : "",
                 color: isActive ? "red" : "#5C6BC3",
                 viewTransitionName: isTransitioning ? "slide" : "",
-                textDecoration:'none'
+                textDecoration: "none",
               };
             }}
           >
@@ -68,7 +104,7 @@ const Navbar = () => {
                 fontWeight: isActive ? "bold" : "",
                 color: isActive ? "red" : "#5C6BC3",
                 viewTransitionName: isTransitioning ? "slide" : "",
-                textDecoration:'none'
+                textDecoration: "none",
               };
             }}
           >
@@ -87,7 +123,7 @@ const Navbar = () => {
                 fontWeight: isActive ? "bold" : "",
                 color: isActive ? "red" : "#5C6BC3",
                 viewTransitionName: isTransitioning ? "slide" : "",
-                textDecoration:'none'
+                textDecoration: "none",
               };
             }}
           >
@@ -106,7 +142,7 @@ const Navbar = () => {
                 fontWeight: isActive ? "bold" : "",
                 color: isActive ? "red" : "#5C6BC3",
                 viewTransitionName: isTransitioning ? "slide" : "",
-                textDecoration:'none'
+                textDecoration: "none",
               };
             }}
           >
@@ -125,7 +161,7 @@ const Navbar = () => {
                 fontWeight: isActive ? "bold" : "",
                 color: isActive ? "red" : "#5C6BC3",
                 viewTransitionName: isTransitioning ? "slide" : "",
-                textDecoration:'none'
+                textDecoration: "none",
               };
             }}
           >
@@ -138,15 +174,32 @@ const Navbar = () => {
 
         {/* Elements aligned to the right */}
         <Button color="inherit" sx={{ marginX: 1 }}>
-          TAZWER
+          {userName}
         </Button>
-        <Button color="inherit" sx={{ marginX: 1 }}>
-          Get PRO
-        </Button>
-        <Button color="inherit" sx={{ marginX: 1 }}>
+        <Button color="inherit" sx={{ marginX: 1 }} onClick={handleMenu}>
           FT
         </Button>
 
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={()=>navigate(`/teacher/profile/${userId}`)}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>Help Topics</MenuItem>
+          <MenuItem onClick={handleClose}>Contact Socrative</MenuItem>
+          <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+        </Menu>
         {/* User account or settings icon */}
         <IconButton color="inherit" sx={{ ml: 2 }}>
           {/* Icon for your user account or similar functionality */}

@@ -19,6 +19,7 @@ import TeacherSignUp from '../Pages/Login_portal/TeacherSignUp'
 import TeacherGoogleSignUp from '../Pages/Login_portal/TeacherGoogleSignUp'
 import StudentNavBar from '../Components/NavBar/StudentNavBar'
 import NavBarWrapper from '../Components/NavBar/NavBarWrapper'
+import TeacherProfile from '../Pages/TeacherProfile'
 const Router = () => {
     const { id,quizzes } = useContext(CreateQuizContex);
     // const location = useLocation()
@@ -52,6 +53,7 @@ const Router = () => {
                 <Route path='/student/quiz' element={<Quiz />} />
                 <Route path='/student/studentLoginInfo' element={<StudentLoginInfo />} />
                 <Route path='/teacher/reports/:id' element={<ShowReport />} />
+                <Route path='/teacher/profile/:uid' element={<TeacherProfile />} />
             </Routes>
         </BrowserRouter>
         {/* <BrowserRouter>
