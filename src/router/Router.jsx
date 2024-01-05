@@ -20,6 +20,7 @@ import TeacherGoogleSignUp from '../Pages/Login_portal/TeacherGoogleSignUp'
 import StudentNavBar from '../Components/NavBar/StudentNavBar'
 import NavBarWrapper from '../Components/NavBar/NavBarWrapper'
 import TeacherProfile from '../Pages/TeacherProfile'
+import HomePage from '../Pages/HomePage'
 const Router = () => {
     const { id,quizzes } = useContext(CreateQuizContex);
     // const location = useLocation()
@@ -39,7 +40,8 @@ const Router = () => {
         <BrowserRouter>
             <NavBarWrapper />
             <Routes>
-                <Route path='/' element={<TeacherLogin />} />
+                <Route path='/' element={<HomePage />} />
+                <Route path='/teacher/login' element={<TeacherLogin />} />
                 <Route path='/teacher/SignUp' element={<TeacherSignUp />} />
                 <Route path='/teacher/GoogleSignUp' element={<TeacherGoogleSignUp />} />
                 <Route path='/Library' element={<QuizList />}/>

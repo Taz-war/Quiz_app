@@ -9,6 +9,7 @@ import Router from './router/Router';
 import Quiz from './Pages/student_portal/Quiz';
 import { CssBaseline } from '@mui/material';
 import TeacherLogin from './Pages/Login_portal/TeacherLogin';
+import HomePage from './Pages/HomePage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       {/* <CreateQuiz /> */}
       {/* <QuizList /> */}
       <Router />
+      {/* <HomePage /> */}
       {/* <TeacherLogin /> */}
       {/* <CssBaseline />
       <Quiz /> */}
