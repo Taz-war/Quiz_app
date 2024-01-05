@@ -53,7 +53,7 @@ const StudentLoginInfo = () => {
   };
   return (
     <div>
-      <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left",mt:4 }}>
+      <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left",mt:4 }} maxWidth='sm'>
         <Typography variant="h5" textAlign={"center"} fontWeight={"bolder"}>
           Please enter your name and email
         </Typography>

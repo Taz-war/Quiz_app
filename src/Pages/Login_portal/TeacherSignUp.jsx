@@ -114,13 +114,14 @@ const TeacherSignUpForm = () => {
 
 
   return (
-    <Container>
+    <Container maxWidth='sm' sx={{ bgcolor: "#DFEAF3", p: 5 }}>
       <form onSubmit={handleSubmit}>
           {step === 1 && (
             <>
         <Grid container spacing={2} alignItems="center" justifyContent="center">
               <Grid item xs={12} md={6}>
                 <TextField
+                sx={{bgcolor:'white'}}
                   label="First Name"
                   name="firstName"
                   onChange={handleInputChange}
@@ -130,6 +131,7 @@ const TeacherSignUpForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                sx={{bgcolor:'white'}}
                   label="Last Name"
                   name="lastName"
                   onChange={handleInputChange}
@@ -139,6 +141,7 @@ const TeacherSignUpForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                sx={{bgcolor:'white'}}
                   label="Email"
                   name="email"
                   type="email"
@@ -149,6 +152,7 @@ const TeacherSignUpForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                sx={{bgcolor:'white'}}
                   label="Password"
                   name="password"
                   type="password"
@@ -159,6 +163,7 @@ const TeacherSignUpForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                sx={{bgcolor:'white'}}
                   label="Confirm Password"
                   name="confirmPassword"
                   type="password"
@@ -182,7 +187,7 @@ const TeacherSignUpForm = () => {
             <>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
-                <FormControl fullWidth margin="normal">
+                <FormControl fullWidth margin="normal" sx={{bgcolor:'white'}}>
                   <InputLabel>Organization Type</InputLabel>
                   <Select
                     name="organizationType"
@@ -200,6 +205,7 @@ const TeacherSignUpForm = () => {
               {formData.organizationType !== "" && (
                 <Grid item xs={12} md={6}>
                   <TextField
+                  sx={{bgcolor:'white'}}
                     label="Organization Name"
                     name="organizationName"
                     onChange={handleInputChange}
@@ -228,7 +234,7 @@ const TeacherSignUpForm = () => {
             <>
             <Grid container spacing={2} alignItems="center" justifyContent="center">
               <Grid item xs={12} md={6}>
-                <FormControl fullWidth margin="normal">
+                <FormControl fullWidth margin="normal" sx={{ bgcolor: 'white' }}>
                   <InputLabel>Role</InputLabel>
                   <Select
                     name="role"
@@ -245,6 +251,7 @@ const TeacherSignUpForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                sx={{bgcolor:'white'}}
                   label="Phone Number (optional)"
                   name="phoneNumber"
                   onChange={handleInputChange}
@@ -252,7 +259,7 @@ const TeacherSignUpForm = () => {
                   margin="normal"
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={12}>
                 <FormControlLabel
                   control={
                     <Checkbox

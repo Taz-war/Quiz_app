@@ -131,7 +131,7 @@ const Quiz = () => {
           <Typography variant="h5" style={{ marginBottom: "20px" }}>
             {`${currentQuestionIndex + 1} of ${quizData.questions.length}`}
           </Typography>
-          <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left" }}>
+          <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left" }} maxWidth='sm'>
             <QuestionRenderer
               question={currentQuestion}
               answer={answers[currentQuestion.id]}
@@ -149,7 +149,7 @@ const Quiz = () => {
         </div>
       </Collapse>
       <Collapse in={examStarted === false}>
-        <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left",mt:4 }}>
+        <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left",mt:4 }} maxWidth='sm'>
           
           <Spin tip="Loading..." size="large">
             <Alert

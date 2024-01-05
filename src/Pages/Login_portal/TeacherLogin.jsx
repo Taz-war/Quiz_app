@@ -71,7 +71,7 @@ const TeacherLogin = () => {
   };
 
   return (
-    <Container>
+    <Container maxWidth='sm' sx={{ bgcolor: "#DFEAF3", p: 5}}>
       <Typography
         variant="h4"
         style={{ textAlign: "center", margin: "20px 0" }}
@@ -87,6 +87,7 @@ const TeacherLogin = () => {
           onChange={(e) => setEmail(e.target.value)}
           fullWidth
           margin="normal"
+          sx={{bgcolor:'white'}}
         />
         <TextField
           label="Password"
@@ -96,6 +97,7 @@ const TeacherLogin = () => {
           onChange={(e) => setPassword(e.target.value)}
           fullWidth
           margin="normal"
+          sx={{ bgcolor: 'white' }}
         />
         <Button
           variant="contained"
@@ -113,6 +115,7 @@ const TeacherLogin = () => {
           onClick={handleGoogleSignIn}
           fullWidth
           disabled={loading}
+          sx={{ bgcolor: 'white' }}
         >
           Sign in with Google
         </Button>

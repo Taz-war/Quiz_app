@@ -20,7 +20,7 @@ const StudentLogin = () => {
   }
   return (
     <div>
-      <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left",mt:4 }}>
+      <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left",mt:4 }} maxWidth='sm'>
         <Typography variant="h5">Please enter your room name</Typography>
         <TextField
           fullWidth
