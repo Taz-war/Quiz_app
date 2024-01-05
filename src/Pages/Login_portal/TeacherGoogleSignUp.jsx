@@ -88,7 +88,7 @@ const TeacherGoogleSignUp = () => {
   
   
     return (
-      <Container>
+      <Container maxWidth='sm' sx={{ bgcolor: "#DFEAF3", p: 5, mt: 4 }}>
         <form onSubmit={handleSubmit}>
           {step === 1 && (
             <>

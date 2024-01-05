@@ -71,7 +71,7 @@ const TeacherLogin = () => {
   };
 
   return (
-    <Container maxWidth='sm' sx={{ bgcolor: "#DFEAF3", p: 5}}>
+    <Container maxWidth='sm' sx={{ bgcolor: "#DFEAF3", p: 5,mt:4}}>
       <Typography
         variant="h4"
         style={{ textAlign: "center", margin: "20px 0" }}

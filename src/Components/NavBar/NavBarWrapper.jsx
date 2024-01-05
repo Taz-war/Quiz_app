@@ -29,8 +29,10 @@ const NavBarWrapper = () => {
 
     if (findRoute) {
       return <Navbar />;
+    } else if (pathName.startsWith('/student')) {
+      return <StudentNavBar />;
     }
-    return <StudentNavBar />;
+    
   };
 
   return <>{getNavBar()}</>;
