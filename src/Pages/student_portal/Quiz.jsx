@@ -121,27 +121,35 @@ const Quiz = () => {
   console.log("final answer", studentInfo);
 
   const handleChange = (event) => {
-    setAnswers({ ...answers, [currentQuestion.id]: event.target.value });
+    if (currentQuestion && typeof currentQuestion.id !== 'undefined') {
+      setAnswers({ ...answers, [currentQuestion.id]: event.target.value });
+    }
+    // setAnswers({ ...answers, [currentQuestion.id]: event.target.value });
   };
+
 
   return (
     <>
       <Collapse in={examStarted}>
         <div style={{ padding: "20px" }}>
           <Typography variant="h5" style={{ marginBottom: "20px" }}>
-            {`${currentQuestionIndex + 1} of ${quizData.questions.length}`}
+            {`${currentQuestionIndex + 1} of ${quizData?.questions.length || 0}`}
           </Typography>
           <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left" }} maxWidth='sm'>
-            <QuestionRenderer
-              question={currentQuestion}
-              answer={answers[currentQuestion.id]}
-              onChange={handleChange}
-            />
+            {currentQuestion && (
+              <QuestionRenderer
+                question={currentQuestion}
+                answer={answers[currentQuestion.id]}
+                onChange={handleChange}
+              />
+            )}
+
             <Button
               variant="contained"
               color="primary"
               onClick={handleNext}
               style={{ marginTop: "20px" }}
+              disabled={!currentQuestion} // Disable the button if there's no current question
             >
               Submit Answer
             </Button>

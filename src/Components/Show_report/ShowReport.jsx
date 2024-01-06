@@ -41,9 +41,10 @@ const ShowReport = () => {
   });
 
   const getAllQuizes = async () => {
+
     try {
       const response = await fetch(
-        `http://localhost:5000/publishedQuestions/${id}`
+        `http://localhost:5000/getReports/${id}`
       );
       const data = await response.json();
       setReport(data);
@@ -51,7 +52,7 @@ const ShowReport = () => {
       setErrorMessage(error.message);
     }
   };
-
+console.log('faky',report)
   useEffect(() => {
     getAllQuizes();
   }, []);
@@ -197,6 +198,15 @@ const ShowReport = () => {
                       color: "#1E75A3",
                     }}
                   >
+                    Rank
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontSize: "large",
+                      fontWeight: "bolder",
+                      color: "#1E75A3",
+                    }}
+                  >
                     Name
                   </TableCell>
                   <TableCell
@@ -229,6 +239,7 @@ const ShowReport = () => {
                   .map((item, index) => {
                     return (
                       <TableRow key={item.id}>
+                        <TableCell>{index+1}</TableCell>
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.email}</TableCell>
                         <TableCell>{item.totalMarks}</TableCell>
