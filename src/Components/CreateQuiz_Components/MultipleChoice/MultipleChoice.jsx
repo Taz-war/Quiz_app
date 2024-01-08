@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Box,
   Button,
   Card,
   Checkbox,
@@ -15,9 +16,10 @@ import {
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
-import { v4 as uuidv4 } from 'uuid';
+import CloseIcon from "@mui/icons-material/Close";
+import { v4 as uuidv4 } from "uuid";
 
-const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
+const MultipleChoice = ({ index, setQuestionSet, questionSet }) => {
   let serialNum = index;
   const [openData, setOpenData] = useState(false);
   const [multipleChoice, setMultipleChoice] = useState(["", ""]);
@@ -28,20 +30,20 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
   // console.log({item})
 
   let tempQuestion = {
-    id:uuidv4(),
-    QuestionType:'multipleChoice',
+    id: uuidv4(),
+    QuestionType: "multipleChoice",
     QuestionTitle: question,
     Options: multipleChoice,
     Point: point,
     Answer: answer,
   };
-  
+
   ////on submit button click////
-  const  handleSubmit =()=>{
+  const handleSubmit = () => {
     // setOpen(true)
-    setOpenData(true)
-    setQuestionSet([...questionSet,tempQuestion])
-  }
+    setOpenData(true);
+    setQuestionSet([...questionSet, tempQuestion]);
+  };
   ///add options////
   const addOption = () => {
     setMultipleChoice([...multipleChoice, ""]);
@@ -71,7 +73,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
 
   return (
     <>
-      <Collapse in={ openData === false}>
+      <Collapse in={openData === false}>
         <Card
           sx={{
             minWidth: 275,
@@ -82,6 +84,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
             mb: 2,
           }}
         >
+          
           <Grid container columns={12} columnSpacing={2}>
             <Grid item xs={8}>
               <TextField
@@ -155,7 +158,7 @@ const MultipleChoice = ({ index,setQuestionSet,questionSet }) => {
           </Button>
         </Card>
       </Collapse>
-      <Collapse in={ openData}>
+      <Collapse in={openData}>
         <Card
           sx={{
             minWidth: 275,

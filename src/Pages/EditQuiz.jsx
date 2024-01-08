@@ -26,7 +26,6 @@ const EditQuiz = ({ quizzes, id }) => {
   const { open, setOpen } = useContext(CreateQuizContex);
   const [componentsToRender, setComponentsToRender] = useState([]);
   let question = quizzes.find((quiz) => quiz._id === id);
-  console.log(question);
   const [value, setValue] = useState(question?.questionSetTitle);
   const [isEditing, setIsEditing] = useState(false);
   const [questionSet, setQuestionSet] = useState([...question?.questions]);

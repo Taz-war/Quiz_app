@@ -24,7 +24,7 @@ const TeacherSignUpForm = () => {
   const { setUserId,userId } = useContext(CreateQuizContex);
   const location = useLocation();
   const id = location.state?.id;
-  console.log('tazz',id)
+
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -77,7 +77,7 @@ const TeacherSignUpForm = () => {
         formData.email,
         formData.password
       );
-      console.log('Firebase Auth User Created', userCredential.user);
+
       await setUserId(userCredential.user.uid)
       const newUser = {
         firstName: formData.firstName,
@@ -90,7 +90,6 @@ const TeacherSignUpForm = () => {
       };
 
       const apiURL = `http://localhost:5000/teacher/signUp/${userCredential.user.uid}`;
-      console.log('API URL', apiURL);
 
       const response = await fetch(apiURL, {
         method: "POST",

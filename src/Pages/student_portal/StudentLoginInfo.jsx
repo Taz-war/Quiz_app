@@ -9,7 +9,6 @@ const StudentLoginInfo = () => {
   const location = useLocation();
   const id = location.state?.id;
   const roomName = location.state?.roomName;
-  console.log(id);
   let navigate = useNavigate();
 
 
@@ -24,7 +23,6 @@ const StudentLoginInfo = () => {
         fetch(`http://localhost:5000/EditQuiz/${id}`)
         .then(res => res.json())
         .then(data => {
-          console.log('tazwer',data)
           navigate("/student/quiz", { state: { data: data,studentData:StudentInfo,id:id ,roomName: roomName } });
         })
       

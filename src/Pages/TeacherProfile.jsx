@@ -11,7 +11,7 @@ const TeacherProfile = () => {
   const [activeStep, setActiveStep] = useState(0);
   const { userInfo, setUserInfo } = useContext(CreateQuizContex);
   const { uid } = useParams();
-  console.log('uff', userInfo)
+
   const [profileData, setProfileData] = useState({
     firstName: userInfo?.firstName || '',
     lastName: userInfo?.lastName || '',

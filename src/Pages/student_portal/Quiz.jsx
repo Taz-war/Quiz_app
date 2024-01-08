@@ -15,7 +15,7 @@ import {
 import QuestionTypeMultipleChoice from "../../Student_Components/QuestionTypeMultipleChoice";
 import QuestionTypeShortQuestion from "../../Student_Components/QuestionTypeShortQuestion";
 import QuestionTypeTrueFalse from "../../Student_Components/QuestionTypeTrueFalse";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import { useEffect } from "react";
 import { Alert, Spin } from "antd";
@@ -57,13 +57,13 @@ const Quiz = () => {
   const studenData = location.state?.studentData;
   const id = location.state?.id;
   const roomName = location.state?.roomName;
-  console.log({ id });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [examStarted, setExamStarted] = useState(false);
   const [studentInfo, setStudentInfo] = useState({ ...studenData });
   const currentQuestion = quizData.questions[currentQuestionIndex];
   const socket = io("http://localhost:5000");
+  const navigate = useNavigate()
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -94,6 +94,7 @@ const Quiz = () => {
     } else {
       // Handle quiz completion
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setExamStarted(false)
       console.log("Quiz Completed", answers);
       const updatedStudentInfo = { ...studentInfo, answer: answers };
       setStudentInfo(updatedStudentInfo);
@@ -113,12 +114,13 @@ const Quiz = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         console.log(data);
+        navigate('/')
       } catch (error) {
         console.error("Error posting question:", error);
       }
     }
   };
-  console.log("final answer", studentInfo);
+
 
   const handleChange = (event) => {
     if (currentQuestion && typeof currentQuestion.id !== 'undefined') {
@@ -133,7 +135,7 @@ const Quiz = () => {
       <Collapse in={examStarted}>
         <div style={{ padding: "20px" }}>
           <Typography variant="h5" style={{ marginBottom: "20px" }}>
-            {`${currentQuestionIndex + 1} of ${quizData?.questions.length || 0}`}
+            {`${currentQuestionIndex + 1<quizData.questions.length? currentQuestionIndex + 1:quizData.questions.length} of ${quizData?.questions.length || 0}`}
           </Typography>
           <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left" }} maxWidth='sm'>
             {currentQuestion && (

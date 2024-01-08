@@ -32,7 +32,6 @@ const TeacherLogin = () => {
       console.log({ userCredential });
       await setUserId(userCredential.user.uid);
       navigate("/Launch", { state: { id: userCredential.user.uid } }); // Redirect to dashboard on successful login
-      console.log("go to next page");
     } catch (error) {
       setError("Failed to log in"); // Display error message
     }

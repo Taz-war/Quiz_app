@@ -43,7 +43,7 @@ const LiveResults = () => {
     socket.emit('startExam',{examStarted:startExam,roomName:roomName})
     // socket.emit("joinRoom", "C7h9EM");
     socket.on("userJoined", (userData, step,room,userEntered) => {
-      console.log({ userEntered });
+      
       setTotalStudentsEntered(userEntered)
       setRoomName(room)
       setEnteredStudents((prevItems) => {
@@ -79,7 +79,6 @@ const LiveResults = () => {
 
   const time = new Date();
   time.setSeconds(time.getSeconds() + 60);
-  console.log({ enteredStudents });
   return (
     <div>
       <Container>
@@ -177,7 +176,7 @@ const LiveResults = () => {
                       borderRadius:'10px'
                     }}
                   >
-                    {totalStudentsEntered}
+                    {enteredStudents.length}
                   </Box>
                   </TableCell>
                 </TableRow>

@@ -5,13 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 const StudentLogin = () => {
   const [enteredRoomName, setEnteredRoomName] = useState("");
-  console.log(enteredRoomName);
   let navigate = useNavigate();
 
   const handleClick=async()=>{
     const response = await fetch(`http://localhost:5000/student/${enteredRoomName}`);
     const data = await response.json();
-    console.log('fahim',data)
     if (data.result == true) {
       navigate("/student/studentLoginInfo", { state: { id: data._id,roomName:enteredRoomName } });
     }else{

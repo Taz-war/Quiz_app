@@ -25,7 +25,6 @@ const NavBarWrapper = () => {
   const getNavBar = () => {
     const pathName = location.pathname;
     const findRoute = teacherNavPaths.some((path) => pathName.includes(path));
-    console.log({ findRoute });
 
     if (findRoute) {
       return <Navbar />;

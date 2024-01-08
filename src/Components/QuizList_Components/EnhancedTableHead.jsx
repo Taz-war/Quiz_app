@@ -3,7 +3,6 @@ import React from 'react'
 
 const EnhancedTableHead = (props) => {
     const { onSelectAllClick,  numSelected, rowCount,selected} =props;
-    console.log({selected})
     const handleDeleteSelected =async()=>{
       try {
         const response = await fetch(`http://localhost:5000/questionset/${selected}`, {

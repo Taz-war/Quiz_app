@@ -75,7 +75,6 @@ const Launch = () => {
     console.log("live", id);
   };
 
-console.log('heda',quizzes)
   return (
     <>
       <Container sx={{ mt: 2 }}>

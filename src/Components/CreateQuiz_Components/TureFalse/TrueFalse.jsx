@@ -32,7 +32,7 @@ const TrueFalse = ({ index,setQuestionSet,questionSet }) => {
     setQuestionSet([...questionSet,tempTrueFalseQuestion])
   }
 
-  // console.log(tempTrueFalseQuestion);
+
   return (
     <>
       <Collapse in={openData === false}>

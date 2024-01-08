@@ -15,6 +15,7 @@ import { useContext } from "react";
 import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
 import { auth } from "../../firebase.config";
 import { signOut } from "firebase/auth";
+import Logo from "../../assets/logo(2).png";
 
 const Navbar = () => {
   const { userName,userId } = useContext(CreateQuizContex);
@@ -22,7 +23,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
 
-  console.log('intake',userId)
+  // console.log('intake',userId)
   // Function to handle sign-out
   const handleSignOut = async () => {
     try {
@@ -57,15 +58,9 @@ const Navbar = () => {
   return (
     <AppBar position="static" sx={{ bgcolor: "#e8eaf6", color: "#5c6bc0" }}>
       <Toolbar>
-        {/* Menu icon on the left */}
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
+
+      <img src={Logo} alt="QuizCrafters Logo" style={{ marginRight: 'auto', height: '50px',width:'300px' }} />
+        
 
         {/* The main logo or title with flex-grow to push everything else to the right */}
         {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -176,9 +171,19 @@ const Navbar = () => {
         <Button color="inherit" sx={{ marginX: 1 }}>
           {userName}
         </Button>
-        <Button color="inherit" sx={{ marginX: 1 }} onClick={handleMenu}>
+        {/* <Button color="inherit" sx={{ marginX: 1 }} onClick={handleMenu}>
           FT
-        </Button>
+        </Button> */}
+        {/* Menu icon on the left */}
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+          onClick={handleMenu}
+        >
+          <MenuIcon />
+        </IconButton>
 
         <Menu
           id="menu-appbar"
@@ -195,7 +200,7 @@ const Navbar = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={()=>navigate(`/teacher/profile/${userId}`)}>Profile</MenuItem>
+          <MenuItem onClick={()=>{navigate(`/teacher/profile/${userId}`); handleClose()}}>Profile</MenuItem>
           <MenuItem onClick={handleClose}>Help Topics</MenuItem>
           <MenuItem onClick={handleClose}>Contact Socrative</MenuItem>
           <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>

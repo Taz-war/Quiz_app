@@ -196,7 +196,6 @@ const QuizList = () => {
                 />
                 <TableBody>
                   {quizzes.map((row, index) => {
-                    console.log(row);
                     const isItemSelected = isSelected(row._id);
                     const labelId = `enhanced-table-checkbox-${index}`;
 

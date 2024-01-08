@@ -20,7 +20,7 @@ const TeacherGoogleSignUp = () => {
     const { setUserId,userId } = useContext(CreateQuizContex);
     const location = useLocation();
     const id = location.state?.id;
-    console.log('tazz',id)
+
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
       firstName: "",
@@ -64,7 +64,7 @@ const TeacherGoogleSignUp = () => {
         };
   
         const apiURL = `http://localhost:5000/teacher/signUp/${id}`;
-        console.log('API URL', apiURL);
+
   
         const response = await fetch(apiURL, {
           method: "POST",

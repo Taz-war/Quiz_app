@@ -52,7 +52,7 @@ const ShowReport = () => {
       setErrorMessage(error.message);
     }
   };
-console.log('faky',report)
+
   useEffect(() => {
     getAllQuizes();
   }, []);
@@ -106,7 +106,6 @@ console.log('faky',report)
     })
   };
 
-  console.log(report);
   return (
     <>
       <Container sx={{ mt: 3 }}>

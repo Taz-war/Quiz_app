@@ -28,8 +28,11 @@ const MultipleChoiceShowData = ({
   const [question, setQuestion] = useState(quizzes?.QuestionTitle);
   const [point, setPoint] = useState(quizzes?.Point);
   const [answer, setAnswer] = useState(quizzes?.Answer);
+  const [qId,setQId] = useState()
+ console.log('intake',quizzes)
 
   let tempQuestion = {
+    id:quizzes.id,
     QuestionType: "multipleChoice",
     QuestionTitle: question,
     Options: multipleChoice,
@@ -63,7 +66,7 @@ const MultipleChoiceShowData = ({
     updatedAnswers[index] = newValue;
     setMultipleChoice(updatedAnswers);
   };
-  console.log({ i });
+
   return (
     <Box>
       <Collapse in={openComponent == false}>
