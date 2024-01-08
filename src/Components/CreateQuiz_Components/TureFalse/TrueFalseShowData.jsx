@@ -37,7 +37,10 @@ const TrueFalseShowData = ({ i, quizzes,setQuestionSet,questionSet }) => {
     console.log({tempTrueFalseQuestion})
     const handleSubmit =()=>{
       setOpenComponent(false)
-      setQuestionSet([...questionSet,tempTrueFalseQuestion])
+      const updateArr = questionSet.map((item, index) =>
+        index === i ? tempTrueFalseQuestion : item
+      );
+      setQuestionSet(updateArr)
     }
   
   return (

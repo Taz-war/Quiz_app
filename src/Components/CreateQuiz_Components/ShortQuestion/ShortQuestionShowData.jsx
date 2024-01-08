@@ -57,8 +57,11 @@ const ShortQuestionShowData = ({ i, quizzes,setQuestionSet,questionSet }) => {
       if (shortAnswers[0] === "") {
         setShortAnswers([]);
       }
+      const updateArr = questionSet.map((item, index) =>
+      index === i ? tempShortQuestion : item
+      );
+      setQuestionSet(updateArr)
       setOpenComponent(false);
-      setQuestionSet([...questionSet,tempShortQuestion])
     };
     console.log({quizzes})
   return (
