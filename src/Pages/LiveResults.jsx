@@ -21,6 +21,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import TimerComponent from "../Components/Timer_Component/TimerComponent";
 import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
+import {url} from '../api'
 
 
 const LiveResults = () => {
@@ -32,7 +33,7 @@ const LiveResults = () => {
   const [enteredStudents, setEnteredStudents] = useState([]);
   const [examDuration, setExamDuration] = useState(0);
 
-  const socket = io("http://localhost:5000");
+  const socket = io(`${url}`);
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to server");

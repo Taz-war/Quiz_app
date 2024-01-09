@@ -4,6 +4,7 @@ import React from "react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import {url} from '../../api'
 
 const StudentLoginInfo = () => {
   const location = useLocation();
@@ -20,7 +21,7 @@ const StudentLoginInfo = () => {
       email: event.target.email.value,
     };
     try {
-        fetch(`http://localhost:5000/EditQuiz/${id}`)
+        fetch(`${url}/EditQuiz/${id}`)
         .then(res => res.json())
         .then(data => {
           navigate("/student/quiz", { state: { data: data,studentData:StudentInfo,id:id ,roomName: roomName } });
@@ -34,20 +35,9 @@ const StudentLoginInfo = () => {
 
   const handleClick = async () => {
     const response = await fetch(
-      `http://localhost:5000/student/loginInfo/${id}`
+      `${url}/student/loginInfo/${id}`
     );
     const data = await response.json();
-    // console.log('fahim',data)
-    // if (data.result == true) {
-    //   fetch(`http://localhost:5000/EditQuiz/${data._id}`)
-    //     .then(res => res.json())
-    //     .then(data => {
-    //       console.log('tazwer',data)
-    //       navigate("/student/quiz", { state: { data: data } });
-    //     })
-    // }else{
-    //     alert('The Room name you have entered is wrong')
-    // }
   };
   return (
     <div>

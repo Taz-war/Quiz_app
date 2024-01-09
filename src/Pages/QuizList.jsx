@@ -30,6 +30,7 @@ import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import { Link } from "react-router-dom";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import DeleteModal from "../Components/QuizList_Components/DeleteModal";
+import {url} from '../api'
 
 const QuizList = () => {
   const { setId, quizzes, setQuizzes, userId } = useContext(CreateQuizContex);
@@ -81,7 +82,7 @@ const QuizList = () => {
   const getAllQuizes = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/questionSet/${userId}`
+        `${url}/questionSet/${userId}`
       );
       const data = await response.json();
       setQuizzes(data.questions);

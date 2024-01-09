@@ -7,10 +7,10 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { Button, TextField, Container, Typography, Box } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
 import { useContext } from "react";
 import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
 import GoogleIconSVG from '../../icons8-google.svg';
+import {url} from '../../api'
 
 const TeacherLogin = () => {
   const { setUserId, userId } = useContext(CreateQuizContex);
@@ -46,7 +46,7 @@ const TeacherLogin = () => {
         const user = result.user;
         const tokenResponse = result._tokenResponse
         
-        const response = await fetch(`http://localhost:5000/searchUser/${user.uid}`);
+        const response = await fetch(`${url}/searchUser/${user.uid}`);
         const data = await response.json();
          console.log(data)
         // Check if the user exists in Firebase Authentication

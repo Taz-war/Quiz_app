@@ -20,8 +20,8 @@ const HomePage = () => {
       <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
           <Toolbar>
                 <img src={Logo} alt="QuizCrafters Logo" style={{ marginRight: 'auto', height: '100px',width:'300px' }} />
-            <Button variant='outlined' sx={{mr:2}}>Contact Sales</Button>
-              <Button color="primary" variant='contained' onClick={()=>setOpen(true)}>Login</Button>
+            <Button variant='outlined'  sx={{mr:2,color:'#e3f2fd',borderColor:'#e3f2fd'}}>Contact Sales</Button>
+              <Button sx={{bgcolor:'white',color:'blue'}} variant='contained'  onClick={()=>setOpen(true)}>Login</Button>
           </Toolbar>
       </AppBar>
       {open && <PopupModal open={open} setOpen={setOpen}/>}

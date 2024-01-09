@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {url} from '../api'
 
 const Rooms = () => {
   const { userId } = useContext(CreateQuizContex);
@@ -32,7 +33,7 @@ const Rooms = () => {
   ///get published quizes
   const getAllQuizes = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/getRooms/${userId}`);
+      const response = await fetch(`${url}/getRooms/${userId}`);
       const data = await response.json();
       setRooms(data);
     } catch (error) {
@@ -54,7 +55,7 @@ const Rooms = () => {
           <Box sx={{ textAlign: 'center', my: 5, p: 3, boxShadow: 3, borderRadius: 2, backgroundColor: '#f5f5f5' }}>
             <MenuBookIcon sx={{ fontSize: 60, color: 'primary.main' }} />
             <Typography variant="h4" color="primary" gutterBottom fontWeight={'bolder'} fontFamily={'Raleway'} >
-              No quiz published yet
+              No rooms created yet
             </Typography>
             <Typography variant="h6">
               Start by launching a quiz

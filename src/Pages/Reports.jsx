@@ -24,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import {url} from '../api'
 
 const Reports = () => {
   const { userId } = useContext(CreateQuizContex);
@@ -35,7 +36,7 @@ const Reports = () => {
   ///get published quizes
   const getAllQuizes = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/publishedQuestions/${userId}`);
+      const response = await fetch(`${url}/publishedQuestions/${userId}`);
       const data = await response.json();
       setRows(data);
     } catch (error) {

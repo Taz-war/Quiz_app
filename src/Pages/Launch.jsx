@@ -20,6 +20,7 @@ import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import { useState } from "react";
 import { useEffect } from "react";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import {url} from '../api'
 
 const Launch = () => {
   const {quizzes, setQuizzes, userId, setUserName, userInfo, setUserInfo } = useContext(CreateQuizContex);
@@ -32,7 +33,7 @@ const Launch = () => {
   console.log(userId)
   const getAllQuizes = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/questionSet/${userId}`);
+      const response = await fetch(`${url}/questionSet/${userId}`);
       const data = await response.json();
       setQuizzes(data.questions);
       setPublishedQuestions(data.studentIds)
@@ -42,7 +43,7 @@ const Launch = () => {
   };
   const getUserInfo = async () =>{
     try {
-      const response = await fetch(`http://localhost:5000/userInfo/${userId}`);
+      const response = await fetch(`${url}/userInfo/${userId}`);
       const data = await response.json();
       setUserInfo(data);
       setUserName(data.userName)
@@ -62,11 +63,9 @@ const Launch = () => {
   const handleLive = async (id, title) => {
     const questionTitle = { questionTitle: title }
 
-    const response = await fetch(`http://localhost:5000/LaunchQuestionSet/${id}`);
+    const response = await fetch(`${url}/LaunchQuestionSet/${id}`);
     const data = await response.text();
 
-    // const studentCollectionResponse = await fetch(`http://localhost:5000/launchedQuestions/${id}`)
-    // setQuizzes(data);
     console.log(data);
     setRoomName(data)
     setOpen(true)

@@ -19,6 +19,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import { useEffect } from "react";
 import { Alert, Spin } from "antd";
+import {url} from '../../api'
 
 const QuestionRenderer = ({ question, answer, onChange }) => {
   switch (question.QuestionType) {
@@ -62,7 +63,7 @@ const Quiz = () => {
   const [examStarted, setExamStarted] = useState(false);
   const [studentInfo, setStudentInfo] = useState({ ...studenData });
   const currentQuestion = quizData.questions[currentQuestionIndex];
-  const socket = io("http://localhost:5000");
+  const socket = io(`${url}`);
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -102,7 +103,7 @@ const Quiz = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:5000/student/loginInfo/${id}`,
+          `${url}/student/loginInfo/${id}`,
           {
             method: "PUT",
             body: JSON.stringify(updatedStudentInfo),

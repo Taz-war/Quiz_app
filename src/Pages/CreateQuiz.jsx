@@ -18,9 +18,7 @@ import TrueFalse from "../Components/CreateQuiz_Components/TureFalse/TrueFalse";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
-// import MultipleChoiceShowData from "../Components/CreateQuiz_Components/MultipleChoice/MultipleChoiceShowData";
-// import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQuestion/ShortQuestionShowData";
-// import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData"; // Corrected the import statement
+import {url} from '../api'
 
 const CreateQuiz = () => {
   const { open, setOpen,userId } = useContext(CreateQuizContex);
@@ -46,7 +44,7 @@ const CreateQuiz = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000/questionSet`, {
+      const response = await fetch(`${url}/questionSet`, {
         method: "POST",
         body: JSON.stringify(newQuestion),
         headers: { "Content-type": "application/json" },

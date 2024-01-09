@@ -2,13 +2,14 @@ import { Button, Container, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {url} from '../../api'
 
 const StudentLogin = () => {
   const [enteredRoomName, setEnteredRoomName] = useState("");
   let navigate = useNavigate();
 
   const handleClick=async()=>{
-    const response = await fetch(`http://localhost:5000/student/${enteredRoomName}`);
+    const response = await fetch(`${url}/student/${enteredRoomName}`);
     const data = await response.json();
     if (data.result == true) {
       navigate("/student/studentLoginInfo", { state: { id: data._id,roomName:enteredRoomName } });

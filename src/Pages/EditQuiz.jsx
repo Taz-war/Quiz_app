@@ -21,6 +21,7 @@ import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQues
 import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
+import {url} from '../api'
 
 const EditQuiz = ({ quizzes, id }) => {
   const { open, setOpen } = useContext(CreateQuizContex);
@@ -47,7 +48,7 @@ const EditQuiz = ({ quizzes, id }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/EditQuiz/${question._id}`,
+        `${url}/EditQuiz/${question._id}`,
         {
           method: "PUT",
           body: JSON.stringify(newQuestion),

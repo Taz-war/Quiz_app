@@ -18,6 +18,7 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from "react";
 import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
+import {url} from '../../api'
 
 
 const TeacherSignUpForm = () => {
@@ -27,6 +28,7 @@ const TeacherSignUpForm = () => {
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
+    userName: "", 
     firstName: "",
     lastName: "",
     email: "",
@@ -80,6 +82,7 @@ const TeacherSignUpForm = () => {
 
       await setUserId(userCredential.user.uid)
       const newUser = {
+        userName:formData.userName,
         firstName: formData.firstName,
         lastName: formData.lastName,
         organizationType: formData.organizationType,
@@ -89,7 +92,7 @@ const TeacherSignUpForm = () => {
         phoneNumber: formData.phoneNumber,
       };
 
-      const apiURL = `http://localhost:5000/teacher/signUp/${userCredential.user.uid}`;
+      const apiURL = `${url}/teacher/signUp/${userCredential.user.uid}`;
 
       const response = await fetch(apiURL, {
         method: "POST",
@@ -111,6 +114,21 @@ const TeacherSignUpForm = () => {
     }
   };
 
+  const isStepComplete = () => {
+    switch(step) {
+      case 1:
+        return formData.userName && formData.firstName && formData.lastName &&
+               formData.email && formData.password && formData.confirmPassword;
+      case 2:
+        return formData.organizationType && 
+               (formData.organizationType === "" || formData.organizationName);
+      case 3:
+        // Add relevant fields check for step 3 if needed
+        return formData.role; // Assuming role is a mandatory field in step 3
+      default:
+        return false;
+    }
+  };
 
   return (
     <Container maxWidth='sm' sx={{ bgcolor: "#DFEAF3", p: 5, mt: 4 }}>
@@ -173,11 +191,21 @@ const TeacherSignUpForm = () => {
                   helperText={passwordError}
                 />
               </Grid>
-              <Grid item xs={12} md={6}></Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  sx={{bgcolor:'white'}}
+                  label="Username"
+                  name="userName"
+                  value={formData.userName}
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
               </Grid>
-                <Button variant="contained" onClick={handleNext} sx={{mt:2}}>
-                  Next
-                </Button>
+              </Grid>
+              <Button variant="contained" onClick={handleNext} sx={{mt:2}} disabled={!isStepComplete()}>
+              Next
+            </Button>
               
             </>
           )}
@@ -221,7 +249,7 @@ const TeacherSignUpForm = () => {
                 </Button>
               </Grid>
               <Grid item xs={12} md={6}>
-                <Button variant="contained" onClick={handleNext}>
+              <Button variant="contained" onClick={handleNext} disabled={!isStepComplete()}>
                   Next
                 </Button>
               </Grid>
@@ -278,7 +306,7 @@ const TeacherSignUpForm = () => {
                 </Button>
               </Grid>
               <Grid item xs={12} md={6}>
-                <Button type="submit" variant="contained">
+              <Button type="submit" variant="contained" disabled={!isStepComplete()}>
                   Finish
                 </Button>
               </Grid>
