@@ -8,13 +8,22 @@ const StudentLogin = () => {
   const [enteredRoomName, setEnteredRoomName] = useState("");
   let navigate = useNavigate();
 
+  const handleNavigation = (data)=>{
+    if (data.result == true) {
+      navigate("/student/studentLoginInfo", { state: { id: data._id, roomName: enteredRoomName } });
+    } else {
+      alert('The Room name you have entered is wrong')
+    }
+  }
+
   const handleClick=async()=>{
     const response = await fetch(`${url}/student/${enteredRoomName}`);
     const data = await response.json();
+    // setTimeout(handleNavigation(data),2000)
     if (data.result == true) {
-      navigate("/student/studentLoginInfo", { state: { id: data._id,roomName:enteredRoomName } });
-    }else{
-        alert('The Room name you have entered is wrong')
+      navigate("/student/studentLoginInfo", { state: { id: data._id, roomName: enteredRoomName } });
+    } else {
+      alert('The Room name you have entered is wrong')
     }
   }
   return (

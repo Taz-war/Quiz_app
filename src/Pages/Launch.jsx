@@ -169,7 +169,7 @@ const Launch = () => {
           <Container>
             <br />
             <Typography variant="h3" >
-              Visit <b>gosocrative.com</b> and enter room name <span style={{ color: 'skyblue' }}>'{roomName}'</span>
+              Visit <b>QuizCrafters.com</b> and enter room name <span style={{ color: 'skyblue' }}>'{roomName}'</span>
             </Typography>
           </Container>
         </Box>
