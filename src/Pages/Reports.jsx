@@ -25,22 +25,27 @@ import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import {url} from '../api'
+import { Spin } from "antd";
 
 const Reports = () => {
   const { userId } = useContext(CreateQuizContex);
   const [rows, setRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loader,setLoader] =useState(false)
   let navigate = useNavigate();
 
   ///get published quizes
   const getAllQuizes = async () => {
+    setLoader(true)
     try {
       const response = await fetch(`${url}/publishedQuestions/${userId}`);
       const data = await response.json();
       setRows(data);
     } catch (error) {
       setErrorMessage(error.message);
+    }finally{
+      setLoader(false)
     }
   };
   useEffect(() => {
@@ -71,6 +76,7 @@ const Reports = () => {
 
   return (
     <Container sx={{ padding: "1em" }}>
+      <Spin tip="Loading..." size="large" spinning={loader}></Spin>
       <div
         style={{
           display: "flex",

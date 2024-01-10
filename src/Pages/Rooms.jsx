@@ -23,21 +23,26 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {url} from '../api'
+import { Spin } from "antd";
 
 const Rooms = () => {
   const { userId } = useContext(CreateQuizContex);
   const [errorMessage, setErrorMessage] = useState("");
   const [rooms,setRooms] =useState([])
+  const [loader,setLoader] =useState(false)
   let navigate = useNavigate();
 
   ///get published quizes
   const getAllQuizes = async () => {
+    setLoader(true)
     try {
       const response = await fetch(`${url}/getRooms/${userId}`);
       const data = await response.json();
       setRooms(data);
     } catch (error) {
       setErrorMessage(error.message);
+    }finally{
+      setLoader(false)
     }
   };
   useEffect(() => {
@@ -50,6 +55,7 @@ const Rooms = () => {
   console.log('aha',rooms)
   return (
     <Container sx={{ padding: "1em" }}>
+      <Spin tip="Loading..." size="large" spinning={loader}></Spin>
       {rooms.length === 0 ? (
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <Box sx={{ textAlign: 'center', my: 5, p: 3, boxShadow: 3, borderRadius: 2, backgroundColor: '#f5f5f5' }}>

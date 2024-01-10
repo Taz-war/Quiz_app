@@ -5,16 +5,19 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import {url} from '../../api'
+import { Spin } from "antd";
 
 const StudentLoginInfo = () => {
   const location = useLocation();
   const id = location.state?.id;
   const roomName = location.state?.roomName;
+  const [loader,setLoader] =useState(false)
   let navigate = useNavigate();
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoader(true)
     const StudentInfo = {
       id: uuidv4(),
       name: event.target.name.value,
@@ -29,6 +32,8 @@ const StudentLoginInfo = () => {
       
     } catch (error) {
       console.error("Error posting question:", error);
+    }finally{
+      setLoader(false)
     }
   };
 
@@ -42,6 +47,7 @@ const StudentLoginInfo = () => {
   return (
     <div>
       <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left",mt:4 }} maxWidth='sm'>
+      <Spin tip="Loading..." size="large" spinning={loader}></Spin>
         <Typography variant="h5" textAlign={"center"} fontWeight={"bolder"}>
           Please enter your name and email
         </Typography>

@@ -30,7 +30,8 @@ import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import { Link } from "react-router-dom";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import DeleteModal from "../Components/QuizList_Components/DeleteModal";
-import {url} from '../api'
+import { url } from "../api";
+import { Spin } from "antd";
 
 const QuizList = () => {
   const { setId, quizzes, setQuizzes, userId } = useContext(CreateQuizContex);
@@ -38,6 +39,7 @@ const QuizList = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -80,14 +82,15 @@ const QuizList = () => {
   ////fetch api call////
   const [errorMessage, setErrorMessage] = useState("");
   const getAllQuizes = async () => {
+    setLoader(true);
     try {
-      const response = await fetch(
-        `${url}/questionSet/${userId}`
-      );
+      const response = await fetch(`${url}/questionSet/${userId}`);
       const data = await response.json();
       setQuizzes(data.questions);
     } catch (error) {
       setErrorMessage(error.message);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -102,10 +105,11 @@ const QuizList = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - quizzes.length) : 0;
 
+  if (loader) {
+    return <Spin tip="Loading..." size="large" spinning={loader}></Spin>;
+  }
   return (
     <Box sx={{ width: "100%" }}>
-      {/* <Navbar /> */}
-
       <Container sx={{ p: 2 }}>
         <Box
           sx={{
@@ -175,7 +179,13 @@ const QuizList = () => {
               }}
             >
               <MenuBookIcon sx={{ fontSize: 60, color: "primary.main" }} />
-              <Typography variant="h4" color="primary" gutterBottom fontWeight={'bolder'} fontFamily={'Raleway'}>
+              <Typography
+                variant="h4"
+                color="primary"
+                gutterBottom
+                fontWeight={"bolder"}
+                fontFamily={"Raleway"}
+              >
                 No quizzes available
               </Typography>
               <Typography variant="h6">Start by creating a new quiz</Typography>

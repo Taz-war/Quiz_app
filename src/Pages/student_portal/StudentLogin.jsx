@@ -3,9 +3,11 @@ import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {url} from '../../api'
+import { Spin } from "antd";
 
 const StudentLogin = () => {
   const [enteredRoomName, setEnteredRoomName] = useState("");
+  const [loader,setLoader] = useState(false)
   let navigate = useNavigate();
 
   const handleNavigation = (data)=>{
@@ -17,18 +19,25 @@ const StudentLogin = () => {
   }
 
   const handleClick=async()=>{
+    setLoader(true)
     const response = await fetch(`${url}/student/${enteredRoomName}`);
     const data = await response.json();
     // setTimeout(handleNavigation(data),2000)
     if (data.result == true) {
+      setLoader(false)
       navigate("/student/studentLoginInfo", { state: { id: data._id, roomName: enteredRoomName } });
     } else {
       alert('The Room name you have entered is wrong')
     }
   }
+
+  if (loader) {
+    return 
+  }
   return (
     <div>
       <Container sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left",mt:4 }} maxWidth='sm'>
+      <Spin tip="Loading..." size="large" spinning={loader}></Spin>
         <Typography variant="h5">Please enter your room name</Typography>
         <TextField
           fullWidth

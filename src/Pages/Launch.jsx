@@ -14,16 +14,17 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useContext } from "react";
 import { CreateQuizContex } from "../Context_Api/CreateQuizStateProvider";
 import { useState } from "react";
 import { useEffect } from "react";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import {url} from '../api'
+import { Spin } from "antd";
 
 const Launch = () => {
-  const {quizzes, setQuizzes, userId, setUserName, userInfo, setUserInfo } = useContext(CreateQuizContex);
+  const {quizzes, setQuizzes, userId, setUserName, userInfo, setUserInfo,loader,setLoader } = useContext(CreateQuizContex);
   const [errorMessage, setErrorMessage] = useState("");
   const [publishedQuestions, setPublishedQuestions] = useState([])
   const [roomName, setRoomName] = useState("")
@@ -32,6 +33,7 @@ const Launch = () => {
 
   console.log(userId)
   const getAllQuizes = async () => {
+    setLoader(true)
     try {
       const response = await fetch(`${url}/questionSet/${userId}`);
       const data = await response.json();
@@ -42,6 +44,7 @@ const Launch = () => {
     }
   };
   const getUserInfo = async () =>{
+
     try {
       const response = await fetch(`${url}/userInfo/${userId}`);
       const data = await response.json();
@@ -49,6 +52,8 @@ const Launch = () => {
       setUserName(data.userName)
     } catch (error) {
       setErrorMessage(error.message);
+    }finally{
+      setLoader(false)
     }
   }
   useEffect(() => {
@@ -73,10 +78,12 @@ const Launch = () => {
 
     console.log("live", id);
   };
+  
 
   return (
     <>
       <Container sx={{ mt: 2 }}>
+      <Spin tip="Loading..." size="large" spinning={loader}></Spin>
         {quizzes.length === 0 ? (
           <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <Box sx={{ textAlign: 'center', my: 5, p: 3, boxShadow: 3, borderRadius: 2, backgroundColor: '#f5f5f5' }}>
