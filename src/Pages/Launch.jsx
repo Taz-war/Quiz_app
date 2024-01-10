@@ -35,7 +35,7 @@ const Launch = () => {
   const getAllQuizes = async () => {
     setLoader(true)
     try {
-      const response = await fetch(`${url}/questionSet/${userId}`);
+      const response = await fetch(`https://quiz-crafters-backend.onrender.com/questionSet/${userId}`);
       const data = await response.json();
       setQuizzes(data.questions);
       setPublishedQuestions(data.studentIds)
@@ -46,7 +46,7 @@ const Launch = () => {
   const getUserInfo = async () =>{
 
     try {
-      const response = await fetch(`${url}/userInfo/${userId}`);
+      const response = await fetch(`https://quiz-crafters-backend.onrender.com/userInfo/${userId}`);
       const data = await response.json();
       setUserInfo(data);
       setUserName(data.userName)
@@ -68,7 +68,7 @@ const Launch = () => {
   const handleLive = async (id, title) => {
     const questionTitle = { questionTitle: title }
 
-    const response = await fetch(`${url}/LaunchQuestionSet/${id}`);
+    const response = await fetch(`https://quiz-crafters-backend.onrender.com/LaunchQuestionSet/${id}`);
     const data = await response.text();
 
     console.log(data);

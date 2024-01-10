@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams } from 'react-router-dom';
 import { useContext } from 'react';
 import { CreateQuizContex } from '../Context_Api/CreateQuizStateProvider';
+import { url } from "../api";
 
 const steps = ['Profile', 'Demographics'];
 
@@ -35,9 +36,35 @@ const TeacherProfile = () => {
   };
 
   // Add your form submit handler here
-  const handleSubmit = () => {
+  const handleSubmit = async(event) => {
+    event.preventDefault();
     console.log('Form submitted', profileData);
-    // Implement your submission logic here
+    console.log('Form submitted', profileData);
+
+    try {
+      const response = await fetch(`${url}/${uid}`, {
+        method: 'PUT', // or 'PATCH' depending on your API
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any other headers your API requires, like authorization tokens
+        },
+        body: JSON.stringify(profileData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json()
+      // const updatedUser = await updateUser({ ...profileData, uid });
+      // console.log('User updated successfully', );
+
+      // Update the context with the new user info
+      setUserInfo(data);
+
+      // You may want to navigate the user to a different page or show a success message
+    } catch (error) {
+      // Handle the error, maybe show a user-friendly error message
+    }
   };
 
   // Add your delete account handler here
@@ -149,19 +176,11 @@ const TeacherProfile = () => {
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
               <Button variant="contained" color="secondary" onClick={handleBack}>Back</Button>
-              <Button variant="contained" color="primary" onClick={handleNext}>Next</Button>
+              <Button variant="contained" color="primary" type='submit' >Submit</Button>
             </Box>
           </Box>
         )}
-        {/* {activeStep === steps.length - 1 && (
-            <Box sx={{ p: 3 }}>
-              Include Account step fields here
-              <Button variant="contained" color="primary" fullWidth type="submit" sx={{ mt: 2 }}>Save</Button>
-              <Button startIcon={<DeleteIcon />} variant="contained" color="error" fullWidth onClick={handleDeleteAccount} sx={{ mt: 2 }}>
-                Delete Account
-              </Button>
-            </Box>
-          )} */}
+        
       </form>
     </Container>
   );

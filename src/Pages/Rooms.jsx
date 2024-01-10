@@ -22,14 +22,15 @@ import { useNavigate } from 'react-router-dom';
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {url} from '../api'
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { url } from '../api'
 import { Spin } from "antd";
 
 const Rooms = () => {
   const { userId } = useContext(CreateQuizContex);
   const [errorMessage, setErrorMessage] = useState("");
-  const [rooms,setRooms] =useState([])
-  const [loader,setLoader] =useState(false)
+  const [rooms, setRooms] = useState([])
+  const [loader, setLoader] = useState(false)
   let navigate = useNavigate();
 
   ///get published quizes
@@ -41,7 +42,7 @@ const Rooms = () => {
       setRooms(data);
     } catch (error) {
       setErrorMessage(error.message);
-    }finally{
+    } finally {
       setLoader(false)
     }
   };
@@ -52,7 +53,7 @@ const Rooms = () => {
   const handleDelete = (id) => {
     setRooms(rooms.filter((row) => row.id !== id));
   };
-  console.log('aha',rooms)
+  console.log('aha', rooms)
   return (
     <Container sx={{ padding: "1em" }}>
       <Spin tip="Loading..." size="large" spinning={loader}></Spin>
@@ -74,33 +75,41 @@ const Rooms = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontSize: 'large', fontWeight: 'bolder', color: '#1E75A3' }}>Name</TableCell>
-                <TableCell sx={{ fontSize: 'large', fontWeight: 'bolder', color: '#1E75A3' }}>Date</TableCell>
                 <TableCell sx={{ fontSize: 'large', fontWeight: 'bolder', color: '#1E75A3' }}>Room</TableCell>
-                <TableCell sx={{ fontSize: 'large', fontWeight: 'bolder', color: '#1E75A3' }}>Actions</TableCell>
+                <TableCell sx={{ fontSize: 'large', fontWeight: 'bolder', color: '#1E75A3' }}>Name</TableCell>
+                <TableCell sx={{ fontSize: 'large', fontWeight: 'bolder', color: '#1E75A3' }}>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rooms.map((row) => (
                 <TableRow key={row._id}>
-                  <TableCell >
-                      {row.questionTitle}
+                  <TableCell sx={{
+                    fontWeight: 'bold',
+                    fontSize:'large',
+                    "&:hover": {
+                      fontWeight: 'bolder',
+                    },
+                  }}>
+                    {row.roomName}
                   </TableCell>
-                  <TableCell>
-                      {row.publishedDate}
-                  </TableCell>
-                  <TableCell>
-                      {row.roomName}
+                  <TableCell sx={{
+                    fontWeight: 'bold',
+                    "&:hover": {
+                      fontWeight: 'bolder',
+                    },
+                  }}>
+                    {row.questionTitle}
                   </TableCell>
 
                   <TableCell>
                     {/* Implement archive action here */}
-                    <IconButton>
+                    <FiberManualRecordIcon color={'success'} />
+                    {/* <IconButton>
                       <ArchiveIcon />
                     </IconButton>
                     <IconButton onClick={() => handleDelete(row.id)}>
                       <DeleteIcon />
-                    </IconButton>
+                    </IconButton> */}
                   </TableCell>
                 </TableRow>
               ))}

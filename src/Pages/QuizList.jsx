@@ -105,11 +105,12 @@ const QuizList = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - quizzes.length) : 0;
 
-  if (loader) {
-    return <Spin tip="Loading..." size="large" spinning={loader}></Spin>;
-  }
+  // if (loader) {
+  //   return <Spin tip="Loading..." size="large" spinning={loader}></Spin>;
+  // }
   return (
     <Box sx={{ width: "100%" }}>
+      <Spin tip="Loading..." size="large" spinning={loader}></Spin>
       <Container sx={{ p: 2 }}>
         <Box
           sx={{
