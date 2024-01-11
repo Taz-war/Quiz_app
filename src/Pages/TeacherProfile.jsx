@@ -18,8 +18,8 @@ const TeacherProfile = () => {
     lastName: userInfo?.lastName || '',
     email: userInfo?.email || '',
     phoneNumber: userInfo?.phoneNumber || '',
-    language: '', // This value was not provided in the userInfo
     organizationType: userInfo?.organizationType || '',
+    organizationName: userInfo?.organizationName || '',
     role: userInfo?.role || '',
   });
 
@@ -39,10 +39,9 @@ const TeacherProfile = () => {
   const handleSubmit = async(event) => {
     event.preventDefault();
     console.log('Form submitted', profileData);
-    console.log('Form submitted', profileData);
 
     try {
-      const response = await fetch(`${url}/${uid}`, {
+      const response = await fetch(`${url}/teacherProfile/${uid}`, {
         method: 'PUT', // or 'PATCH' depending on your API
         headers: {
           'Content-Type': 'application/json',
@@ -55,15 +54,9 @@ const TeacherProfile = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json()
-      // const updatedUser = await updateUser({ ...profileData, uid });
-      // console.log('User updated successfully', );
-
-      // Update the context with the new user info
       setUserInfo(data);
-
-      // You may want to navigate the user to a different page or show a success message
+      setActiveStep(0)
     } catch (error) {
-      // Handle the error, maybe show a user-friendly error message
     }
   };
 
@@ -154,6 +147,19 @@ const TeacherProfile = () => {
                     <MenuItem value="other">Other</MenuItem>
                   </Select>
                 </FormControl>
+                {profileData.organizationType !== "" && (
+                <Grid item xs={12} md={6}>
+                  <TextField
+                  sx={{bgcolor:'white'}}
+                    label="Organization Name"
+                    name="organizationName"
+                    value={profileData.organizationName}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="normal"
+                  />
+                </Grid>
+              )}
               </Grid>
               <Grid item xs={12} md={6}>
                 <FormControl fullWidth margin="normal">
@@ -165,19 +171,29 @@ const TeacherProfile = () => {
                     label="Role"
                     onChange={handleChange('role')}
                   >
-                    <MenuItem value="school">Teacher</MenuItem>
-                    <MenuItem value="university">Administrator</MenuItem>
-                    <MenuItem value="corporate">IT/Technology</MenuItem>
+                    <MenuItem value="teacher">Teacher</MenuItem>
+                    <MenuItem value="administrator">Administrator</MenuItem>
+                    <MenuItem value="it/technology">IT/Technology</MenuItem>
                     <MenuItem value="other">Other</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
+              <Grid item xs={12} md={6}></Grid>
             </Grid>
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-              <Button variant="contained" color="secondary" onClick={handleBack}>Back</Button>
-              <Button variant="contained" color="primary" type='submit' >Submit</Button>
-            </Box>
+            <Grid container spacing={2} mt={3} rowSpacing={3}>
+              <Grid item xs={12} md={6}>
+              <Button variant="outlined" color="secondary" fullWidth onClick={handleBack}>Back</Button>
+              </Grid>
+              <Grid item xs={12} md={6}>
+              <Button variant="contained" color="primary" type='submit' fullWidth>Save</Button>
+              </Grid>
+              <Grid item xs={12}>
+            <Button startIcon={<DeleteIcon />} variant="contained" color="error" fullWidth onClick={handleDeleteAccount} sx={{ mt: 2 }}>
+                Delete Account
+              </Button>
+              </Grid>
+            </Grid>
           </Box>
         )}
         
