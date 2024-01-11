@@ -8,13 +8,14 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
+import Logo from "../../assets/logo(2).png";
 
 const StudentNavBar = () => {
   return (
     <AppBar position="static" sx={{ bgcolor: "#e8eaf6", color: "#5c6bc0" }}>
       <Toolbar>
         {/* Menu icon on the left */}
-        
+        <img src={Logo} alt="QuizCrafters Logo" style={{ marginRight: 'auto', height: '50px',width:'300px' }} />
 
         {/* The main logo or title with flex-grow to push everything else to the right */}
 
