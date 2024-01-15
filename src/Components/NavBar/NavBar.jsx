@@ -201,8 +201,8 @@ const Navbar = () => {
           onClose={handleClose}
         >
           <MenuItem onClick={()=>{navigate(`/teacher/profile/${userId}`); handleClose()}}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>Help Topics</MenuItem>
-          <MenuItem onClick={handleClose}>Contact Socrative</MenuItem>
+          {/* <MenuItem onClick={handleClose}>Help Topics</MenuItem> */}
+          {/* <MenuItem onClick={handleClose}>Contact Socrative</MenuItem> */}
           <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
         </Menu>
         {/* User account or settings icon */}

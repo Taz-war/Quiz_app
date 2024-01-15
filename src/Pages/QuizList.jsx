@@ -110,8 +110,8 @@ const QuizList = () => {
   // }
   return (
     <Box sx={{ width: "100%" }}>
-      <Spin tip="Loading..." size="large" spinning={loader}></Spin>
       <Container sx={{ p: 2 }}>
+      <Spin tip="Loading..." size="large" spinning={loader}></Spin>
         <Box
           sx={{
             display: "flex",
