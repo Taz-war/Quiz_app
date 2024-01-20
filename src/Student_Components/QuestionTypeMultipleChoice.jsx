@@ -48,6 +48,7 @@ const QuestionTypeMultipleChoice = ({ question, answer, onChange }) => {
               sx={{
                 // Change the color if this option is selected
                 width: "40%",
+                mb:2,
                 color: answer === option ? "primary.main" : "inherit",
               }}
             />
