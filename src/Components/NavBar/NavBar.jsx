@@ -29,6 +29,7 @@ const Navbar = () => {
     try {
       await signOut(auth);
       // Sign-out successful, navigate to login page or handle as needed
+      localStorage.clear();
       navigate("/"); // Replace '/login' with your login route
       console.log("User signed out successfully");
     } catch (error) {
