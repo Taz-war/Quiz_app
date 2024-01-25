@@ -7,6 +7,8 @@ import { CreateQuizContex } from '../Context_Api/CreateQuizStateProvider';
 import { url } from "../api";
 import { deleteUser } from 'firebase/auth';
 import { auth } from '../firebase.config';
+import { useTheme } from '@mui/material/styles';
+
 
 const steps = ['Profile', 'Demographics'];
 
@@ -15,6 +17,10 @@ const TeacherProfile = () => {
   const [activeStep, setActiveStep] = useState(0);
   const { userInfo, setUserInfo, userId } = useContext(CreateQuizContex);
   const { uid } = useParams();
+  const theme = useTheme()
+  const inputStyle = {
+    bgcolor: theme.palette.mode === 'dark' ? theme.palette.background.paper : 'white',
+  };
 
   const [profileData, setProfileData] = useState({
     firstName: userInfo?.firstName || '',
@@ -183,7 +189,7 @@ const TeacherProfile = () => {
                 {profileData.organizationType !== "" && (
                 <Grid item xs={12} md={6}>
                   <TextField
-                  sx={{bgcolor:'white'}}
+                      sx={inputStyle}
                     label="Organization Name"
                     name="organizationName"
                     value={profileData.organizationName}
