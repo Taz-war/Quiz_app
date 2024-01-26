@@ -20,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.19.0",
     "react-scripts": "^5.0.1",
+    "react-spring": "^9.7.3",
     "react-timer-hook": "^3.0.7",
     "socket.io-client": "^4.7.2",
     "sort-by": "^0.0.2",
