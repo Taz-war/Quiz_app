@@ -26,13 +26,13 @@ const HomePage = () => {
           </Toolbar>
       </AppBar>
       <Box p={10} mt={10}>
-        <Box sx={{ background: 'linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(67, 67, 67, 0.8))',p:2 }}>
+        <Box sx={{ background: 'linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(67, 67, 67, 0.8))',p:2,borderRadius:'15px' }}>
         <Typography variant='h3' sx={{color:'whitesmoke',fontWeight:'bolder'}}>Empower Your Teaching with Interactive Quizzes.</Typography>
         <Typography variant='h5' sx={{ color: '#2891fa', fontWeight: 'bolder' }}>Create, Launch, and Monitor Live Quizzes in Seconds</Typography>
         </Box>
         <Box mt={15}>
           <Typography variant='h3' sx={{ color: '#2891fa',fontWeight:'bolder' }}>Features Overview</Typography>
-          <Container sx={{ background: 'linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(67, 67, 67, 0.8))', p: 2 }}>
+          <Container sx={{ background: 'linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(67, 67, 67, 0.8))', p: 2, borderRadius:'15px' }}>
         <AnimatedText />
           </Container>
         </Box>
