@@ -70,9 +70,34 @@ const Reports = () => {
 
   const filteredRows = getFilteredRows(rows, searchTerm);
 
-  const handleDelete = (id) => {
-    setRows(rows.filter((row) => row.id !== id));
-  };
+  // const handleDelete =async (id) => {
+  //   console.log(id)
+  //   if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+  //     try {
+
+  //       // If Firebase deletion is successful, proceed with API call to delete user profile
+  //       const response = await fetch(`${url}/reports/delete/${id}`, {
+  //         method: 'DELETE',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           // Add any other headers your API requires
+  //         },
+  //       });
+
+  //       await getAllQuizes()
+  //       // setRows(rows.filter((row) => row.id !== id));
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       // Redirect user or update UI accordingly
+  //       // For example, you might want to redirect to the login page or home page
+  //     } catch (error) {
+  //       console.error('Error deleting account:', error.message);
+  //       // Optionally update UI to show error message
+  //     }
+  //   }
+
+  // };
 
   return (
     <Container sx={{ padding: "1em" }}>
@@ -125,7 +150,7 @@ const Reports = () => {
               <TableCell sx={{fontSize:'large',fontWeight:'bolder',color:'#1E75A3'}}>Name</TableCell>
               <TableCell sx={{fontSize:'large',fontWeight:'bolder',color:'#1E75A3'}}>Date</TableCell>
               <TableCell sx={{fontSize:'large',fontWeight:'bolder',color:'#1E75A3'}}>Room</TableCell>
-              <TableCell sx={{fontSize:'large',fontWeight:'bolder',color:'#1E75A3'}}>Actions</TableCell>
+              {/* <TableCell sx={{fontSize:'large',fontWeight:'bolder',color:'#1E75A3'}}>Actions</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -180,15 +205,15 @@ const Reports = () => {
                   </Link>
                 </TableCell>
 
-                <TableCell>
-                  {/* Implement archive action here */}
+                {/* <TableCell>
+                  Implement archive action here
                   <IconButton>
                     <ArchiveIcon />
                   </IconButton>
-                  <IconButton onClick={() => handleDelete(row.id)}>
+                  <IconButton onClick={() => handleDelete(row._id)}>
                     <DeleteIcon />
                   </IconButton>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
