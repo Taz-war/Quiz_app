@@ -4,7 +4,7 @@ import { useTimer } from "react-timer-hook";
 import PlayCircleFilledOutlinedIcon from "@mui/icons-material/PlayCircleFilledOutlined";
 import PauseCircleRoundedIcon from "@mui/icons-material/PauseCircleRounded";
 import NotStartedRoundedIcon from "@mui/icons-material/NotStartedRounded";
-import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
+import { useTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import CheckIcon from '@mui/icons-material/Check';
 import { useState } from "react";
@@ -13,6 +13,7 @@ import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
 
 const TimerComponent = () => {
     const { setStartExam } = useContext(CreateQuizContex);
+  const theme = useTheme();
   const [inputValue, setInputValue] = useState("");
   const [expiryTimestamp, setExpiryTimestamp] = useState(new Date());
   const {
@@ -42,6 +43,14 @@ const TimerComponent = () => {
     time.setSeconds(time.getSeconds() + durationInSeconds);
     setExpiryTimestamp(time);
     setInputValue('')
+  };
+
+  // Define styles for the timer digits based on the theme mode
+  const timerDigitStyle = {
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : "#E7EDF0",
+    color: theme.palette.mode === 'dark' ? theme.palette.grey[200] : "inherit", // You can set it to any color you prefer
+    borderRadius: "6px",
+    padding: 1,
   };
 
   const handleStartTimer = () => {
@@ -79,31 +88,19 @@ const TimerComponent = () => {
       <div style={{ textAlign: "center",width:'50%' }}>
         <div style={{ fontSize: "30px", marginBottom: 6 }}>
           <span
-            style={{
-              backgroundColor: "#E7EDF0",
-              borderRadius: "6px",
-              padding: 1,
-            }}
+            style={timerDigitStyle}
           >
             {formatTime(hours)}
           </span>
           :
           <span
-            style={{
-              backgroundColor: "#E7EDF0",
-              borderRadius: "6px",
-              padding: 1,
-            }}
+            style={timerDigitStyle}
           >
             {formatTime(minutes)}
           </span>
           :
           <span
-            style={{
-              backgroundColor: "#E7EDF0",
-              borderRadius: "6px",
-              padding: 1,
-            }}
+            style={timerDigitStyle}
           >
             {formatTime(seconds)}
           </span>

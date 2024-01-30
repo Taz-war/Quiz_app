@@ -8,7 +8,7 @@ import  'antd/dist/antd'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  
+    
     <CreateQuizStateProvider>
       <App />
     </CreateQuizStateProvider>

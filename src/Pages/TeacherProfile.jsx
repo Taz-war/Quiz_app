@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import { Box, Stepper, Step, StepLabel, TextField, Button, FormControl, InputLabel, Select, MenuItem, Container, Grid } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useContext } from 'react';
 import { CreateQuizContex } from '../Context_Api/CreateQuizStateProvider';
 import { url } from "../api";
+import { deleteUser } from 'firebase/auth';
+import { auth } from '../firebase.config';
+import { useTheme } from '@mui/material/styles';
+
 
 const steps = ['Profile', 'Demographics'];
 
 const TeacherProfile = () => {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
-  const { userInfo, setUserInfo } = useContext(CreateQuizContex);
+  const { userInfo, setUserInfo, userId } = useContext(CreateQuizContex);
   const { uid } = useParams();
+  const theme = useTheme()
+  const inputStyle = {
+    bgcolor: theme.palette.mode === 'dark' ? theme.palette.background.paper : 'white',
+  };
 
   const [profileData, setProfileData] = useState({
     firstName: userInfo?.firstName || '',
@@ -41,7 +50,7 @@ const TeacherProfile = () => {
     console.log('Form submitted', profileData);
 
     try {
-      const response = await fetch(`${url}/teacherProfile/${uid}`, {
+      const response = await fetch(`${url}/teacherProfile/${userId}`, {
         method: 'PUT', // or 'PATCH' depending on your API
         headers: {
           'Content-Type': 'application/json',
@@ -61,9 +70,39 @@ const TeacherProfile = () => {
   };
 
   // Add your delete account handler here
-  const handleDeleteAccount = () => {
-    console.log('Delete account clicked');
-    // Implement your delete account logic here
+  const handleDeleteAccount = async() => {
+    if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+      try {
+        const user = auth.currentUser;
+        if (!user) {
+          throw new Error('No authenticated user found');
+        }
+
+        // Delete the user from Firebase Authentication
+        await deleteUser(user);
+
+        // If Firebase deletion is successful, proceed with API call to delete user profile
+        const response = await fetch(`${url}/teacherProfile/delete/${userId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            // Add any other headers your API requires
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        // Handle successful account deletion
+        console.log('Account successfully deleted');
+        // Redirect user or update UI accordingly
+        navigate("/")
+        // For example, you might want to redirect to the login page or home page
+      } catch (error) {
+        console.error('Error deleting account:', error.message);
+        // Optionally update UI to show error message
+      }
+    }
   };
 
   return (
@@ -150,7 +189,7 @@ const TeacherProfile = () => {
                 {profileData.organizationType !== "" && (
                 <Grid item xs={12} md={6}>
                   <TextField
-                  sx={{bgcolor:'white'}}
+                      sx={inputStyle}
                     label="Organization Name"
                     name="organizationName"
                     value={profileData.organizationName}

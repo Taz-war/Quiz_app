@@ -91,6 +91,7 @@ const MultipleChoice = ({ index, setQuestionSet, questionSet }) => {
                 variant="outlined"
                 label="Question"
                 fullWidth
+                defaultValue={question}
                 sx={{ mb: 2, mt: 2 }}
                 onBlur={(e) => setQuestion(e.target.value)}
               >
@@ -102,6 +103,7 @@ const MultipleChoice = ({ index, setQuestionSet, questionSet }) => {
                 variant="outlined"
                 label="Point"
                 fullWidth
+                defaultValue={point}
                 sx={{ mb: 2, mt: 2 }}
                 onBlur={(e) => setPoint(e.target.value)}
               >

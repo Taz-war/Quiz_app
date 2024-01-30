@@ -10,18 +10,24 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import { useState } from "react";
 import { useContext } from "react";
 import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
 import { auth } from "../../firebase.config";
 import { signOut } from "firebase/auth";
 import Logo from "../../assets/logo(2).png";
+import {  useThemeToggle } from "../../Context_Api/ThemeProvider ";
+import { useTheme } from '@mui/material/styles';
 
 const Navbar = () => {
   const { userName,userId } = useContext(CreateQuizContex);
   const [activeButton, setActiveButton] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
+ const theme = useTheme();
+  const { toggleTheme } = useThemeToggle();
 
   // console.log('intake',userId)
   // Function to handle sign-out
@@ -29,6 +35,7 @@ const Navbar = () => {
     try {
       await signOut(auth);
       // Sign-out successful, navigate to login page or handle as needed
+      localStorage.clear();
       navigate("/"); // Replace '/login' with your login route
       console.log("User signed out successfully");
     } catch (error) {
@@ -168,6 +175,11 @@ const Navbar = () => {
         <div style={{ flexGrow: 1 }} />
 
         {/* Elements aligned to the right */}
+        {/* <Button onClick={toggleTheme}>Toggle Theme</Button> */}
+        <IconButton onClick={toggleTheme} color="inherit">
+          {theme.palette.mode === 'dark' ? <LightModeIcon fontSize="large"/> : <DarkModeIcon fontSize="large"/>}
+        </IconButton>
+
         <Button color="inherit" sx={{ marginX: 1 }}>
           {userName}
         </Button>

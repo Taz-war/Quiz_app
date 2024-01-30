@@ -161,11 +161,6 @@ const QuizList = () => {
               </Link>
             </Button>
           </Box>
-
-          {/* Right-aligned Deleted button */}
-          <Button variant="outlined" sx={{ mr: 1 }}>
-            Deleted
-          </Button>
         </Box>
         {quizzes.length === 0 ? (
           <Slide direction="up" in={true} mountOnEnter unmountOnExit>

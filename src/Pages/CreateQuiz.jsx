@@ -78,7 +78,7 @@ const CreateQuiz = () => {
       <Container>
         <Grid container columns={12} columnSpacing={2} mt={2}>
           <Grid item xs={12} textAlign={"left"}>
-            <Link to={`/`} style={{ color: "inherit", textDecoration: "none" }}>
+            <Link to={`/Library`} style={{ color: "inherit", textDecoration: "none" }}>
               <IconButton>
                 <ArrowBackIcon />
               </IconButton>
