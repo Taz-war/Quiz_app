@@ -9,6 +9,7 @@ import {
   Typography,
   Paper,
   FormLabel,
+  Grid,
 } from "@mui/material";
 
 const QuestionTypeMultipleChoice = ({ question, answer, onChange }) => {
@@ -17,42 +18,41 @@ const QuestionTypeMultipleChoice = ({ question, answer, onChange }) => {
       <FormControl component="fieldset" fullWidth>
         <Typography
           component="legend"
-          sx={{ fontWeight: "bolder", fontSize: "x-large",mb:2 }}
+          sx={{ fontWeight: "bolder", fontSize: "x-large", mb: 2 }}
         >
           {question.QuestionTitle}
         </Typography>
+
         <RadioGroup
-          row
           aria-label={question.QuestionTitle}
           name="multipleChoice"
           value={answer || ""}
           onChange={onChange}
-          sx={{ marginTop: "10px", display: "flex", flexWrap: "wrap" }}
+          sx={{ marginTop: "10px" }}
         >
-          {question.Options.map((option,i) => (
-            <FormControlLabel
-              key={option}
-              value={option}
-              control={<Radio size="medium"/>}
-              label={
-                <Typography
-                  p={2}
-                  border={"1px solid #DEEAF3"}
-                  width={"100%"}
-                  color={'black'}
-                  sx={{ bgcolor: answer === option ? "#DEEAF3" : "inherit" }}
-                >
-                  {option}
-                </Typography>
-              }
-              sx={{
-                // Change the color if this option is selected
-                width: "40%",
-                mb:2,
-                color: answer === option ? "primary.main" : "inherit",
-              }}
-            />
-          ))}
+          <Grid container spacing={2}>
+            {question.Options.map((option, i) => (
+              <Grid item xs={12} sm={6} key={i}> {/* Adjust grid sizing as needed */}
+                <FormControlLabel
+                  value={option}
+                  control={<Radio />}
+                  label={option}
+                  sx={{
+                    width: '100%', // Set the width to fill the grid item
+                    '.MuiTypography-root': { // Apply styles to the label Typography
+                      p: 2,
+                      border: "1px solid #DEEAF3",
+                      width: '100%', // Ensure the label takes full width of the FormControlLabel
+                      bgcolor: answer === option ? "#DEEAF3" : "inherit",
+                    },
+                    '&.MuiFormControlLabel-root': {
+                      justifyContent: 'flex-start', // Align radio button and label to the start
+                    },
+                  }}
+                />
+              </Grid>
+            ))}
+          </Grid>
         </RadioGroup>
       </FormControl>
     </Paper>
