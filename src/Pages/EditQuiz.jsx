@@ -21,7 +21,7 @@ import ShortQuestionShowData from "../Components/CreateQuiz_Components/ShortQues
 import TrueFalseShowData from "../Components/CreateQuiz_Components/TureFalse/TrueFalseShowData";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
-import {url} from '../api'
+import { url } from "../api";
 
 const EditQuiz = ({ quizzes, id }) => {
   const { open, setOpen } = useContext(CreateQuizContex);
@@ -47,14 +47,11 @@ const EditQuiz = ({ quizzes, id }) => {
     };
 
     try {
-      const response = await fetch(
-        `${url}/EditQuiz/${question._id}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(newQuestion),
-          headers: { "Content-type": "application/json" },
-        }
-      );
+      const response = await fetch(`${url}/EditQuiz/${question._id}`, {
+        method: "PUT",
+        body: JSON.stringify(newQuestion),
+        headers: { "Content-type": "application/json" },
+      });
 
       if (!response.ok)
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -81,8 +78,11 @@ const EditQuiz = ({ quizzes, id }) => {
     <>
       <Container>
         <Grid container columns={12} columnSpacing={2} mt={2}>
-          <Grid item xs={12} textAlign={'left'}>
-            <Link to={`/Launch`} style={{ color: "inherit", textDecoration: "none" }}>
+          <Grid item xs={12} textAlign={"left"}>
+            <Link
+              to={`/Library`}
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
               <IconButton>
                 <ArrowBackIcon />
               </IconButton>
@@ -104,11 +104,13 @@ const EditQuiz = ({ quizzes, id }) => {
                     {isEditing ? (
                       <DoneTwoToneIcon
                         onClick={handleSaveClick}
+                        fontSize="large"
                         sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
                       />
                     ) : (
                       <BorderColorTwoToneIcon
                         onClick={handleEditClick}
+                        fontSize="large"
                         sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
                       />
                     )}

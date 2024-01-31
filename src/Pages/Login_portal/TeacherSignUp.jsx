@@ -15,20 +15,19 @@ import {
   Container,
   Grid,
 } from "@mui/material";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
-import {url} from '../../api'
-
+import { url } from "../../api";
 
 const TeacherSignUpForm = () => {
-  const { setUserId,userId } = useContext(CreateQuizContex);
+  const { setUserId, userId } = useContext(CreateQuizContex);
   const location = useLocation();
   const id = location.state?.id;
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    userName: "", 
+    userName: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -40,14 +39,21 @@ const TeacherSignUpForm = () => {
     phoneNumber: "",
     agreeToTerms: false,
   });
-  const [validationMessage, setValidationMessage] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [validationMessage, setValidationMessage] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
+  const [passwordValidationError, setPasswordValidationError] = useState('');
+
+  const validatePassword = (password) => {
+    const regex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    return regex.test(password);
+  };
 
   const handleNext = () => {
-    setPasswordError('');
+    setPasswordError("");
     if (step === 1 && formData.password !== formData.confirmPassword) {
-      setPasswordError('Passwords do not match');
+      setPasswordError("Passwords do not match");
       return; // Prevent going to next step
     }
     if (step < 3) setStep(step + 1);
@@ -59,7 +65,17 @@ const TeacherSignUpForm = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
     setFormData({ ...formData, [name]: value });
+    if (name === "password") {
+      if (!validatePassword(value)) {
+        setPasswordValidationError(
+          "Password needs 8+ characters with a number and special character."
+        );
+      } else {
+        setPasswordValidationError("");
+      }
+    }
   };
 
   const handleCheckboxChange = (event) => {
@@ -68,9 +84,9 @@ const TeacherSignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setValidationMessage('');
+    setValidationMessage("");
     if (formData.password !== formData.confirmPassword) {
-      setValidationMessage('Passwords do not match');
+      setValidationMessage("Passwords do not match");
       return; // Stop the form submission
     }
     try {
@@ -80,15 +96,15 @@ const TeacherSignUpForm = () => {
         formData.password
       );
 
-      await setUserId(userCredential.user.uid)
+      await setUserId(userCredential.user.uid);
       const newUser = {
-        userName:formData.userName,
+        userName: formData.userName,
         firstName: formData.firstName,
         lastName: formData.lastName,
         organizationType: formData.organizationType,
         organizationName: formData.organizationName,
         role: formData.role,
-        email:formData.email,
+        email: formData.email,
         phoneNumber: formData.phoneNumber,
       };
 
@@ -99,7 +115,7 @@ const TeacherSignUpForm = () => {
         body: JSON.stringify(newUser),
         headers: { "Content-type": "application/json" },
       });
-      navigate('/Launch');
+      navigate("/Launch");
 
       if (!response.ok) {
         // This will catch HTTP errors like 404 or 500
@@ -107,7 +123,7 @@ const TeacherSignUpForm = () => {
       } else {
         // Successful response
         const data = await response.json();
-        console.log('Server Response Data', data);
+        console.log("Server Response Data", data);
       }
     } catch (error) {
       console.error("Error creating an account or making API call: ", error);
@@ -115,13 +131,21 @@ const TeacherSignUpForm = () => {
   };
 
   const isStepComplete = () => {
-    switch(step) {
+    switch (step) {
       case 1:
-        return formData.userName && formData.firstName && formData.lastName &&
-               formData.email && formData.password && formData.confirmPassword;
+        return (
+          formData.userName &&
+          formData.firstName &&
+          formData.lastName &&
+          formData.email &&
+          formData.password &&
+          formData.confirmPassword
+        );
       case 2:
-        return formData.organizationType && 
-               (formData.organizationType === "" || formData.organizationName);
+        return (
+          formData.organizationType &&
+          (formData.organizationType === "" || formData.organizationName)
+        );
       case 3:
         // Add relevant fields check for step 3 if needed
         return formData.role; // Assuming role is a mandatory field in step 3
@@ -131,14 +155,19 @@ const TeacherSignUpForm = () => {
   };
 
   return (
-    <Container maxWidth='sm' sx={{ bgcolor: "#DFEAF3", p: 5, mt: 4 }}>
+    <Container maxWidth="sm" sx={{ bgcolor: "#DFEAF3", p: 5, mt: 4 }}>
       <form onSubmit={handleSubmit}>
-          {step === 1 && (
-            <>
-        <Grid container spacing={2} alignItems="center" justifyContent="center">
+        {step === 1 && (
+          <>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              justifyContent="center"
+            >
               <Grid item xs={12} md={6}>
                 <TextField
-                sx={{bgcolor:'white'}}
+                  sx={{ bgcolor: "white" }}
                   label="First Name"
                   name="firstName"
                   onChange={handleInputChange}
@@ -148,7 +177,7 @@ const TeacherSignUpForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                sx={{bgcolor:'white'}}
+                  sx={{ bgcolor: "white" }}
                   label="Last Name"
                   name="lastName"
                   onChange={handleInputChange}
@@ -158,7 +187,7 @@ const TeacherSignUpForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                sx={{bgcolor:'white'}}
+                  sx={{ bgcolor: "white" }}
                   label="Email"
                   name="email"
                   type="email"
@@ -169,18 +198,21 @@ const TeacherSignUpForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                sx={{bgcolor:'white'}}
+                  sx={{ bgcolor: "white" }}
                   label="Password"
                   name="password"
                   type="password"
                   onChange={handleInputChange}
                   fullWidth
                   margin="normal"
+                  required
+                  error={!!passwordValidationError}
+                  helperText={passwordValidationError}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                sx={{bgcolor:'white'}}
+                  sx={{ bgcolor: "white" }}
                   label="Confirm Password"
                   name="confirmPassword"
                   type="password"
@@ -193,7 +225,7 @@ const TeacherSignUpForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  sx={{bgcolor:'white'}}
+                  sx={{ bgcolor: "white" }}
                   label="Username"
                   name="userName"
                   value={formData.userName}
@@ -202,19 +234,27 @@ const TeacherSignUpForm = () => {
                   margin="normal"
                 />
               </Grid>
-              </Grid>
-              <Button variant="contained" onClick={handleNext} sx={{mt:2}} disabled={!isStepComplete()}>
+            </Grid>
+            <Button
+              variant="contained"
+              onClick={handleNext}
+              sx={{ mt: 2 }}
+              disabled={!isStepComplete()}
+            >
               Next
             </Button>
-              
-            </>
-          )}
+          </>
+        )}
 
-          {step === 2 && (
-            <>
+        {step === 2 && (
+          <>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
-                <FormControl fullWidth margin="normal" sx={{bgcolor:'white'}}>
+                <FormControl
+                  fullWidth
+                  margin="normal"
+                  sx={{ bgcolor: "white" }}
+                >
                   <InputLabel>Organization Type</InputLabel>
                   <Select
                     name="organizationType"
@@ -232,7 +272,7 @@ const TeacherSignUpForm = () => {
               {formData.organizationType !== "" && (
                 <Grid item xs={12} md={6}>
                   <TextField
-                  sx={{bgcolor:'white'}}
+                    sx={{ bgcolor: "white" }}
                     label="Organization Name"
                     name="organizationName"
                     onChange={handleInputChange}
@@ -242,26 +282,45 @@ const TeacherSignUpForm = () => {
                 </Grid>
               )}
             </Grid>
-            <Grid container spacing={2} alignItems="center" justifyContent="center" mt={3}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              justifyContent="center"
+              mt={3}
+            >
               <Grid item xs={12} md={6}>
                 <Button variant="contained" onClick={handlePrevious}>
                   Previous
                 </Button>
               </Grid>
               <Grid item xs={12} md={6}>
-              <Button variant="contained" onClick={handleNext} disabled={!isStepComplete()}>
+                <Button
+                  variant="contained"
+                  onClick={handleNext}
+                  disabled={!isStepComplete()}
+                >
                   Next
                 </Button>
               </Grid>
             </Grid>
-            </>
-          )}
+          </>
+        )}
 
-          {step === 3 && (
-            <>
-            <Grid container spacing={2} alignItems="center" justifyContent="center">
+        {step === 3 && (
+          <>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              justifyContent="center"
+            >
               <Grid item xs={12} md={6}>
-                <FormControl fullWidth margin="normal" sx={{ bgcolor: 'white' }}>
+                <FormControl
+                  fullWidth
+                  margin="normal"
+                  sx={{ bgcolor: "white" }}
+                >
                   <InputLabel>Role</InputLabel>
                   <Select
                     name="role"
@@ -278,7 +337,7 @@ const TeacherSignUpForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                sx={{bgcolor:'white'}}
+                  sx={{ bgcolor: "white" }}
                   label="Phone Number (optional)"
                   name="phoneNumber"
                   onChange={handleInputChange}
@@ -299,21 +358,29 @@ const TeacherSignUpForm = () => {
                 />
               </Grid>
             </Grid>
-            <Grid container spacing={2} alignItems="center" justifyContent="center">
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              justifyContent="center"
+            >
               <Grid item xs={12} md={6}>
                 <Button variant="contained" onClick={handlePrevious}>
                   Previous
                 </Button>
               </Grid>
               <Grid item xs={12} md={6}>
-              <Button type="submit" variant="contained" disabled={!isStepComplete()}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={!isStepComplete()}
+                >
                   Finish
                 </Button>
               </Grid>
             </Grid>
-            </>
-          )}
-
+          </>
+        )}
       </form>
     </Container>
   );

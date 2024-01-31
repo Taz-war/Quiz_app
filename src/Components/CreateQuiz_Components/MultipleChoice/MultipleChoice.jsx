@@ -61,15 +61,15 @@ const MultipleChoice = ({ index, setQuestionSet, questionSet }) => {
     updatedAnswers[index] = newValue;
     setMultipleChoice(updatedAnswers);
   };
-  function debounce(func, timeout = 50) {
-    let timer;
-    return (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        func.apply(this, args);
-      }, timeout);
-    };
-  }
+ 
+  // Validation function
+  const isSubmitDisabled = () => {
+    const isQuestionEmpty = !question.trim();
+    const isPointEmpty = !point;
+    const isAnyOptionChecked = multipleChoice.some(opt => opt === answer);
+
+    return isQuestionEmpty || isPointEmpty || !isAnyOptionChecked;
+  };
 
   return (
     <>
@@ -103,7 +103,7 @@ const MultipleChoice = ({ index, setQuestionSet, questionSet }) => {
                 variant="outlined"
                 label="Point"
                 fullWidth
-                defaultValue={point}
+                // defaultValue={point}
                 sx={{ mb: 2, mt: 2 }}
                 onBlur={(e) => setPoint(e.target.value)}
               >
@@ -155,6 +155,7 @@ const MultipleChoice = ({ index, setQuestionSet, questionSet }) => {
             size="small"
             sx={{ ml: 2, mt: 2 }}
             onClick={() => handleSubmit()}
+            disabled={isSubmitDisabled()}
           >
             submit
           </Button>
@@ -187,6 +188,7 @@ const MultipleChoice = ({ index, setQuestionSet, questionSet }) => {
             <Grid item xs={2} textAlign={"right"}>
               <IconButton onClick={() => setOpenData(false)}>
                 <BorderColorTwoToneIcon
+                fontSize="large"
                   sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
                 />
               </IconButton>

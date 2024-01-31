@@ -28,11 +28,11 @@ const MultipleChoiceShowData = ({
   const [question, setQuestion] = useState(quizzes?.QuestionTitle);
   const [point, setPoint] = useState(quizzes?.Point);
   const [answer, setAnswer] = useState(quizzes?.Answer);
-  const [qId,setQId] = useState()
- console.log('intake',quizzes)
+  const [qId, setQId] = useState();
+  console.log("intake", quizzes);
 
   let tempQuestion = {
-    id:quizzes.id,
+    id: quizzes.id,
     QuestionType: "multipleChoice",
     QuestionTitle: question,
     Options: multipleChoice,
@@ -67,6 +67,15 @@ const MultipleChoiceShowData = ({
     setMultipleChoice(updatedAnswers);
   };
 
+  // Validation function
+  const isSubmitDisabled = () => {
+    const isQuestionEmpty = !question.trim();
+    const isPointEmpty = !point;
+    const isAnyOptionChecked = multipleChoice.some((opt) => opt === answer);
+
+    return isQuestionEmpty || isPointEmpty || !isAnyOptionChecked;
+  };
+
   return (
     <Box>
       <Collapse in={openComponent == false}>
@@ -96,6 +105,7 @@ const MultipleChoiceShowData = ({
             <Grid item xs={2} textAlign={"right"}>
               <IconButton onClick={() => setOpenComponent(true)}>
                 <BorderColorTwoToneIcon
+                  fontSize="large"
                   sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
                 />
               </IconButton>
@@ -184,6 +194,7 @@ const MultipleChoiceShowData = ({
             size="small"
             sx={{ ml: 2, mt: 2 }}
             onClick={() => handleSubmit()}
+            disabled={isSubmitDisabled()}
           >
             submit
           </Button>

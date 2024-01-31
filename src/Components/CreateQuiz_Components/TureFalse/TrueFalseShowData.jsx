@@ -72,6 +72,7 @@ const TrueFalseShowData = ({ i, quizzes,setQuestionSet,questionSet }) => {
                   <Grid item xs={2} textAlign={'right'}>
                       <IconButton onClick={() => setOpenComponent(true)}>
                           <BorderColorTwoToneIcon
+                          fontSize="large"
                               sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
                           />
                       </IconButton>

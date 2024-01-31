@@ -100,11 +100,13 @@ const CreateQuiz = () => {
                     {isEditing ? (
                       <DoneTwoToneIcon
                         onClick={handleSaveClick}
+                        fontSize="large"
                         sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
                       />
                     ) : (
                       <BorderColorTwoToneIcon
                         onClick={handleEditClick}
+                        fontSize="large"
                         sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
                       />
                     )}

@@ -13,9 +13,9 @@ import {
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import BorderColorTwoToneIcon from "@mui/icons-material/BorderColorTwoTone";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
+const ShortQuestion = ({ index, setQuestionSet, questionSet }) => {
   let serialNum = index;
   const [openData, setOpenData] = useState(false);
   const [question, setQuestion] = useState("");
@@ -23,13 +23,13 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
   const [shortAnswers, setShortAnswers] = useState([""]);
 
   let tempShortQuestion = {
-    id:uuidv4(),
-    QuestionType:'shortQuestion',
+    id: uuidv4(),
+    QuestionType: "shortQuestion",
     QuestionTitle: question,
     Point: point,
     Answer: shortAnswers,
   };
-  
+
   ///add option///
   const addOption = () => {
     setShortAnswers([...shortAnswers, ""]);
@@ -55,8 +55,19 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
       setShortAnswers([]);
     }
     setOpenData(true);
-    setQuestionSet([...questionSet,tempShortQuestion])
+    setQuestionSet([...questionSet, tempShortQuestion]);
   };
+
+  ///validation function///
+  const isSubmitDisabled = () => {
+    const isQuestionEmpty = !question.trim();
+    const isPointEmpty = !point;
+    const isAnyAnswerFilled = shortAnswers.some(answer => answer.trim());
+
+    return isQuestionEmpty || isPointEmpty || !isAnyAnswerFilled;
+  };
+
+  
   return (
     <>
       <Collapse in={openData === false}>
@@ -77,7 +88,6 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
                 label="Question"
                 fullWidth
                 sx={{ mb: 2, mt: 2 }}
-                
                 onChange={(e) => setQuestion(e.target.value)}
               >
                 Question
@@ -121,49 +131,61 @@ const ShortQuestion = ({ index,setQuestionSet,questionSet  }) => {
           >
             ADD MORE Options
           </Button>
-          <Button variant="contained" size="small" sx={{ml:2,mt:2}} onClick={() => handleSubmit()}>
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ ml: 2, mt: 2 }}
+            onClick={() => handleSubmit()}
+            disabled={isSubmitDisabled()}
+          >
             submit
           </Button>
         </Card>
       </Collapse>
       <Collapse in={openData}>
-        
-          <Card
-            sx={{
-              minWidth: 275,
-              bgcolor: "#FFFFF",
-              mt: 2,
-              p: 2,
-              textAlign: "left",
-              mb: 2,
-            }}
-          >
-            <Grid container columns={12} columnSpacing={2}>
-              <Grid item xs={10}>
-                <Typography fontSize={"x-large"} fontWeight={"bolder"}>{`${serialNum + 1} . ${question}`}</Typography>
-                {shortAnswers.length > 0 &&
-                  shortAnswers.map((data, i) => (
-                    <Button
-                      key={i}
-                      variant="contained"
-                      sx={{ bgcolor: "#E7F6EA", color: "#4EB164",mr:2,'&:hover':{
-                        bgcolor:"#E7F6EA"
-                      } }}
-                    >
-                      {data}
-                    </Button>
-                  ))}
-              </Grid>
-              <Grid item xs={2} textAlign={"right"}>
-              <IconButton onClick={() => setOpenData(false)}>
-                  <BorderColorTwoToneIcon
-                    sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
-                  />
-                </IconButton>
-              </Grid>
+        <Card
+          sx={{
+            minWidth: 275,
+            bgcolor: "#FFFFF",
+            mt: 2,
+            p: 2,
+            textAlign: "left",
+            mb: 2,
+          }}
+        >
+          <Grid container columns={12} columnSpacing={2}>
+            <Grid item xs={10}>
+              <Typography fontSize={"x-large"} fontWeight={"bolder"}>{`${
+                serialNum + 1
+              } . ${question}`}</Typography>
+              {shortAnswers.length > 0 &&
+                shortAnswers.map((data, i) => (
+                  <Button
+                    key={i}
+                    variant="contained"
+                    sx={{
+                      bgcolor: "#E7F6EA",
+                      color: "#4EB164",
+                      mr: 2,
+                      "&:hover": {
+                        bgcolor: "#E7F6EA",
+                      },
+                    }}
+                  >
+                    {data}
+                  </Button>
+                ))}
             </Grid>
-          </Card>
-       
+            <Grid item xs={2} textAlign={"right"}>
+              <IconButton onClick={() => setOpenData(false)}>
+                <BorderColorTwoToneIcon
+                  fontSize="large"
+                  sx={{ bgcolor: "skyblue", color: "white", p: 1 }}
+                />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </Card>
       </Collapse>
     </>
   );
