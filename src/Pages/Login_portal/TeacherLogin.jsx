@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
 import GoogleIconSVG from '../../icons8-google.svg';
 import {url} from '../../api'
+import axios from "axios";
 
 const TeacherLogin = () => {
   const { setUserId, userId } = useContext(CreateQuizContex);
@@ -31,6 +32,9 @@ const TeacherLogin = () => {
       );
       console.log({ userCredential });
       await setUserId(userCredential.user.uid);
+      const loggedUser= {email: userCredential.user.email}
+      
+      const getToken=await axios.post(`${url}/jwt`,loggedUser,{withCredentials:true}).then(res=> console.log(res.data))
       navigate("/Launch", { state: { id: userCredential.user.uid } }); // Redirect to dashboard on successful login
     } catch (error) {
       setError("Failed to log in"); // Display error message

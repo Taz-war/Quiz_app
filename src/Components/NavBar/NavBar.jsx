@@ -20,6 +20,8 @@ import { signOut } from "firebase/auth";
 import Logo from "../../assets/logo(2).png";
 import {  useThemeToggle } from "../../Context_Api/ThemeProvider ";
 import { useTheme } from '@mui/material/styles';
+import { url } from "../../api";
+import axios from "axios";
 
 const Navbar = () => {
   const { userName,userId } = useContext(CreateQuizContex);
@@ -36,6 +38,7 @@ const Navbar = () => {
       await signOut(auth);
       // Sign-out successful, navigate to login page or handle as needed
       localStorage.clear();
+      axios.get(`${url}/logOut`,{withCredentials:true})
       navigate("/"); // Replace '/login' with your login route
       console.log("User signed out successfully");
     } catch (error) {
