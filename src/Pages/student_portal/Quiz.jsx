@@ -134,6 +134,15 @@ const Quiz = () => {
     // setAnswers({ ...answers, [currentQuestion.id]: event.target.value });
   };
 
+  ///get quizzes from teacher///
+  useEffect(()=>{
+    fetch(`${url}/EditQuiz/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          
+        })
+  },[examStarted])
+
   const isLastQuestion = currentQuestionIndex === quizData.questions.length - 1;
 
   return (

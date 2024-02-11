@@ -37,7 +37,7 @@ const Rooms = () => {
   const getAllQuizes = async () => {
     setLoader(true)
     try {
-      const response = await fetch(`${url}/getRooms/${userId}`);
+      const response = await fetch(`${url}/getRooms/${userId}`,{credentials:'include'});
       const data = await response.json();
       setRooms(data);
     } catch (error) {

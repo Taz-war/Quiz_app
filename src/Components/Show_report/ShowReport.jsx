@@ -44,7 +44,7 @@ const ShowReport = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/getReports/${id}`
+        `http://localhost:5000/getReports/${id}`,{credentials:'include'}
       );
       const data = await response.json();
       setReport(data);

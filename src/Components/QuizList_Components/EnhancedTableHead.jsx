@@ -7,6 +7,7 @@ const EnhancedTableHead = (props) => {
       try {
         const response = await fetch(`http://localhost:5000/questionset/${selected}`, {
           method: 'DELETE',
+          credentials:'include'
           // body:selected,
         });
   
