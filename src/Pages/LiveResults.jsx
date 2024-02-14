@@ -28,10 +28,12 @@ const LiveResults = () => {
   const { startExam,setStartExam } = useContext(CreateQuizContex);
   const [roomData, setRoomData] = useState("");
   const [steps, setSteps] = useState(0);
+  const [quizData,setQuizData]= useState(null)
   const [roomName,setRoomName] = useState('')
   const [totalStudentsEntered, setTotalStudentsEntered] = useState(0);
   const [enteredStudents, setEnteredStudents] = useState([]);
   const [examDuration, setExamDuration] = useState(0);
+  const [liveQuestionId,setLiveQuestionId] = useState('')
 
   const socket = io(`${url}`);
   useEffect(() => {
@@ -41,10 +43,10 @@ const LiveResults = () => {
 
     socket.emit("joinAdminRoom", "admin");
 
-    socket.emit('startExam',{examStarted:startExam,roomName:roomName})
+    
     // socket.emit("joinRoom", "C7h9EM");
-    socket.on("userJoined", (userData, step,room,userEntered) => {
-      
+    socket.on("userJoined", (userData,room,userEntered) => {
+      // setLiveQuestionId(id)
       setTotalStudentsEntered(userEntered)
       setRoomName(room)
       setEnteredStudents((prevItems) => {
@@ -59,10 +61,15 @@ const LiveResults = () => {
           return [...prevItems, userData];
         }
       });
-      setSteps(step);
+      
     });
+    socket.on('liveQid',(id)=>{
+      console.log(id)
+      setLiveQuestionId(id)
+    })
     console.log(enteredStudents);
     console.log(steps);
+    socket.emit('startExam',{examStarted:startExam,roomName:roomName,quizData:quizData})
     socket.on("connectedRoom", (data) => {
       console.log("socketroom", data);
 
@@ -77,6 +84,23 @@ const LiveResults = () => {
     setInputValue('')
     // Optional: Clear the input field or perform any other action
   };
+
+  const fetchQuizData = async () => {
+// Assuming 'id' is the quiz identifier
+    try {
+      const response = await fetch(`${url}/EditQuiz/${liveQuestionId}`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      setQuizData(data);
+      setSteps(quizData?.questions?.length) // Assuming the fetched data is the quiz data
+    } catch (error) {
+      console.error("Error fetching quiz data:", error);
+    }
+  };
+  useEffect(()=>{
+    fetchQuizData();
+    console.log('hello ffahim')
+  },[liveQuestionId])
 
   const time = new Date();
   time.setSeconds(time.getSeconds() + 60);

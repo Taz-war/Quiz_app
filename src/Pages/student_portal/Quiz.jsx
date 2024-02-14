@@ -55,19 +55,25 @@ const QuestionRenderer = ({ question, answer, onChange }) => {
 
 const Quiz = () => {
   const location = useLocation();
-  const quizData = location.state?.data;
+  // const quizData = location.state?.data;
   const studenData = location.state?.studentData;
   const id = location.state?.id;
   const roomName = location.state?.roomName;
+  const [quizData,setQuizData]= useState(null)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [examStarted, setExamStarted] = useState(false);
   const [studentInfo, setStudentInfo] = useState({ ...studenData });
-  const currentQuestion = quizData.questions[currentQuestionIndex];
+  const currentQuestion = quizData?.questions[currentQuestionIndex];
   const socket = io(`${url}`);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const handleExamStarted = (data) => {
+      setExamStarted(data.examStarted);
+      setQuizData(data.quizData);
+    };
+
     socket.on("connect", () => {
       console.log("Connected to server");
     });
@@ -75,27 +81,29 @@ const Quiz = () => {
       "joinRoom",
       roomName,
       studenData,
-      quizData.questions.length,
-      currentQuestionIndex
+      // quizData?.questions?.length,
+      currentQuestionIndex,
     );
 
-    socket.on("examStarted", (data) => {
-      console.log("examStarted", data.examStarted);
-      setExamStarted(data.examStarted);
-    });
+    // socket.emit('currentQuestion',currentQuestionIndex)
+
+    socket.emit('QId',id)
+
+    socket.on("examStarted", handleExamStarted);
 
     socket.on("message", (message) => {
       console.log("fahimTazwer", message);
     });
     // socket.emit("sendMessage", { room: "C7h9EM", message: "message" });
+
   }, [socket, currentQuestionIndex]);
 
   const handleNext = async () => {
     if (currentQuestionIndex < quizData.questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentQuestionIndex(prevIndex => prevIndex + 1);
     } else if (currentQuestionIndex === quizData.questions.length - 1) {
       // Handle quiz completion
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentQuestionIndex(prevIndex => prevIndex + 1);
       setExamStarted(false);
       console.log("Quiz Completed", answers);
       const updatedStudentInfo = { ...studentInfo, answer: answers };
@@ -133,9 +141,25 @@ const Quiz = () => {
     }
     // setAnswers({ ...answers, [currentQuestion.id]: event.target.value });
   };
+  if (!quizData) {
+    return (
+      <Container
+        sx={{ bgcolor: "#DFEAF3", p: 4, textAlign: "left", mt: 4 }}
+        maxWidth="sm"
+      >
+        <Spin tip="Loading..." size="large">
+          <Alert
+            type="info"
+            message="Waiting for quiz data..."
+            description="Please wait until the quiz data is loaded."
+          />
+        </Spin>
+      </Container>
+    );
+  }
 
-  const isLastQuestion = currentQuestionIndex === quizData.questions.length - 1;
-
+  const isLastQuestion = currentQuestionIndex === quizData?.questions.length - 1;
+ 
   return (
     <>
       <Collapse in={examStarted}>
