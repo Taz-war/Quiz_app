@@ -28,7 +28,8 @@ const DeleteModal = ({openDeleteModal,setOpenDeleteModal}) => {
   const handleDelete =async()=>{
     try {
       const response = await fetch(`http://localhost:5000/questionSet/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        credentials:'include'
       });
 
       if (!response.ok)

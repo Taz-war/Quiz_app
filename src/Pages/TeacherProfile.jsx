@@ -57,6 +57,7 @@ const TeacherProfile = () => {
           // Add any other headers your API requires, like authorization tokens
         },
         body: JSON.stringify(profileData),
+        credentials:'include'
       });
 
       if (!response.ok) {
@@ -88,6 +89,7 @@ const TeacherProfile = () => {
             'Content-Type': 'application/json',
             // Add any other headers your API requires
           },
+          credentials:'include'
         });
 
         if (!response.ok) {

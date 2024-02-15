@@ -84,7 +84,7 @@ const QuizList = () => {
   const getAllQuizes = async () => {
     setLoader(true);
     try {
-      const response = await fetch(`${url}/questionSet/${userId}`);
+      const response = await fetch(`${url}/questionSet/${userId}`, { credentials: 'include' });
       const data = await response.json();
       setQuizzes(data.questions);
     } catch (error) {

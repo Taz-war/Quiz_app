@@ -51,6 +51,7 @@ const EditQuiz = ({ quizzes, id }) => {
         method: "PUT",
         body: JSON.stringify(newQuestion),
         headers: { "Content-type": "application/json" },
+        credentials:'include'
       });
 
       if (!response.ok)

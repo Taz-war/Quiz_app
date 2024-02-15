@@ -17,11 +17,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from "react";
 import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
 import {url} from '../../api'
+import axios from "axios";
 
 const TeacherGoogleSignUp = () => {
     const { setUserId,userId } = useContext(CreateQuizContex);
     const location = useLocation();
     const id = location.state?.id;
+  const email = location.state?.email;
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
       userName: "",
@@ -74,6 +76,10 @@ const TeacherGoogleSignUp = () => {
           body: JSON.stringify(newUser),
           headers: { "Content-type": "application/json" },
         });
+
+        const loggedUser = { email: email }
+
+        const getToken = await axios.post(`${url}/jwt`, loggedUser, { withCredentials: true }).then(res => console.log(res.data))
         navigate('/Launch');
   
         if (!response.ok) {

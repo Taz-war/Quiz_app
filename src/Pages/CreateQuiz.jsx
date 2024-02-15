@@ -48,6 +48,7 @@ const CreateQuiz = () => {
         method: "POST",
         body: JSON.stringify(newQuestion),
         headers: { "Content-type": "application/json" },
+        credentials:'include'
       });
 
       if (!response.ok)

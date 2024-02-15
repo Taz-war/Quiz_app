@@ -39,7 +39,7 @@ const Reports = () => {
   const getAllQuizes = async () => {
     setLoader(true)
     try {
-      const response = await fetch(`${url}/publishedQuestions/${userId}`);
+      const response = await fetch(`${url}/publishedQuestions/${userId}`, { credentials: 'include' });
       const data = await response.json();
       setRows(data);
     } catch (error) {

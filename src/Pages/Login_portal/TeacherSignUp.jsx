@@ -19,6 +19,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
 import { url } from "../../api";
+import axios from "axios";
 
 const TeacherSignUpForm = () => {
   const { setUserId, userId } = useContext(CreateQuizContex);
@@ -115,6 +116,9 @@ const TeacherSignUpForm = () => {
         body: JSON.stringify(newUser),
         headers: { "Content-type": "application/json" },
       });
+      const loggedUser = { email: userCredential.user.email }
+
+      const getToken = await axios.post(`${url}/jwt`, loggedUser, { withCredentials: true }).then(res => console.log(res.data))
       navigate("/Launch");
 
       if (!response.ok) {

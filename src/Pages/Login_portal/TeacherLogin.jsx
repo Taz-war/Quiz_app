@@ -10,7 +10,8 @@ import { Button, TextField, Container, Typography, Box } from "@mui/material";
 import { useContext } from "react";
 import { CreateQuizContex } from "../../Context_Api/CreateQuizStateProvider";
 import GoogleIconSVG from '../../icons8-google.svg';
-import {url} from '../../api'
+import { url } from '../../api'
+import axios from "axios";
 
 const TeacherLogin = () => {
   const { setUserId, userId } = useContext(CreateQuizContex);
@@ -31,6 +32,9 @@ const TeacherLogin = () => {
       );
       console.log({ userCredential });
       await setUserId(userCredential.user.uid);
+      const loggedUser = { email: userCredential.user.email }
+
+      const getToken = await axios.post(`${url}/jwt`, loggedUser, { withCredentials: true }).then(res => console.log(res.data))
       navigate("/Launch", { state: { id: userCredential.user.uid } }); // Redirect to dashboard on successful login
     } catch (error) {
       setError("Failed to log in"); // Display error message
@@ -42,27 +46,27 @@ const TeacherLogin = () => {
     const provider = new GoogleAuthProvider();
     setLoading(true);
     try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        const tokenResponse = result._tokenResponse
-        
-        const response = await fetch(`${url}/searchUser/${user.uid}`);
-        const data = await response.json();
-         console.log(data)
-        // Check if the user exists in Firebase Authentication
-        if (data) {
-            // User exists, navigate to appropriate page
-            navigate('/Launch', { state: { id: user.uid }});
-        } else {
-            // User doesn't exist, navigate to sign-up page
-            navigate('/teacher/GoogleSignUp',{ state: { id: user.uid }});
-        }
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const tokenResponse = result._tokenResponse
+
+      const response = await fetch(`${url}/searchUser/${user.uid}`);
+      const data = await response.json();
+      console.log(data)
+      // Check if the user exists in Firebase Authentication
+      if (data) {
+        // User exists, navigate to appropriate page
+        navigate('/Launch', { state: { id: user.uid } });
+      } else {
+        // User doesn't exist, navigate to sign-up page
+        navigate('/teacher/GoogleSignUp', { state: { id: user.uid,email:user.email } });
+      }
     } catch (error) {
-        setError('Failed to log in with Google');
+      setError('Failed to log in with Google');
     }
     setLoading(false);
-};
-  
+  };
+
 
 
   const handleSignUpNavigation = () => {
@@ -70,7 +74,7 @@ const TeacherLogin = () => {
   };
 
   return (
-    <Container maxWidth='sm' sx={{ bgcolor: "#DFEAF3", p: 5,mt:4}}>
+    <Container maxWidth='sm' sx={{ bgcolor: "#DFEAF3", p: 5, mt: 4 }}>
       <Typography
         variant="h4"
         style={{ textAlign: "center", margin: "20px 0" }}
@@ -86,7 +90,7 @@ const TeacherLogin = () => {
           onChange={(e) => setEmail(e.target.value)}
           fullWidth
           margin="normal"
-          sx={{bgcolor:'white'}}
+          sx={{ bgcolor: 'white' }}
         />
         <TextField
           label="Password"
@@ -120,10 +124,10 @@ const TeacherLogin = () => {
         </Button>
         <Box sx={{ marginTop: "20px", textAlign: "center" }}>
           <Typography>
-              Don't have an account?
-          <Button variant="text" onClick={handleSignUpNavigation}>
-            Sign Up
-          </Button>
+            Don't have an account?
+            <Button variant="text" onClick={handleSignUpNavigation}>
+              Sign Up
+            </Button>
           </Typography>
         </Box>
       </form>
